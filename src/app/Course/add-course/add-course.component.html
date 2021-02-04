@@ -1,0 +1,25 @@
+
+<div class="container">
+    <h3 [translate]="'HR.New Course'"></h3>
+    <br>
+    <form  #frm="ngForm" (ngSubmit)="addCourse()">
+        <div class="form-row">
+            <div class="col-md-3">
+                <select [(ngModel)]="courseObj.trainingTypeID" name="sel2" class="form-control">Training Types
+                    <option value="" selected disabled hidden>Training Types</option>
+                    <option *ngFor="let item of TrainingTypesList" value="{{item.id}}">{{item.trainingTypeName}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched"
+                [class.is-valid]="name.valid" [(ngModel)]="courseObj.courseName" required minlength="3"
+                name="name" id="name" class="form-control"[placeholder]="'HR.Course Name' | translate"
+                aria-describedby="helpId">
+            <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"></small>
+            </div>
+        </div>
+        <br>
+        <button id="addCourse" type="submit" [disabled]="frm.invalid" class="btn btn-primary" [translate]="'HR.Add'"
+        ></button>
+    </form>
+</div>

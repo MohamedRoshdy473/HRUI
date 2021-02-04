@@ -1,0 +1,440 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<div class="container">
+    <p-table class="container card" #dt [value]="Employees" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" [loading]="loading" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['name','code','professionName','hiringDateHiringDate','email']">
+        <ng-template pTemplate="caption">
+            <h1 [translate]="'HR.AllEmployees'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <!-- List of Employees -->
+
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <button id="addEmpBtn" routerLink="/addemployee" class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th [translate]="'HR.Image'"></th>
+                <th pSortableColumn="name"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="name"></p-sortIcon>
+                </th>
+                <th pSortableColumn="positionName"><span [translate]="'HR.Position Name'"></span>
+                    <p-sortIcon field="positionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="hiringDateHiringDate"><span [translate]="'HR.HiringDate'"></span>
+                    <p-sortIcon field="hiringDateHiringDate"></p-sortIcon>
+                </th>
+                <th pSortableColumn="email"><span [translate]="'HR.Email'"></span>
+                    <p-sortIcon field="email"></p-sortIcon>
+                </th>
+                <th ><span [translate]="'HR.Controls'" style="margin-left: 30px;"></span></th>
+                <th ><span [translate]="'HR.View'" style="margin-left: 30px;"></span></th>
+            </tr>
+            <tr>
+                <th>
+                    <label></label>
+                </th>
+                <th>
+                    <input pInputText style="width: 100%;" type="text"
+                        (input)="dt.filter($event.target.value, 'name', 'startsWith')"
+                        [placeholder]="'HR.name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input pInputText type="text" style="width: 100%"
+                        (input)="dt.filter($event.target.value, 'positionLevel', 'contains')"
+                        [placeholder]="'HR.Position Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input pInputText type="text" style="width: 100%"
+                        (input)="dt.filter($event.target.value, 'professionName', 'contains')"
+                        [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input pInputText type="text" style="width: 100%"
+                        (input)="dt.filter($event.target.value, 'hiringDateHiringDate', 'contains')"
+                        [placeholder]="'HR.HiringDate' | translate" class="p-column-filter">
+                    <!-- <p-calendar (onSelect)="onDateSelect($event)"
+                    (onClearClick)="dt.filter('', 'hiringDateHiringDate', 'equals')" [showButtonBar]="true"
+                    styleClass="p-column-filter" [placeholder]="'HR.HiringDate' | translate" [readonlyInput]="true"
+                    dateFormat="yy-mm-dd">
+                </p-calendar> -->
+                </th>
+                <th>
+                    <input pInputText style="width: 100%;" type="email"
+                        (input)="dt.filter($event.target.value, 'email', 'startsWith')"
+                        [placeholder]="'HR.Email' | translate" class="p-column-filter">
+                </th>
+                <th></th>
+          <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-employee>
+            <tr>
+                <td>
+                    <img class="img-thumbnail" src="{{getimage}}api/employees/getImage/{{employee.photo }}" alt=""
+                        width="40%" height="40%">
+                </td>
+                <td>
+                    {{employee.name}}
+                </td>
+                <td>
+                    {{employee.positionLevel}}&nbsp;{{employee.positionName}}
+                </td>
+                <td>
+                    {{employee.professionName}}
+                </td>
+                <td>
+                    {{employee.hiringDateHiringDate | date :'dd-MM-yyyy'}}
+                </td>
+                <td>
+                    {{employee.email}}
+                </td>
+
+                <!-- <td>
+                {{employee.phone}}
+            </td> -->
+                <!-- <td>
+                {{employee.gender}}
+            </td> -->
+                <!-- <td>
+                {{employee.maritalStatus}}
+            </td> -->
+                <!-- <td>
+                    <div style="margin-left: 10%;" class="row">
+                        <button (click)="showBasicDialog(employee.id)" class="btn btn-success c-btn">
+                            <i class="fa fa-eye" aria-hidden="true"></i></button>
+                        <button [routerLink]="['/editEmployee',employee.id]" class="btn btn-primary c-btn">
+                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+
+                        <button (click)="confirm(employee.id)" style="display: flex;" class="btn btn-danger c-btn">
+                            <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                    </div>
+                </td> -->
+                <td>
+                    <!-- <button icon="pi pi-print" printSectionId="print-section" ngxPrint styleClass="p-button-text"
+                    [translate]="'HR.Print'" (click)="PrintEmployee(employee.id)"></button>  -->
+                    <!-- <span class="pi pi-print btn" printSectionId="print-section" ngxPrint></span>-->
+                    <span style="margin-left: 20px;" class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(employee.id)"></span>
+                    <span class="btn pi pi-pencil" aria-hidden="true"
+                        [routerLink]="['/editEmployee',employee.id]"></span>
+                    <span class="btn pi pi-times" (click)="confirm(employee.id)" aria-hidden="true"></span>
+                   <!-- <span class="btn" (click)="viewAllImages(employee.id)">View</span> -->
+                </td>
+                <td style="width: 50px;">
+                    <button class="btn btn-success" style="margin-left: 40px;" (click)="viewAllImages(employee.id)" [translate]="'HR.View'">
+                    </button>
+                </td>
+                
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" [translate]="'HR.No data found'"></td>
+            </tr>
+            <tr>
+
+            </tr>
+        </ng-template>
+
+    </p-table>
+
+
+    <p-dialog [header]="'HR.Details' | translate" [(visible)]="displayMaximizable" [modal]="true"
+        [style]="{width: '50vw'}" [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+        <!-- <h1 [translate]="'HR.Details'"> {{Employee.name}}</h1>
+             <div class="row">
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.name'"></span>&nbsp;:
+                {{Employee.name}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.Position Name'"></span>&nbsp;:
+                {{Employee.positionLevel}}&nbsp;{{Employee.positionName}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.Profession Name'"></span>&nbsp;:
+                {{Employee.professionName}}</div>
+                <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.Code'"></span>&nbsp;:
+                    {{Employee.code}}
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.Email'"></span>&nbsp;:
+                {{Employee.email}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.EmailCompany'"></span>&nbsp;:
+                {{Employee.emailCompany}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.phone'"></span>&nbsp;:
+                {{Employee.phone}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.relevantPhone'"></span>&nbsp;:
+                {{Employee.relevantPhone}}</div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.Mobile'"></span>&nbsp;:
+                {{Employee.mobile}}</div>
+                <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.NationalId'"></span>&nbsp;:
+                    {{Employee.nationalId}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.dateOfBirth'"></span>&nbsp;:
+                {{Employee.dateOfBirth | date :'dd-MM-yyyy'}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.HiringDate'"></span>&nbsp;:
+                {{Employee.hiringDateHiringDate | date :'dd-MM-yyyy'}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.UniversityName'"></span>&nbsp;:
+                {{Employee.universityName}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.FacultyName'"></span>&nbsp;:
+                {{Employee.facultyName}}</div>
+                <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.FacultyDepartmentName'"></span>&nbsp;:
+                    {{Employee.facultyDepartmentName}}</div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.graduatioYear'"></span>&nbsp;:
+                {{Employee.graduatioYear}}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.gender'"></span>&nbsp;:
+                {{Employee.gender}}
+            </div>
+            <div class="col-md-6 col-lg-6 form-control"><span class="bold" [translate]="'HR.maritalStatus'"></span>&nbsp;:
+                {{Employee.maritalStatus}}</div>
+        </div>  -->
+        <div id="print-section">
+            <table
+                style="margin: 1em 0;width: 100%;overflow: hidden;background: #fff;color: #024457;border-radius: 10px;border: 1px solid #167f92;">
+                <tr>
+                    <th>
+                        <h1 [translate]="'HR.Details'" style="color: #024457;"> {{Employee.name}}</h1>
+                    </th>
+                    <td style="float: right;margin-bottom: 40px;">
+                        <img class="img-thumbnail" class="roounded" src="{{getimage}}api/employees/getImage/{{imgName}}"
+                            alt="" width="50px" height="50px" style="border-radius: 50%;">
+                    </td>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Employee Name'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Position Name'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.name}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.positionLevel}}&nbsp;{{Employee.positionName}}</td>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Profession Name'"></th>
+                        <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.HiringDate'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.professionName}}</td>                   
+                        <td style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.hiringDateHiringDate | date :'dd-MM-yyyy'}}</td>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.phone'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Mobile'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.phone}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.mobile}}</td>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Email'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.EmailCompany'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.email}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.emailCompany}}</td>
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                    [translate]="'HR.Address'"></th>
+                                        <td
+                    style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                    {{Employee.address}}</td>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.relevantPhone'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.NationalId'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.relevantPhone}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.nationalId}}</td>
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.dateOfBirth'"></th>
+                        <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Code'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.dateOfBirth | date :'dd-MM-yyyy'}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.code}}</td>
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.UniversityName'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.FacultyName'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.universityName}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.facultyName}}</td>
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.FacultyDepartmentName'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.graduatioYear'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.facultyDepartmentName}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.graduatioYear}}</td>
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.gender'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.maritalStatus'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.gender}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.maritalStatus}}</td>
+                </tr><br><br>
+            </table>
+            
+        </div>
+        <!-- <span class="pi pi-print btn btn-primary"></span> -->
+        <ng-template pTemplate="footer">
+            <button class="btn btn-primary" printSectionId="print-section" ngxPrint styleClass="p-button-text" [translate]="'HR.Print'">
+                {{"HR.Print"| translate}}</button>
+            <p-button icon="pi pi-check" [routerLink]="['/editEmployee',Employee.id]" [label]="'HR.Update' | translate"
+                styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-times" (click)="displayMaximizable=false" [label]="'HR.No' | translate"></p-button>
+        </ng-template>
+    </p-dialog>
+</div>
+
+<p-dialog [(visible)]="NewEmployeeDocumentDialogbool" [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <div class="row">
+        <p-table [value]="empImages">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th colspan="2" style="color: #2674a8; font-size: 20px; font: bold; text-align: center;" [translate]="'HR.Document Name'"></th>
+                </tr>
+
+            </ng-template>
+            <ng-template pTemplate="body" let-i>
+                <tr>
+                    <td style="color: rgb(187, 12, 12);font-size: large;text-align: center;">{{i.fileName}}
+                    </td>
+                    <td><button class="btn btn-info" style="margin-right: 30px;float: right;" (click)="viewSingleDoc(i)" [translate]="'HR.View'"></button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td></td>
+                    <td colspan="6" [translate]="'HR.No data found'"
+                    > </td>
+                </tr>
+                <tr>
+
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-times" (click)="NewEmployeeDocumentDialogbool=false" [label]="'HR.No' | translate"></p-button>
+    </ng-template>
+
+</p-dialog>

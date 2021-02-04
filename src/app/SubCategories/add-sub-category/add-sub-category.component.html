@@ -1,0 +1,29 @@
+<br>
+<div class="container">
+    <h3 [translate]="'HR.New Sub Category'"
+    ></h3>
+    <br>
+    <form  #frm="ngForm" (ngSubmit)="addsubcategory()">
+        <div class="form-row">
+            <div class="col-md-3">
+                <label class="labelstyle" [translate]="'HR.Category Name'"></label>
+                <select [(ngModel)]="subcategoryObj.categoryID" name="sel2" class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of category" value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label class="labelstyle" [translate]="'HR.SubCategory Name'"></label>
+                <input type="text" #name="ngModel" [class.is-invalid]="name.invalid && name.touched"
+                [class.is-valid]="name.valid" [(ngModel)]="subcategoryObj.SubCategoryName" required minlength="3"
+                name="name" id="name" class="form-control" [placeholder]="'HR.SubCategory Name' | translate"
+                aria-describedby="helpId">
+            <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted" [translate]="'HR.messege'"></small>
+            </div>
+        </div>
+        <br>
+        <button id="AddSubCategory" type="submit" [disabled]="frm.invalid" class="btn btn-primary" [translate]="'HR.Add'"
+        ></button>
+    </form>
+</div>
+<br>

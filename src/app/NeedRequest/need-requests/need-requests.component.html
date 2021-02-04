@@ -1,0 +1,141 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<p-table #dt [value]="needRequests" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['EmployeeName','CategoryName','SubCategoryName','Date','Comment']">
+    <ng-template pTemplate="caption">
+        <div class="row">
+            <div class="table-header col-md-10" [translate]="'HR.List of Need Requests'">
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        [placeholder]="'HR.Global Search' | translate" />
+                </span>
+            </div>
+            <div class="col-md-2">
+                <button id="addNeedRequestBtn" routerLink="/addNeedRequest"
+                    class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th [translate]="'HR.Employee Name'"></th>
+            <th [translate]="'HR.Category Name'"></th>
+            <th [translate]="'HR.SubCategory Name'"> </th>
+            <th [translate]="'HR.Category Date'"></th>
+            <!-- <th>Comment</th> -->
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'employeeName', 'startsWith')"
+                    [placeholder]="'HR.Employee Name' | translate" class="p-column-filter">
+            </th>
+            <th>
+                <select [(ngModel)]="needRequest.categoryId" name="sub" class="form-control"
+                    (change)='onOptionsSelected(needRequest.categoryId)'>
+                    <option value="" selected disabled hidden>Category</option>
+                    <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.name}}</option>
+                </select>
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'subCategoryName', 'startsWith')"
+                    [placeholder]="'HR.SubCategory Name' | translate" class="p-column-filter">
+            </th>
+            <th>
+                <p-calendar (onSelect)="onDateSelect($event)" (onClearClick)="dt.filter('', 'date', 'equals')"
+                    [showButtonBar]="true" styleClass="p-column-filter" placeholder="Search by Date"
+                    [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
+            </th>
+            <!-- <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'comment', 'startsWith')"
+                    placeholder="Search by Comment" class="p-column-filter">
+            </th> -->
+            <th></th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-needRequest>
+        <tr>
+            <td>
+                {{needRequest.employeeName}}
+            </td>
+            <td>
+                {{needRequest.categoryName}}
+            </td>
+            <td>
+                {{needRequest.subCategoryName}}
+            </td>
+            <td>
+                {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+            </td>
+            <!-- <td>
+                {{needRequest.comment}}
+            </td> -->
+            <td>
+                <div style="margin-left: 10%;" class="row">
+                    <button (click)="showBasicDialog(needRequest.id)" class="btn btn-success c-btn">
+                        <i class="fa fa-eye" aria-hidden="true"></i></button>
+                    <button [routerLink]="['/editNeedRequest',needRequest.id]" class="btn btn-primary c-btn">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+
+                    <button (click)="confirm(needRequest.id)" style="display: flex;" class="btn btn-danger c-btn">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="6" [translate]="'HR.No data found'"></td>
+        </tr>
+    </ng-template>
+</p-table>
+<p-dialog header="Need request Details" [(visible)]="displayBasic" [style]="{width: '70vw'}" [baseZIndex]="10000">
+    <div class="row">
+        <div class="col-md-6 form-control"><span class="bold"
+                [translate]="'HR.Employee Name'"></span>&nbsp;{{needRequest.employeeName}}</div>
+        <br>
+        <div class="col-md-6 form-control"><span class="bold"
+                [translate]="'HR.Category Name'"></span>&nbsp;{{needRequest.categoryName}}</div>
+        <br>
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.SubCategory Name'">
+            </span>&nbsp;{{needRequest.subCategoryName}}
+        </div>
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Category Date'">
+            </span>&nbsp;{{needRequest.needRequestDate | date :'dd-MM-yyyy'}}</div>
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Note'">
+            </span>&nbsp;{{needRequest.comment}}</div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" [routerLink]="['/editNeedRequest',needRequest.id]"
+            [label]="'HR.Update' | translate" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
+    </ng-template>
+</p-dialog>

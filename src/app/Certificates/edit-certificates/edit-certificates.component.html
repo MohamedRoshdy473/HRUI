@@ -1,0 +1,68 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+ <br>
+ <div class="container">
+     <h3 [translate]="'HR.Edit Certificate'"></h3>
+     <br>
+     <form  #frm="ngForm" (ngSubmit)="update()">
+         <div class="form-row">
+
+            <div class="col-md-3">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select [(ngModel)]="certificateObj.employeeID" [ngModelOptions]="{standalone: true}" name="sel2"
+                    class="form-control">Employees
+                    <option value="" selected disabled hidden>Employees</option>
+                    <option *ngFor="let item of Employees"
+                    [selected]="certificateObj.employeeID==item.id ? true : null" 
+                    value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>        
+            <div class="col-md-3">
+                <label [translate]="'HR.Certificate Name'"></label>
+                <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}"
+                [placeholder]="'HR.Certificate Name' | translate" name="certificate" [(ngModel)]="certificateObj.certificate" />
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Certificate Place'"></label>
+                <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}"
+                [placeholder]="'HR.Certificate Place' | translate" name="certificatePlace" [(ngModel)]="certificateObj.certificatePlace" />
+            </div>
+        <br>
+        <div class="col-md-3">
+            <label [translate]="'HR.Certificate Date'"></label><br>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" value="{{certificateObj.certificateDate | date:'yyyy-MM-dd'}}"
+                  (dateChange)="addEvent('change', $event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+        </div>
+    </div>
+         <br>
+         <button id="Add" type="submit" [disabled]="frm.invalid" class="btn btn-primary" [translate]="'HR.Update'"></button>
+     </form>
+ </div>
+ <br>

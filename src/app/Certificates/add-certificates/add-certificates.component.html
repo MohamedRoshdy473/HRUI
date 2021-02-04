@@ -1,0 +1,38 @@
+<br>
+<div class="container">
+    <h3 [translate]="'HR.New Certificate'"></h3>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="AddCertificate()">
+        <div class="form-row">
+            <div class="col-md-3">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select [(ngModel)]="certificateObj.employeeID" [ngModelOptions]="{standalone: true}" name="sel2"
+                    class="form-control" >Employees
+                    <option value="" selected disabled hidden >Employees</option>
+                    <option *ngFor="let item of employee" value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Certificate Name'"></label>
+                <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}"
+                [placeholder]="'HR.Certificate Name' | translate"
+                name="certificate" [(ngModel)]="certificateObj.certificate" />
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Certificate Place'"></label>
+                <input type="text"  class="form-control" [ngModelOptions]="{standalone: true}"
+                [placeholder]="'HR.Certificate Place' | translate" name="certificatePlace" [(ngModel)]="certificateObj.certificatePlace" />
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Certificate Date'"></label>
+                <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [placeholder]="'HR.Certificate Date' | translate"
+                    name="DOB" [(ngModel)]="certificateObj.certificateDate">
+            </div>
+            <br>
+        </div>
+        <br>
+        <button id="AddCertificate" type="submit" [disabled]="frm.invalid" class="btn btn-primary" [translate]="'HR.Add'"
+        ></button>
+    </form>
+</div>
+<br>

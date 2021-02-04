@@ -1,0 +1,18 @@
+<br>
+<div class="container">
+    <h3 [translate]="'HR.New Category'"></h3>
+    <br>
+    <form   #frm="ngForm" (ngSubmit)="AddCategory()">
+        <div class="form-row">
+            <div class="col-md-3">
+                <input type="text" [translate]="'HR.name'"  #name="ngModel" [class.is-invalid]="name.invalid && name.touched"
+                [class.is-valid]="name.valid" [(ngModel)]="category.name" required minlength="3"
+                name="name2" id="name" class="form-control" [placeholder]="'HR.name' | translate" aria-describedby="helpId">
+            <small [hidden]="name.valid || name.untouched" id="helpId" class="text-muted"></small>
+            </div>
+        </div>
+        <br>
+        <button id="AddCategory" type="submit" [disabled]="frm.invalid" class="btn btn-primary"[translate]="'HR.Add Category'" ></button>
+    </form>
+</div>
+<br>

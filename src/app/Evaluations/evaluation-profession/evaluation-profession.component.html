@@ -1,0 +1,144 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<div class="container card">
+
+<p-table #dt [value]="EvaluationProfessions" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['professionName','evaluationTypeName']">
+    <ng-template pTemplate="caption">
+
+        <div class="row">
+            <div class="table-header col-md-10">
+                        <h1 [translate]="'HR.Evaluations Profession'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+
+                <!-- <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        [placeholder]="'HR.Global Search' | translate" />
+                </span> -->
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="labelstyle" [translate]="'HR.Profession Name'"></label>
+                <select [(ngModel)]="EvaluationProfessionObj.professionID" name="sub" class="form-control"
+                    (change)='onOptionsSelected(EvaluationProfessionObj.professionID)'>
+                    <option value="" selected disabled hidden>Profession</option>
+                    <option *ngFor="let eval of Professions" value="{{eval.id}}">{{eval.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-7"></div>
+            <div class="col-md-2">
+                <button id="AddEvaluationProfession" routerLink="/AddEvaluationProfession"
+                    class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
+            </div>
+            <!-- <div class="col-3">
+                <label class="labelstyle">Evaluation Type</label>
+                <select [(ngModel)]="EvaluationProfessionObj.professionID" name="sub" class="form-control" >
+                    <option value="" selected disabled hidden>EvaluationType Type</option>
+                    <option *ngFor="let cat of EvaluationType" value="{{cat.id}}">{{cat.evaluationTypeName}}</option>
+                  </select>
+              </div>  
+            <div style="margin-left: 10%;" class="col-md-3" [translate]="'HR.List Of Evaluation Profession'"></div>-->
+
+        </div>
+
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th [translate]="'HR.Profession Name'"></th>
+            <th [translate]="'HR.Evaluation Type'"></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'professionName', 'contains')"
+                    [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
+            </th>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'evaluationTypeName', 'contains')"
+                    [placeholder]="'HR.Evaluation Type' | translate" class="p-column-filter">
+            </th>
+            <th></th>
+
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-evaluationProfessionObj>
+        <tr>
+            <td>
+                {{evaluationProfessionObj.professionName}}
+            </td>
+            <td>
+                {{evaluationProfessionObj.evaluationTypeName}}
+            </td>
+            <!-- <td>
+                <div style="margin-left: 10%;" class="row">
+                    <button (click)="showBasicDialog(evaluationProfessionObj.id)" class="btn btn-success c-btn">
+                        <i class="fa fa-eye" aria-hidden="true"></i></button>
+                    <button [routerLink]="['/EditEvaluationProfession',evaluationProfessionObj.id]"
+                        class="btn btn-primary c-btn">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button (click)="confirm(evaluationProfessionObj.id)" style="display: flex;"
+                        class="btn btn-danger c-btn">
+                        <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                </div>
+            </td> -->
+            <td>
+                <span class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(evaluationProfessionObj.id)"></span>
+                <span class="btn pi pi-pencil" aria-hidden="true"
+                    [routerLink]="['/EditEvaluationProfession',evaluationProfessionObj.id]"></span>
+                <span class="btn pi pi-times" (click)="confirm(evaluationProfessionObj.id)" aria-hidden="true"></span>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="6" [translate]="'HR.No data found'"></td>
+        </tr>
+    </ng-template>
+</p-table>
+</div>
+
+
+
+<p-dialog [header]="'HR.Details' | translate" [(visible)]="displayBasic" [style]="{width: '70vw'}" [baseZIndex]="10000">
+    <div class="row">
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Profession Name'">:
+            </span>&nbsp;{{EvaluationProfessionObj.professionName}}</div>
+        <br>
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Evaluation Type'"> :</span>:
+            &nbsp;{{EvaluationProfessionObj.evaluationTypeName}}</div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" [routerLink]="['/EditEvaluationProfession',EvaluationProfessionObj.id]"
+            [label]="'HR.Update' | translate" styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
+    </ng-template>
+</p-dialog>

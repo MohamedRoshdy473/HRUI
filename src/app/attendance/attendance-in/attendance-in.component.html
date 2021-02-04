@@ -1,0 +1,32 @@
+
+<div class="col-md-12 datetime" >
+
+    {{now | date }}
+    <div style="padding-left: 10px;" >
+    {{now | date: 'hh:mm:ss' }}</div>
+    </div>
+    <!-- sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" -->
+    <p-pickList [source]="AllEmployees"  [target]="AttendINEmployees" sourceHeader="All Employees" 
+    targetHeader="IN" dragdrop="true" (onMoveToTarget)="moved($event.items)"
+        [responsive]="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="name"
+        >
+        <ng-template let-employee pTemplate="item">
+            <div class="product-item">
+            <div class="image-container">
+                <img class="img-thumbnail" src="{{getimage}}api/employees/getImage/{{employee.photo }}"
+                    [alt]="employee.name" class="employee-image" />
+            </div>
+                <div class="product-list-detail">
+                    <h5 class="p-mb-2">{{employee.name}}</h5>
+                    <!-- <i class="pi pi-tag employee-category-icon"></i> -->
+                    <span class="product-category">{{employee.profession}}</span>
+                </div>
+                <div *ngIf="employee.existInSource" class="product-list-action">
+                    <h6 class="p-mb-2">{{now | date: 'hh:mm:ss' }}</h6>
+                </div>
+                <div *ngIf="!employee.existInSource" class="product-list-action">
+                    <h6 class="p-mb-2">{{employee.time| date: 'hh:mm:ss' }}</h6>
+                </div>
+            </div>
+        </ng-template>
+    </p-pickList>

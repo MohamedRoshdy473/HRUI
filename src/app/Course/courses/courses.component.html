@@ -1,0 +1,120 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+
+<p-table #dt [value]="coursesList" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5,10,20]" styleClass="p-datatable-customers" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+    [globalFilterFields]="['CourseName','TrainingTypeName']">
+    <ng-template pTemplate="caption">
+        <div class="row">
+            <div class="table-header col-md-10" [translate]="'HR.List of Courses'">
+                 &nbsp;
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    [placeholder]="'HR.Global Search' | translate"
+                    />
+                </span>
+            </div>
+            <div class="col-md-2">
+                <button id="addCourse" routerLink="/AddCourse"
+                    class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+            </div>
+
+
+            <div class="col-3">
+                <label class="labelstyle" [translate]="'HR.Select Training Type'"></label>
+                <select [(ngModel)]="courseObj.trainingTypeID" name="sub" class="form-control" 
+                (change)='onOptionsSelected(courseObj.trainingTypeID)'>
+                  <option value="" selected disabled hidden>TrainingTypesList</option>
+                  <option *ngFor="let TrainType of TrainingTypesList" value="{{TrainType.id}}">{{TrainType.trainingTypeName}}</option>
+                </select>
+              </div>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th [translate]="'HR.Training Type'"></th>
+            <th [translate]="'HR.Course Name'"></th>
+        </tr>
+        <tr>
+            <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'trainingTypeName', 'contains')"
+                [placeholder]="'HR.Training Type' | translate"
+                class="p-column-filter">
+            </th> 
+             <th>
+                <input pInputText type="text" (input)="dt.filter($event.target.value, 'courseName', 'contains')"
+                [placeholder]="'HR.Course Name' | translate" class="p-column-filter">
+            </th> 
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-courseObj>
+        <tr>
+            <td>
+                {{courseObj.trainingTypeName}}
+            </td>
+            <td>
+                {{courseObj.courseName}}
+            </td>
+            <td>
+                <div style="margin-left: 10%;" class="row">
+                    <button (click)="showBasicDialog(courseObj.id)" class="btn btn-success c-btn">
+                        <i class="fa fa-eye" aria-hidden="true"></i></button>
+                    <button [routerLink]="['/EditCourse',courseObj.id]" class="btn btn-primary c-btn">
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                    <button (click)="confirm(courseObj.id)" style="display: flex;" class="btn btn-danger c-btn">
+            <i class="fa fa-trash-o"
+            aria-hidden="true"></i></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="6" [translate]="'HR.No data found'"
+            ></td>
+        </tr>
+    </ng-template>
+</p-table>
+
+
+<p-dialog [header]="'HR.Details' | translate"[(visible)]="displayBasic" [style]="{width: '70vw'}" [baseZIndex]="10000">
+    <div class="row">
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Course Name'"> </span>&nbsp;{{courseObj.courseName}}</div>
+        <br>
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Training Type'"></span>&nbsp;{{courseObj.trainingTypeName}}</div>     
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" [routerLink]="['/EditCourse',courseObj.id]" [label]="'HR.Update' | translate"
+
+            styleClass="p-button-text"></p-button>
+        <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"
+        ></p-button>
+    </ng-template>
+</p-dialog>

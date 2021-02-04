@@ -1,0 +1,32 @@
+<br>
+<div class="container card">
+        <br>
+    <h1 [translate]="'HR.New Evaluation Professions'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="AddEvaluationProfession()">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Profession Name'"></label>
+                <select [(ngModel)]="EvaluationProfessionObj.professionID" [ngModelOptions]="{standalone: true}"
+                    name="cat" class="form-control" (change)='onOptionsSelected(EvaluationProfessionObj.professionID)'>
+                    <option value="" selected disabled hidden>Profession</option>
+                    <option *ngFor="let Prof of Professions" value="{{Prof.id}}">{{Prof.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Type'"></label>
+                <select [(ngModel)]="EvaluationProfessionObj.evaluationTypeID" [ngModelOptions]="{standalone: true}"
+                    name="sub" class="form-control" (change)="onTypeSelected($event.target.value)">
+                    <option value="" selected disabled hidden>Evaluation Type</option>
+                    <option *ngFor="let item of EvaluationType" value="{{item.evaluationTypeID}}">
+                        {{item.evaluationTypeName}}</option>
+                </select>
+            </div>
+            <br>
+        </div>
+        <br>
+        <button id="AddEvaluationProfession" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+            [translate]="'HR.Add'"></button>
+    </form><br>
+</div>
+<br>

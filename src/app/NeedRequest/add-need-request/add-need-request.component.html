@@ -1,0 +1,53 @@
+<br>
+<div class="container">
+    <h3 [translate]="'HR.New Need Request'"></h3>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="AddNeedRequest()">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select [(ngModel)]="needRequests.EmployeeId" [ngModelOptions]="{standalone: true}" id="sel2"
+                    class="form-control">Employees
+                    <option value="" selected disabled hidden>Employees</option>
+                    <option *ngFor="let item of employees" value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Category Name'"></label>
+                <select [(ngModel)]="needRequests.CategoryId" [ngModelOptions]="{standalone: true}" name="cat"
+                    class="form-control" (change)='onOptionsSelected(needRequests.CategoryId)'>
+                    <option value="" selected disabled hidden>Category</option>
+                    <option *ngFor="let cat of categories" value="{{cat.id}}">{{cat.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.SubCategory Name'"></label>
+                <select [(ngModel)]="needRequests.SubCategoryId" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Sub Category</option>
+                    <option *ngFor="let Subcat of subcategorydisplay" value="{{Subcat.id}}">{{Subcat.subCategoryName}}
+                    </option>
+                </select>
+            </div>
+            <br>
+            <div class="col-md-4">
+                <label [translate]="'HR.Category Date'"></label>
+                <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [placeholder]="'HR.Category Date' | translate"
+
+                    name="DOB" [(ngModel)]="needRequests.needRequestDate">
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Note'">Comment</label>
+                <input type="text" #Comment="ngModel" [class.is-invalid]="Comment.invalid && Comment.touched"
+                    [class.is-valid]="Comment.valid" [(ngModel)]="needRequests.Comment" required minlength="3"
+                    name="Comment" id="EmpName" class="form-control" [placeholder]="'HR.Note' | translate"
+                    aria-describedby="helpId">
+                <small [hidden]="Comment.valid || Comment.untouched" id="helpId" class="text-muted"></small>
+            </div>
+        </div>
+        <br>
+        <button id="AddNeedRequest" type="submit" [disabled]="frm.invalid" class="btn btn-primary"[translate]="'HR.Add'"
+        ></button>
+    </form>
+</div>
+<br>

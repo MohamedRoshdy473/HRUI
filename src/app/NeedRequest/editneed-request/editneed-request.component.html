@@ -1,0 +1,87 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<br>
+<div class="container">
+    <h3 [translate]="'HR.Update'"></h3>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="update()">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select disabled [(ngModel)]="needRequest.employeeId" [ngModelOptions]="{standalone: true}" name="name"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Evaluation Type</option>
+                    <option *ngFor="let item of employees" [selected]="needRequest.employeeId==item.id ? true : null"
+                        value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label [translate]="'HR.Category Name'"></label>
+                <select [(ngModel)]="needRequest.categoryId" [ngModelOptions]="{standalone: true}" name="cat"
+                    class="form-control" (change)='onOptionsSelected(needRequest.CategoryId)'>
+                    <option value="" selected disabled hidden>Category</option>
+                    <option *ngFor="let cat of categories" [selected]="needRequest.categoryId==cat.id ? true : null"
+                        value="{{cat.id}}">{{cat.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.SubCategory Name'"></label>
+                <select [(ngModel)]="needRequest.subCategoryId" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Sub Category</option>
+                    <option *ngFor="let Subcat of subcategorydisplay"
+                        [selected]="needRequest.subCategoryId==Subcat.id ? true : null" value="{{Subcat.id}}">
+                        {{Subcat.subCategoryName}}</option>
+                </select>
+            </div>
+            <br>
+            <div class="col-md-4">
+                <label [translate]="'HR.Category Date'"></label><br>
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" class="form-control"
+                        value="{{needRequest.needRequestDate | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
+                        (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Note'"></label>
+                <input [(ngModel)]="needRequest.comment" type="text" #Comment="ngModel"
+                    [class.is-invalid]="Comment.invalid && Comment.touched" [class.is-valid]="Comment.valid" required
+                    minlength="3" name="Comment" id="EmpName" class="form-control" [placeholder]="'HR.Note' | translate"
+
+                    aria-describedby="helpId">
+                <small [hidden]="Comment.valid || Comment.untouched" id="helpId" class="text-muted"></small>
+            </div>
+        </div>
+        <br>
+        <button id="Add" type="submit" [disabled]="frm.invalid" class="btn btn-primary">Update</button>
+    </form>
+</div>
+<br>

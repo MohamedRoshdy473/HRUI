@@ -1,0 +1,117 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<br>
+<div class="container card">
+    <br>
+    <h1 [translate]="'HR.Edit Evaluation'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="update()">
+        <div class="form-row">
+
+            <div class="col-md-4">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select disabled [(ngModel)]="EvaluationObj.employeeID" [ngModelOptions]="{standalone: true}"
+                    name="sel2" class="form-control" (change)='onOptionsSelected(EvaluationObj.employeeID)'>Employees
+                    <option value="" selected disabled hidden>Employees</option>
+                    <option *ngFor="let item of Employees" [selected]="EvaluationObj.employeeID==item.id ? true : null"
+                        value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Profession Name'"></label>
+                <select disabled required [(ngModel)]="EvaluationObj.professionID" name="sel2" class="form-control"
+                    (change)='onOptionsSelected(EvaluationObj.professionID)'>Professions
+                    <option value="" selected disabled hidden>Professions</option>
+                    <option *ngFor="let item of Professions"
+                        [selected]="EvaluationObj.professionID==item.id ? true : null" value="{{item.id}}">{{item.name}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Type'"></label>
+                <select [(ngModel)]="EvaluationObj.evaluationTypeID" [ngModelOptions]="{standalone: true}" name="name"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Evaluation Type</option>
+                    <option *ngFor="let item of EvaluationType"
+                        [selected]="EvaluationObj.evaluationTypeID==item.evaluationTypeID ? true : null"
+                        value="{{item.evaluationTypeID}}">{{item.evaluationTypeName}}</option>
+                </select>
+            </div>
+            <br>
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Degree'"></label><br>
+                <!-- [matTooltip]="ratingId+1" matTooltipPosition="above" -->
+                <!-- <button mat-icon-button  *ngFor="let ratingId of ratingArr; 
+            index as i" [id]="'star_'+i"
+                (click)="onClick(i+1)">
+                <mat-icon>
+                    {{showIcon(i)}}
+                </mat-icon>
+            </button>
+            <mat-error *ngIf="starCount == null || starCount == 0">
+                Star count is <strong>required</strong> and cannot be zero
+            </mat-error> -->
+
+                <!-- <p-rating  [ngModel]="EvaluationObj.evaluationDegreee"  [ngModelOptions]="{standalone: true}" [cancel]="false"></p-rating> -->
+                <input type="number" min=".5" max="10" step="0.5" class="form-control"
+                    [ngModelOptions]="{standalone: true}" placeholder="Date " name="DOB"
+                    [(ngModel)]="EvaluationObj.evaluationDegreee">
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Date'"></label><br>
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker"
+                        value="{{EvaluationObj.evaluationDate | date:'yyyy-MM-dd'}}"
+                        (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker" class="form-control"
+                        value="{{EvaluationObj.evaluationDate | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
+                        (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Note'"></label>
+                <input [(ngModel)]="EvaluationObj.note" type="text" #Note="ngModel"
+                    [class.is-invalid]="Note.invalid && Note.touched" [class.is-valid]="Note.valid" required
+                    minlength="3" name="Note" id="Note" class="form-control" placeholder="Note"
+                    aria-describedby="helpId">
+                <small [hidden]="Note.valid || Note.untouched" id="helpId" class="text-muted">Note must be more than 3
+                    letters</small>
+            </div>
+        </div>
+        <br>
+        <button id="Add" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+            [translate]="'HR.Update'"></button>
+    </form><br>
+</div>
+<br>

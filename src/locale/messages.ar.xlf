@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+    <trans-unit id="d0e030365385aa0bdf9095cff7257d4858f61a83" datatype="html">
+        <source>AL-Mostakbal</source>
+        <target>المستقبل</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4247d08759dcab00a2b3ddc74d192b2f1a700772" datatype="html">
+        <source>Home <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>(current)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <target>الرئيسيه</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source>
+        <target>خروج</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f65253954b66e929a8b4d5ecaf61f9129f8cec64" datatype="html">
+        <source> Dashboard</source>
+        <target>لوحة التحكم</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="994363f08f9fbfa3b3994ff7b35c6904fdff18d8" datatype="html">
+        <source>Profile</source>
+        <target>ملف شخصى</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="586a5fd72602b5b14ec0c55f84814de47bb21e3a" datatype="html">
+        <source>Tasks</source>
+        <target>مهام</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="91790d0958e3586f4c03e0e2a68dc37afa3206c7" datatype="html">
+        <source>Etc ...</source>
+        <target>Etc ...</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="676e37188f8766df924e9c7b770e3a19d3623f77" datatype="html">
+        <source>MAIN MENU</source>
+        <target>القائمه الرئيسيه</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4d13a9cd5ed3dcee0eab22cb25198d43886942be" datatype="html">
+        <source>Users</source>
+        <target>المستخدمين</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="24968c3b9f7cb940df7e5bf46f61a11710481829" datatype="html">
+        <source>Reports</source>
+        <target>التقارير</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fca3a09a894bdef44717e06cde6b1e50b3191267" datatype="html">
+        <source>Tables</source>
+        <target>القوائم</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="174aeff57250511626633d55c14b69b753f4ed42" datatype="html">
+        <source>Employee</source>
+        <target>الموظفين</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1439d89e1e58b0cd4332fdb1d90271356b13edfc" datatype="html">
+        <source>Excuses</source>
+        <target>الاذونات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="738286d48d12a1593720085fec8101748f918420" datatype="html">
+        <source>Add Excuse</source>
+        <target>اضافة اذن</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b6094faeb918b8734cb22d33ba34d583ae3d4ade" datatype="html">
+        <source>All Excuses</source>
+        <target>كل الاذونات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1d843c0e8b67bb9dc000666002891da0d4c3e6bb" datatype="html">
+        <source>Leaves</source>
+        <target>الاجازات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6128fc3c8b299e85d7ad675d9328cfb7b6b180cb" datatype="html">
+        <source>Add Leave</source>
+        <target>اضافة اجازه</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1929e35ec826b8c532709d30458ece7a7ba57479" datatype="html">
+        <source>All Leaves</source>
+        <target>كل الاجازات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a39e421b2a9a4405c2314ee3c7bb92dceeca1dce" datatype="html">
+        <source>Attendance</source>
+        <target>الحضور</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">114</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5d7d1f61c290c5b330c90251ff7df530e5459551" datatype="html">
+        <source>IN</source>
+        <target>الدخول</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">121</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7817028acb112c6ac4983d74986edabb106795ea" datatype="html">
+        <source>OUT</source>
+        <target>الخروج</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5fe315df87f120dee0ca04442ab852af5914e3b3" datatype="html">
+        <source>System Users</source>
+        <target>مستخدمى النظام</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cc0516716708ffa9224f91d2e24205bb29c542d4" datatype="html">
+        <source> Add</source>
+        <target>اضافه</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="108d7d104f08920d4c40f2fce7cc1795d0d38f2b" datatype="html">
+        <source>UserName</source>
+        <target>اسم المستخدم</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="244aae9346da82b0922506c2d2581373a15641cc" datatype="html">
+        <source>Email</source>
+        <target>الايميل</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c36a66f2107e8da5371ebc9d15c2008dff567f46" datatype="html">
+        <source>Role</source>
+        <target>الدور</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>Password</source>
+        <target>الرقم السرى</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
+        <source>Save</source>
+        <target>حفظ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="125e145c96fb5463c13ad84ffaab4ba46b12b9d2" datatype="html">
+        <source>NO</source>
+        <target> الغاء</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b820a11e96908cf16b181a5f017c64ae7dea1fcf" datatype="html">
+        <source>New Excuse</source>
+        <target> اضافة اذن</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b34bad57cc0ec28e7a6d8900ee8646b0234d76e3" datatype="html">
+        <source>Previous Excuses</source>
+        <target> الاذونات السابقه</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2f933b826a570836cab04f683970a2d22068458c" datatype="html">
+        <source>Date</source>
+        <target> التاريخ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="08d6d6eeeda4ddd88a22bf80bdaa1d8009aeb3c5" datatype="html">
+        <source> Time</source>
+        <target> الوقت</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3bbce5fef7e1151da052a4e529453edb340e3912" datatype="html">
+        <source>Hours</source>
+        <target> عدد الساعات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5c54befce78d70e20c215f10a00e617245f53bc9" datatype="html">
+        <source>Note</source>
+        <target> ملاحظات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f6755cff4957d5c3c89bafce5651f1b6fa2b1fd9" datatype="html">
+        <source>Add</source>
+        <target> حفظ</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+            <trans-unit id="31ea667d03c58d4c0e6c0cabe6f63d4a7f061595" datatype="html">
+        <source>Need Request</source>
+        <target> طلبات الشراء</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="607de17c2a755f65775881c19e276e7c933bcf94" datatype="html">
+        <target>الفئة</target>
+        <source>Category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="04201f9d27abd7d6f58a4328ab98063ce1072006" datatype="html">
+        <source>Categories</source>
+            <target>الفئات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+            <trans-unit id="08effcabdf71f68de5c3fab53fbd15ad214710b3" datatype="html">
+        <source>SubCategories</source>
+              <target>الفئات الفرعية</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">133</context>
+        </context-group>
+      </trans-unit>
+
+     <trans-unit id="1f0420c805d885318cd8f154f932f104702e30a0" datatype="html">
+        <source>Categories SubCategories</source>
+            <target>الفئات/الفرعية</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">152</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="8faaaeebf1ab0c31d4624dc91094eb606bd71db4" datatype="html">
+        <source>Need Request Employee</source>
+        <target>طلب شراء للموظف</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">148</context>
+        </context-group>
+      </trans-unit>
+            <trans-unit id="555a8b8498263022a1680f359bd57281a3e42591" datatype="html">
+        <source>Evaluation Type</source>
+        <target>نوع التقييم</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">155</context>
+        </context-group> 
+      </trans-unit>
+      <trans-unit id="27c9aaaee3c286f06eac57e230c0ac6618815531" datatype="html">
+        <source>Evaluations Profession</source>
+                <target>تقييمات القسم</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">162</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="10773c7383f84abaff315ecedf080bbe306de52c" datatype="html">
+        <source>Evaluations</source>
+          <target>التقييمات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">170</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="e1d9bbe82ba73e53ae5776e3edb7e7248caacc06" datatype="html">
+        <source>Certificates</source>
+          <target>الشهادات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">178</context>
+        </context-group>
+      </trans-unit>
+
+     <trans-unit id="50993d9f74bbb96aa5a059466a43453731d24f29" datatype="html">
+        <source>TrainingTypes</source>
+        <target>أنواع التدريب</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">185</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="7eec194fdb5177fb2a2b67ddfd1a5c71a943eb9d" datatype="html">
+        <source>Courses</source>
+        <target>الدورات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">193</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="124644ba52ce44ba63cac2e0d13e54d5d6134049" datatype="html">
+        <source>TrainingProfessions</source>
+        <target>تدريبات الاقسام</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">200</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="020cbba7b2b14b8c849772cd062ee9d9b1ef518e" datatype="html">
+        <source>Trainings</source>
+        <target>التدريبات</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">209</context>
+        </context-group>
+      </trans-unit>
+
+      <trans-unit id="ba42c84ca9343f8c6cfc3f448dfec596b14aebed" datatype="html">
+        <source>Request Training</source>
+        <target>طلب تدريب</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">257</context>
+        </context-group>
+      </trans-unit>
+
+
+
+
+
+
+
+
+    </body>
+  </file>
+</xliff>

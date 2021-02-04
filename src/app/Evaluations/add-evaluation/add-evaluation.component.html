@@ -1,0 +1,73 @@
+<br>
+<div class="container card">
+    <br>
+    <h1 [translate]="'HR.New Evaluation'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="AddEvaluation()">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select [(ngModel)]="EvaluationObj.employeeID" [ngModelOptions]="{standalone: true}" name="sel2"
+                    class="form-control" (change)='onOptionsSelected(EvaluationObj.employeeID)'>Employees
+                    <option value="" selected disabled hidden>Employees</option>
+                    <option *ngFor="let item of Employees" value="{{item.id}}">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Profession Name'"></label>
+                <!-- <input type="text" readonly class="form-control" [ngModelOptions]="{standalone: true}"
+                    placeholder="Profession Name " name="professionName" [(ngModel)]="EvaluationObj.professionName" /> -->
+                <select [(ngModel)]="EvaluationObj.professionID" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Professions</option>
+                    <option *ngFor="let item of ProfessionsEmployee" value="{{item.id}}"
+                        [selected]="item.id==EvaluationObj.professionID ? true :null">{{item.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Type'"></label>
+                <select [(ngModel)]="EvaluationObj.evaluationTypeID" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Evaluation Type</option>
+                    <option *ngFor="let item of EvaluationType" value="{{item.evaluationTypeID}}">
+                        {{item.evaluationTypeName}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Degree'"></label><br>
+                <!-- [matTooltip]="ratingId+1" matTooltipPosition="above" -->
+                <!-- <button mat-icon-button *ngFor="let ratingId of ratingArr; 
+                index as i" [id]="'star_'+i"
+                    (click)="onClick(i+1)">
+                    <mat-icon>
+                        {{showIcon(i)}}
+                    </mat-icon>
+                </button>
+                <mat-error *ngIf="starCount == null || starCount == 0">
+                    Star count is <strong>required</strong> and cannot be zero
+                </mat-error> -->
+                <!-- <p-rating  [ngModel]="EvaluationObj.evaluationDegreee"  [ngModelOptions]="{standalone: true}" [cancel]="false"></p-rating> -->
+                <input type="number" min=".5" max="10" step="0.5" class="form-control"
+                    [ngModelOptions]="{standalone: true}" [placeholder]="'HR.Evaluation Degree' | translate" name="DOB"
+                    [(ngModel)]="EvaluationObj.evaluationDegreee">
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Evaluation Date'"></label>
+                <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" [placeholder]="'HR.Evaluation Date' | translate"
+                    name="DOB" [(ngModel)]="EvaluationObj.evaluationDate">
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Note'"></label>
+                <input type="text" #Note="ngModel" [class.is-invalid]="Note.invalid && Note.touched"
+                    [class.is-valid]="Note.valid" [(ngModel)]="EvaluationObj.Note" required minlength="3" name="Note"
+                    id="Note" class="form-control" [placeholder]="'HR.Note' | translate" aria-describedby="helpId">
+                <small [hidden]="Note.valid || Note.untouched" id="helpId" class="text-muted"></small>
+            </div>
+            <br>
+        </div>
+        <br>
+        <button id="AddEvaluation" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+            [translate]="'HR.Add'"></button>
+    </form><br>
+</div>
+<br>

@@ -1,0 +1,61 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<br>
+<div class="container card">
+    <div class="row">
+        <h1 [translate]="'HR.New Excuse'" style="margin: 20px; font-size: 2em;color: #2674a8;"></h1>
+         <!-- <h3 class="col-md-3" [translate]="'HR.New Excuse'"></h3>
+       <a href="/previousExcuse" class="btn btn-primary" [translate]="'HR.Previous Excuses'"></a> -->
+    </div>
+
+    <form style="margin-left: 2%;" #frm="ngForm" (ngSubmit)="add()">
+        <div class="row">
+            <span class="col-md-2" for="time" [translate]="'HR.Date'"></span>
+            <input name="date" type="date" class="col-md-4 form-control" [(ngModel)]="Excuse.Date" inputId="date">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="time" [translate]="'HR.Time'"> </span>
+            <input name="time" type="time" class="col-md-4 form-control" [(ngModel)]="Excuse.Time" inputId="time">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="Hours" [translate]="'HR.Hours'"></span>
+            <input name="Hours" type="number" min="1" max="2" value="1" class="col-md-4 form-control"
+                [(ngModel)]="Excuse.Hours" inputId="Hours">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="Note" [translate]="'HR.Note'"></span>
+            <textarea name="Note" type="text" class="col-md-4 form-control" [(ngModel)]="Excuse.Comment"
+                inputId="Note"></textarea>
+        </div>
+        <br>
+        <button id="Add" type="submit" [disabled]="frm.invalid || ExBool==false" class="btn btn-primary"
+                    [translate]="'HR.Add'"></button>
+        <!-- <button id="Add" [disabled]="frm.invalid" type="submit" class="btn btn-primary"><span [translate]="'HR.Add'"></span></button> -->
+    </form><br>
+</div>

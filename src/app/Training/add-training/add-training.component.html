@@ -1,0 +1,78 @@
+<br>
+<div class="container">
+    <h3 [translate]="'HR.New Training'"></h3>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="AddTraining()">
+        <div class="form-row">
+            <div class="col-md-3">
+                <label [translate]="'HR.Profession Name'"></label>
+                <select [ngModel]="TrainingObj.professionID || ''" [ngModelOptions]="{standalone: true}" name="cat"
+                    class="form-control" (change)='onProfessionSelected($event)'>
+                    <option value="">Profession Name</option>
+                    <option *ngFor="let Prof of Professions" value="{{Prof.id}}">{{Prof.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Employee Name'"></label>
+                <select [ngModel]="TrainingObj.employeeID || ''" [ngModelOptions]="{standalone: true}" name="cat"
+                    class="form-control" (change)='onEmployeeSelected($event)'>
+                    <option value="">Employee Name</option>
+                    <option *ngFor="let emp of lstProfEmployees" value="{{emp.id}}">{{emp.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Training Type'"></label>
+                <select [ngModel]="TrainingObj.trainingTypeID || ''" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control" (change)='onTrainingSelected($event)'>
+                    <option value="">Training Type</option>
+                    <option *ngFor="let item of TrainingProfession" value="{{item.trainingTypeID}}">
+                        {{item.trainingTypeName}}</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Course Name'"></label>
+                <select [ngModel]="TrainingObj.courseID || ''" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control" (change)='onCourseSelected($event)'>
+                    <option value="">Course Name</option>
+                    <option *ngFor="let item of courses" value="{{item.courseID}}">{{item.courseName}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-md-3">
+                <label [translate]="'HR.Training Place'"></label>
+                <input type="text" #place="ngModel" [class.is-invalid]="place.invalid && place.touched"
+                    [class.is-valid]="place.valid" [(ngModel)]="TrainingObj.trainingPlace" required minlength="3"
+                    name="place" id="traingPlace" class="form-control" placeholder="Training place"
+                    aria-describedby="helpId">
+                <small [hidden]="place.valid || place.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messege'"></small>
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.Instructor Name'"></label>
+                <select [(ngModel)]="TrainingObj.instructorID" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Instructor Name</option>
+                    <option *ngFor="let item of Instructors" value="{{item.id}}">{{item.instructorName}}
+                    </option>
+                </select>
+            </div>
+
+            <div class="col-md-3">
+                <label [translate]="'HR.Start Date'"> </label>
+                <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" placeholder="Start Date "
+                    name="DOB" [(ngModel)]="TrainingObj.startDate">
+            </div>
+            <div class="col-md-3">
+                <label [translate]="'HR.End Date'"></label>
+                <input type="date" class="form-control" [ngModelOptions]="{standalone: true}" placeholder="End Date "
+                    name="DOB" [(ngModel)]="TrainingObj.endDate">
+            </div>
+        </div>
+        <br>
+        <button id="AddTraining" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+            [translate]="'HR.Add'"></button>
+    </form>
+</div>
+<br>

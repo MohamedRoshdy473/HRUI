@@ -1,0 +1,22 @@
+<!-- <app-side-nav></app-side-nav> -->
+
+<!-- <div [dir]="direction">
+  <button (click)="direction = 'rtl'">Set RTL</button>
+  <button (click)="direction = 'ltr'">Set LTR</button> 
+  
+  <label>
+    <select (change)="changeDir()"  #langSelect (change)="translate.use(langSelect.value)" class="btn btn-primary dropdown-toggle btn-sm">
+       <option   *ngFor="let lang of translate.getLangs()"
+       [value]="lang" [selected]="lang === translate.currentLang">{{ lang }}</option>
+    </select>
+  </label>
+  <app-main></app-main>
+
+</div> -->
+
+<div [dir]="textDir">
+<!-- <div  (change)="changeDir($event)">
+  </div> -->
+  <router-outlet></router-outlet>
+
+</div>

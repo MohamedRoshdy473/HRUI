@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="d0e030365385aa0bdf9095cff7257d4858f61a83" datatype="html">
+        <source>AL-Mostakbal</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4247d08759dcab00a2b3ddc74d192b2f1a700772" datatype="html">
+        <source>Home <x id="START_TAG_SPAN" ctype="x-span" equiv-text="&lt;span&gt;"/>(current)<x id="CLOSE_TAG_SPAN" ctype="x-span" equiv-text="&lt;/span&gt;"/></source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="bb694b49d408265c91c62799c2b3a7e3151c824d" datatype="html">
+        <source>Logout</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f65253954b66e929a8b4d5ecaf61f9129f8cec64" datatype="html">
+        <source>Dashboard</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">29</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">54</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="994363f08f9fbfa3b3994ff7b35c6904fdff18d8" datatype="html">
+        <source>Profile</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="586a5fd72602b5b14ec0c55f84814de47bb21e3a" datatype="html">
+        <source>Tasks</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="91790d0958e3586f4c03e0e2a68dc37afa3206c7" datatype="html">
+        <source>Etc ...</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">32</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="676e37188f8766df924e9c7b770e3a19d3623f77" datatype="html">
+        <source>MAIN MENU</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4d13a9cd5ed3dcee0eab22cb25198d43886942be" datatype="html">
+        <source>Users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">61</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="24968c3b9f7cb940df7e5bf46f61a11710481829" datatype="html">
+        <source>Reports</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">64</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="fca3a09a894bdef44717e06cde6b1e50b3191267" datatype="html">
+        <source>Tables</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">67</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="174aeff57250511626633d55c14b69b753f4ed42" datatype="html">
+        <source>Employee</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">73</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">72</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1439d89e1e58b0cd4332fdb1d90271356b13edfc" datatype="html">
+        <source>Excuses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">81</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="738286d48d12a1593720085fec8101748f918420" datatype="html">
+        <source>Add Excuse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b6094faeb918b8734cb22d33ba34d583ae3d4ade" datatype="html">
+        <source>All Excuses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">91</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1d843c0e8b67bb9dc000666002891da0d4c3e6bb" datatype="html">
+        <source>Leaves</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">98</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="6128fc3c8b299e85d7ad675d9328cfb7b6b180cb" datatype="html">
+        <source>Add Leave</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">105</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="1929e35ec826b8c532709d30458ece7a7ba57479" datatype="html">
+        <source>All Leaves</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="31ea667d03c58d4c0e6c0cabe6f63d4a7f061595" datatype="html">
+        <source>Need Request</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="607de17c2a755f65775881c19e276e7c933bcf94" datatype="html">
+        <source>Category</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">124</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="a39e421b2a9a4405c2314ee3c7bb92dceeca1dce" datatype="html">
+        <source>Attendance</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">132</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5d7d1f61c290c5b330c90251ff7df530e5459551" datatype="html">
+        <source>IN</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">139</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7817028acb112c6ac4983d74986edabb106795ea" datatype="html">
+        <source>OUT</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/side-nav/side-nav.component.html</context>
+          <context context-type="linenumber">142</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b820a11e96908cf16b181a5f017c64ae7dea1fcf" datatype="html">
+        <source>New Excuse</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="b34bad57cc0ec28e7a6d8900ee8646b0234d76e3" datatype="html">
+        <source>Previous Excuses</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2f933b826a570836cab04f683970a2d22068458c" datatype="html">
+        <source>Date</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">10</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="08d6d6eeeda4ddd88a22bf80bdaa1d8009aeb3c5" datatype="html">
+        <source> Time</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">15</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="3bbce5fef7e1151da052a4e529453edb340e3912" datatype="html">
+        <source>Hours</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">20</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5c54befce78d70e20c215f10a00e617245f53bc9" datatype="html">
+        <source>Note</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">26</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="f6755cff4957d5c3c89bafce5651f1b6fa2b1fd9" datatype="html">
+        <source>Add</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Excuse/add-excuse/add-excuse.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5fe315df87f120dee0ca04442ab852af5914e3b3" datatype="html">
+        <source>System Users</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">30</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="cc0516716708ffa9224f91d2e24205bb29c542d4" datatype="html">
+        <source> Add</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">33</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="108d7d104f08920d4c40f2fce7cc1795d0d38f2b" datatype="html">
+        <source>UserName</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="244aae9346da82b0922506c2d2581373a15641cc" datatype="html">
+        <source>Email</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">78</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c36a66f2107e8da5371ebc9d15c2008dff567f46" datatype="html">
+        <source>Role</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">43</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">95</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="c32ef07f8803a223a83ed17024b38e8d82292407" datatype="html">
+        <source>Password</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">88</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="52c9a103b812f258bcddc3d90a6e3f46871d25fe" datatype="html">
+        <source>Save</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">116</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="125e145c96fb5463c13ad84ffaab4ba46b12b9d2" datatype="html">
+        <source>NO</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/Users/all-users/all-users.component.html</context>
+          <context context-type="linenumber">118</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

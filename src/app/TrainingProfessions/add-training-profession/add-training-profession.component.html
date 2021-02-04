@@ -1,0 +1,44 @@
+<br>
+<div class="container">
+    <h3 [translate]="'HR.New Training Professions'"></h3>
+    <br>
+    <form #frm="ngForm" (ngSubmit)="AddTrainingprofession()">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Profession Name'"></label>
+                <select [(ngModel)]="TrainingprofessionObj.professionID" [ngModelOptions]="{standalone: true}"
+                    name="cat" class="form-control" (change)='onOptionsSelected(TrainingprofessionObj.professionID)'>
+                    <option value="" selected disabled hidden>Profession</option>
+                    <option *ngFor="let Prof of Professions" value="{{Prof.id}}">{{Prof.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Training Type'"></label>
+                <select [(ngModel)]="TrainingprofessionObj.trainingTypeID" [ngModelOptions]="{standalone: true}"
+                    name="sub" class="form-control" (change)='onTrainingSelected(TrainingprofessionObj.trainingTypeID)'>
+                    <option value="" [translate]="'HR.Training Type'"></option>
+                    <option *ngFor="let item of TrainingTypes" value="{{item.trainingTypeID}}">{{item.trainingTypeName}}
+                    </option>
+                </select>
+
+                <!-- <ul *ngFor="let item of TrainingTypes">
+                    <li>{{item.ID}}/{{item.trainingTypeName}}</li>
+
+                </ul> -->
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Course Name'"></label>
+                <select [(ngModel)]="TrainingprofessionObj.courseID" [ngModelOptions]="{standalone: true}" name="sub"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Course Name</option>
+                    <option *ngFor="let item of courses" value="{{item.id}}">{{item.courseName}}</option>
+                </select>
+            </div>
+            <br>
+        </div>
+        <br>
+        <button id="AddTrainingProfession" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+            [translate]="'HR.Add'"></button>
+    </form>
+</div>
+<br>

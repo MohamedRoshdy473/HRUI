@@ -1,0 +1,361 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+
+<br>
+<div class="container card">
+    <h1 [translate]="'HR.Update Employee'" style="margin-bottom: 20px;margin-top:30px; font-size: 2em;color: #2674a8;">
+    </h1>
+
+    <br>
+    <form #frm="ngForm" (ngSubmit)="update()">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label for="name" [translate]="'HR.name'"></label>
+                <input [(ngModel)]="Employee.name" type="text" #EmpName="ngModel"
+                    [class.is-invalid]="EmpName.invalid && EmpName.touched" [class.is-valid]="EmpName.valid" required
+                    minlength="3" name="Name" id="EmpName" class="form-control" [placeholder]="'HR.name' | translate"
+                    aria-describedby="helpId">
+                <small [hidden]="EmpName.valid || EmpName.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messege'"></small>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.PositionLevel'"></label>
+                <select [(ngModel)]="Employee.positionlevelId" name="sel2" class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of positionLevellst" value="{{item.id}}">{{item.levelName}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Position Name'"></label>
+                <select [(ngModel)]="Employee.PositionId" name="sel2" class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of Positions" value="{{item.id}}">{{item.positionName}}</option>
+                </select>
+            </div>
+        </div><br>
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Profession Name'"></label>
+                <select [(ngModel)]="Employee.professionID" [ngModelOptions]="{standalone: true}" name="cat"
+                    class="form-control">
+                    <option value="" selected disabled hidden>Profession Name</option>
+                    <option *ngFor="let Prof of profession" [selected]="Employee.professionID===Prof.id ? true : null"
+                        value="{{Prof.id}}">{{Prof.name}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.Email'"></label>
+                <input type="email" class="form-control" name="email" [(ngModel)]="Employee.email" #mail="ngModel"
+                    [class.is-invalid]="mail.invalid && mail.touched" [class.is-valid]="mail.valid" required
+                    [placeholder]="'HR.Email' | translate">
+                <small [hidden]="mail.valid || mail.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegeEmail'"></small>
+            </div>
+            <div class="col-md-4">
+                <label  [translate]="'HR.EmailCompany'"></label>
+                <input type="email" class="form-control" name="EmailCompany" [(ngModel)]="Employee.emailCompany"
+                #mailcompany="ngModel" minlength="10"
+                    [class.is-invalid]="mailcompany.invalid && mailcompany.touched" [class.is-valid]="mailcompany.valid" required
+                    [placeholder]="'HR.EmailCompany' | translate">
+                    <small [hidden]="mailcompany.valid || mailcompany.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegeEmail'"></small>
+            </div>
+        </div><br>
+        <div class="form-row">
+            <div class="col-md-4">
+                <label  [translate]="'HR.phone'"></label>
+                <!-- <input  class="form-control" minlength="10" type="number" name="phone" [(ngModel)]="Employee.Phone"
+                #phn="ngModel"
+                [class.is-invalid]="phn.invalid && phn.touched" [class.is-valid]="phn.valid" required
+                    [placeholder]="'HR.phone' | translate">
+                    <small [hidden]="phn.valid || phn.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegephn'"></small> -->
+                    <input type="number"  [placeholder]="'HR.phone' | translate" class="form-control" name="mobileNumber" [ngModel]="Employee.phone" [pattern]="mobNumberPattern" #mobNumber="ngModel">  
+                    <div *ngIf="mobNumber.errors  && !isValidFormSubmitted" [ngClass] = "'error'">  
+                      <div *ngIf="mobNumber.errors.pattern" [translate]="'HR.messegephnError'">                         
+                      </div>   
+                    </div>
+            </div>
+            <div class="col-md-4">
+                <label  [translate]="'HR.relevantPhone'"></label>
+                <!-- <input class="form-control" minlength="10" type="number" name="Rphone" [(ngModel)]="Employee.RelevantPhone"
+                #relevantphn="ngModel"
+                [class.is-invalid]="relevantphn.invalid && relevantphn.touched" [class.is-valid]="relevantphn.valid" required
+                    [placeholder]="'HR.relevantPhone' | translate">
+                    <small [hidden]="relevantphn.valid || relevantphn.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegephn'"></small> -->
+                    <input type="number" [placeholder]="'HR.relevantPhone' | translate" class="form-control" name="RelevantPhoneNumber" [ngModel]="Employee.relevantPhone" [pattern]="mobNumberPattern" #RelevantNumber="ngModel">  
+                    <div *ngIf="RelevantNumber.errors  && !isValidFormSubmitted" [ngClass] = "'error'">  
+                      <div *ngIf="RelevantNumber.errors.pattern" [translate]="'HR.messegephnError'">                         
+                      </div>   
+                    </div>
+            </div>
+            <div class="col-md-4">
+                <label  [translate]="'HR.Mobile'"></label>
+                <!-- <input class="form-control" type="number" name="Mobile" [(ngModel)]="Employee.mobile" minlength="10"
+                #EmpMobile="ngModel"
+                [class.is-invalid]="EmpMobile.invalid && EmpMobile.touched" [class.is-valid]="EmpMobile.valid" required
+                    [placeholder]="'HR.Mobile' | translate">
+                    <small [hidden]="EmpMobile.valid || EmpMobile.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegephn'"></small> -->
+                    <input type="number" [placeholder]="'HR.Mobile' | translate" class="form-control" name="MobileNumber" [ngModel]="Employee.mobile" [pattern]="mobNumberPattern" #MobileNumber="ngModel">  
+                    <div *ngIf="MobileNumber.errors  && !isValidFormSubmitted" [ngClass] = "'error'">  
+                      <div *ngIf="MobileNumber.errors.pattern" [translate]="'HR.messegephnError'">                         
+                      </div>   
+                    </div>
+            </div>
+        </div><br>
+
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Code'" style="margin-bottom: 23px;"></label><br>
+                <input type="text" #code="ngModel" [class.is-invalid]="code.invalid && code.touched"
+                    [class.is-valid]="code.valid" [(ngModel)]="Employee.code" required minlength="3" name="code"
+                    id="code" class="form-control" [placeholder]="'HR.Code' | translate" aria-describedby="helpId">
+                <small [hidden]="code.valid || code.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messege'"></small>
+            </div>
+            <div class="col-md-4">
+                <mat-label [translate]="'HR.dateOfBirth'"></mat-label><br>
+                <mat-form-field appearance="fill" [floatLabel]="options.value.floatLabel">
+                    <input matInput [matDatepicker]="picker" class="form-control"
+                        value="{{Employee.dateOfBirth | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
+                        (dateChange)="addEvent('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-label>{{'HR.HiringDate'| translate}}</mat-label><br>
+                 <!--<label [translate]="'HR.HiringDate'"></label> -->
+                <mat-form-field appearance="fill">
+                    <input matInput [matDatepicker]="picker1" class="form-control"
+                        value="{{Employee.hiringDateHiringDate | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
+                        (dateChange)="addEventhiringDateHiringDate('change', $event)">
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.UniversityName'"></label>
+                <select (change)="onchangeUniversity($event)" [(ngModel)]="Employee.universityId" name="sel2"
+                    class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of Universities" value="{{item.id}}">{{item.universityName}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.FacultyName'"></label>
+                <select [value]="0" (change)="onchangeFaculty($event)" [(ngModel)]="Employee.facultyId" name="sel2"
+                    class="form-control">
+                    <option value="0" selected>{{'HR.FacultyName'| translate}}</option>
+                    <option *ngFor="let item of Faculties"
+                    [selected]="Employee.facultyId==item.id ? true : null" value="{{item.id}}">{{item.facultyName}}</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.FacultyDepartmentName'"></label>
+                <select [(ngModel)]="Employee.facultyDepartmentId" name="sel2" class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of FacultyDepartments" value="{{item.id}}">{{item.facultyDepartmentName}}
+                    </option>
+                </select>
+            </div>
+        </div><br>
+        <div class="form-row">
+            <div class="col-md-4">
+                <label [translate]="'HR.Address'"></label>
+                <input type="text" #EmpAddress="ngModel" [class.is-invalid]="EmpAddress.invalid && EmpAddress.touched"
+                    [class.is-valid]="EmpAddress.valid" [(ngModel)]="Employee.address" required minlength="3"
+                    name="EmpAddress" id="EmpName" class="form-control" [placeholder]="'HR.Address' | translate"
+                    aria-describedby="helpId">
+                <small [hidden]="EmpAddress.valid || EmpAddress.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messege'"></small>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.graduatioYear'"></label>
+                <input type="number" name="GYear" [(ngModel)]="Employee.graduatioYear" #EmpGdate="ngModel"
+                    [class.is-invalid]="EmpGdate.invalid && EmpGdate.touched" [class.is-valid]="EmpGdate.valid" required
+                    class="form-control" min="1890" [placeholder]="'HR.graduatioYear' | translate">
+                <small [hidden]="EmpGdate.valid || EmpGdate.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegeGraduationYear'"></small>
+            </div>
+            <div class="col-md-4">
+                <label  [translate]="'HR.NationalId'"></label>
+                <input type="number" name="empNationalId" [(ngModel)]="Employee.nationalId"
+                #EmpNationalId="ngModel" [class.is-invalid]="EmpNationalId.invalid && EmpNationalId.touched"
+                [class.is-valid]="EmpNationalId.valid" required
+                class="form-control" min="1890"
+                    [placeholder]="'HR.graduatioYear' | translate">
+                    <small [hidden]="EmpNationalId.valid || EmpNationalId.untouched" id="helpId" class="text-muted" [translate]="'HR.messegeNationalId'"></small>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-4">
+                <label  [translate]="'HR.Upload Profile Picture'"></label>
+                <div class="custom-file">
+                    <input accept="image/*" (change)="onFileSelected($event.target.files)" type="file"
+                        class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01" [translate]="'HR.Choose file'"></label>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.gender'"></label>
+                <select name="gender" [(ngModel)]="Employee.gender" class="form-control">
+                    <option value="Male" [translate]="'HR.Male'"></option>
+                    <option value="Female" [translate]="'HR.Female'"></option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <label [translate]="'HR.maritalStatus'"></label>
+                <select name="Mstatus" [(ngModel)]="Employee.maritalStatus" class="form-control">
+                    <option value="Single" [translate]="'HR.Single'"></option>
+                    <option value="married" [translate]="'HR.Married'"></option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div>
+            <span><button id="Add" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+                    [translate]="'HR.Update'"></button>
+            </span>
+            <span *ngIf="Employee.photo!=Employee.photo&&showAlert==false" #alert
+                class="alert alert-warning alert-dismissible fade show" role="alert">
+                <button type="button" class="close" aria-label="Close" (click)="closeAlert()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong [translate]="'HR.Images Uploaded Successfuly'"></strong>
+            </span>
+        </div><br>
+    </form>
+</div>
+<br>
+<!-- Upload Attached File  -->
+
+<div class="row">
+    <div class="col">
+        <p-table [value]="lstTest">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="color: #2674a8; font-size: 20px; font: bold;" [translate]="'HR.Document Name'"></th>
+                    <!-- <th style="color: #2674a8; font-size: 20px; font: bold;">Document File</th> -->
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-i>
+                <tr>
+                    <td>{{i.documentName}}</td>
+                    <td (click)="downloadFile(i.fileName)"
+                        style="color: blue; cursor: pointer; text-decoration: blue  underline;">{{i.fileName}}
+                    </td>
+
+                    <!-- <button pButton pRipple icon="pi pi-trash" style="min-width: 5px;" class="p-button-danger"
+                        (click)="delDocument(i.id)"></button> -->
+
+                </tr>
+            </ng-template>
+        </p-table>
+        <br />
+        <div style="margin: 20px;">
+            <p-button (click)="showdocDialog()" icon="pi pi-external-link" [label]="'HR.Add Document' | translate"></p-button>
+        </div>        <br />
+        <br />
+        <p-dialog [header]="'HR.Add Document' | translate" [(visible)]="displaydoc" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+            <div class="row">
+                <div class="col">
+                    <div class="p-col-12 p-md-4">
+                        <div class="p-inputgroup">
+                            <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
+                            <input type="text" pInputText [placeholder]="'HR.Document Name' | translate"
+                                [(ngModel)]="empImage.documentName">
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                       
+                        <br />
+                        <br />
+                        <div class="p-field col-md-3" style="margin-bottom:15px;">
+                            <div class="col-md-3">
+                                <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)"
+                                    style="display:none;">
+                                <button type="button" class="btn btn-success" (click)="file.click()" [translate]="'HR.Upload Employee Document'">
+                                    </button>
+                            </div>
+                         
+                        </div>
+                        <div>
+                            <button class="btn btn-info" style="margin-top: 20px;float: right;"
+                                (click)="Savedoctolist()" [translate]="'HR.Save To List'"></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <br>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th [translate]="'HR.Document Name'"></th>
+
+                                <th [translate]="'HR.File Name'"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let i of lstoddocproj">
+
+                                <td>{{i.documentName}}</td>
+                                <td>{{i.fileName}}</td>
+                             
+                            </tr>
+                            <tr>
+
+                            </tr>
+                            <tr *ngIf="lstoddocproj.length == 0">
+                                <td colspan="4" style="color: rgb(102, 97, 23);" [translate]="'HR.No documents found'"></td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                    <button class="btn btn-warning" [disabled]="lstoddocproj.length == 0"
+                        (click)="SaveDocuentToDB()" [translate]="'HR.Add List'"></button>
+                </div>
+            </div>
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-check" (click)="displaydoc=false" [label]="'HR.No' | translate" styleClass="p-button-text">
+                </p-button>
+            </ng-template>
+        </p-dialog>
+   
+    </div>
+</div>
+
+
+

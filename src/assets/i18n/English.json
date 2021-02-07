@@ -161,7 +161,7 @@
     "FacultyDepartmentName":"Department Name",
     "NationalId":"National Id",
     "PositionLevel":"Position Level",
-    "messegeNationalId":"Must enter National Id",
+    "messegeNationalId":"Must enter valid National Id",
     "Print":"Print",
     "Upload Profile Picture":"Upload Profile Picture",
     "View":"View",
@@ -171,16 +171,25 @@
     "No documents found":"No documents found",
     "Add Document":"Add Document",
     "Save To List":"Save To List",
-    "File Name":"File Name"
+    "File Name":"File Name",
+    "New Position Level":"New Position Level",
+    "New Position":"New Position",
+    "Add Position Level":"Add Position Level",
+    "DisplayPositionLevels":"Positions Levels",
+    "DisplayPositions":"Positions",
+    "DisplayProfessions":"Professions",
+    "New Profession":"New Profession",
+    "DisplayUniversities":"Universities",
+    "DisplayFaculties":"Faculties",
+    "New Faculty":"New Faculty",
+    "Faculty Name":"Faculty Name",
+    "University Name":"University Name",
+    "New University":"New University",
+    "DisplayFacultydepartments":"Faculty Departments",
+    "Faculty Department Name":"Faculty Department Name",
+    "managerName":"Manager Name"
     
 
 
-    
-
-
-
-
-
-    
   }
 }

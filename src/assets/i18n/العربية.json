@@ -161,7 +161,7 @@
     "FacultyDepartmentName":"الشعبة",
     "NationalId":"رقم البطاقة",
     "PositionLevel":"المستوى الوظيفي",
-    "messegeNationalId":"يجب إدخال الرقم القومي",
+    "messegeNationalId":"يجب إدخال رقم قومي صحيح",
     "Print":"طبع",
     "Upload Profile Picture":"تحميل صورة شخصية",
     "View":"عرض",
@@ -171,7 +171,26 @@
     "No documents found":"لا توجد مستندات",
     "Add Document":"إضافة مستند",
     "Save To List":"إضافة للقائمة",
-    "File Name":"إسم الملف"
+    "File Name":"إسم الملف",
+    "New Position":"وظيفة جديدة",
+    "New Position Level":"إضافة مستوي وظيفي",
+    "DisplayPositionLevels":"المستويات الوظيفية",
+    "DisplayPositions":"الوظائف",
+    "DisplayProfessions":"الأقسام",
+    "New Profession":"قسم جديد",
+    "DisplayUniversities":"الجامعات",
+    "DisplayFaculties":"الكليات",
+    "New Faculty":"كلية جديدة",
+    "Faculty Name":"إسم الكلية",
+    "University Name":"إسم الجامعة",
+    "New University":"جامعة جديدة",
+    "DisplayFacultydepartments":"أقسام الكلية",
+    "Faculty Department Name":"إسم الشعبة",
+    "managerName":"إسم المدير"
+
+
+
+    
 
 
 

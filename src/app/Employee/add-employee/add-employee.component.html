@@ -64,7 +64,7 @@
                     <small [hidden]="phn.valid || phn.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
                 <input type="number" [placeholder]="'HR.phone' | translate" class="form-control" name="mobileNumber"
-                    [ngModel]="Employee.Phone" [pattern]="mobNumberPattern" #mobNumber="ngModel">
+                    [ngModel]="Employee.Phone" [pattern]="phonePatern" #mobNumber="ngModel">
                 <div *ngIf="mobNumber.errors  && !isValidFormSubmitted" [ngClass]="'error'">
                     <div *ngIf="mobNumber.errors.pattern" [translate]="'HR.messegephnError'">
                     </div>
@@ -81,6 +81,7 @@
                 <input type="number" [placeholder]="'HR.relevantPhone' | translate" class="form-control"
                     name="RelevantPhoneNumber" [ngModel]="Employee.RelevantPhone" [pattern]="mobNumberPattern"
                     #RelevantNumber="ngModel">
+
                 <div *ngIf="RelevantNumber.errors  && !isValidFormSubmitted" [ngClass]="'error'">
                     <div *ngIf="RelevantNumber.errors.pattern" [translate]="'HR.messegephnError'">
                     </div>
@@ -176,12 +177,13 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.NationalId'"></label>
-                <input type="number" name="empNationalId" [(ngModel)]="Employee.NationalId" #EmpNationalId="ngModel"
-                    [class.is-invalid]="EmpNationalId.invalid && EmpNationalId.touched"
-                    [class.is-valid]="EmpNationalId.valid" required class="form-control" min="1890"
-                    [placeholder]="'HR.graduatioYear' | translate">
-                <small [hidden]="EmpNationalId.valid || EmpNationalId.untouched" id="helpId" class="text-muted"
-                    [translate]="'HR.messegeNationalId'"></small>
+                <input type="number" [placeholder]="'HR.NationalId' | translate" class="form-control"
+                    name="EmpNationalId" [ngModel]="Employee.NationalId" [pattern]="NationalIdPatern"
+                    #EmpNationalId="ngModel" >
+                <div *ngIf="EmpNationalId.errors  && !isValidFormSubmitted" [ngClass]="'error'">
+                    <div *ngIf="EmpNationalId.errors.pattern" [translate]="'HR.messegeNationalId'">
+                    </div>
+                </div>              
             </div>
         </div>
         <br>
@@ -240,14 +242,16 @@
 <div style="margin: 20px;">
     <p-button (click)="showdocDialog()" icon="pi pi-external-link" [label]="'HR.Add Document' | translate"></p-button>
 </div>
-<p-dialog [header]="'HR.Add Document' | translate" [(visible)]="displaydoc" [style]="{width: '50vw'}" [baseZIndex]="10000">
+<p-dialog [header]="'HR.Add Document' | translate" [(visible)]="displaydoc" [style]="{width: '50vw'}"
+    [baseZIndex]="10000">
 
     <div class="row">
         <div class="col">
             <div class="p-col-12 p-md-4">
                 <div class="p-inputgroup">
                     <span class="p-inputgroup-addon"><i class="pi pi-user"></i></span>
-                    <input type="text" pInputText [placeholder]="'HR.Document Name' | translate"  [(ngModel)]="empImage.documentName">
+                    <input type="text" pInputText [placeholder]="'HR.Document Name' | translate"
+                        [(ngModel)]="empImage.documentName">
                 </div>
             </div>
             <div class="p-col-12 p-md-4">
@@ -257,12 +261,14 @@
                     <div class="col-md-3">
                         <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)"
                             style="display:none;">
-                        <button type="button" class="btn btn-success" (click)="file.click()" [translate]="'HR.Upload Employee Document'"></button>
+                        <button type="button" class="btn btn-success" (click)="file.click()"
+                            [translate]="'HR.Upload Employee Document'"></button>
                     </div>
 
                 </div>
                 <div>
-                    <button class="btn btn-info" style="margin-top: 20px;float: right;" (click)="Savedoctolist()"[translate]="'HR.Save To List'"></button>
+                    <button class="btn btn-info" style="margin-top: 20px;float: right;" (click)="Savedoctolist()"
+                        [translate]="'HR.Save To List'"></button>
                 </div>
             </div>
         </div>
@@ -295,11 +301,13 @@
 
             </table>
 
-            <button class="btn btn-warning" [disabled]="lstoddocproj.length == 0" (click)="SaveDocuentToDB()" [translate]="'HR.Add List'"></button>
+            <button class="btn btn-warning" [disabled]="lstoddocproj.length == 0" (click)="SaveDocuentToDB()"
+                [translate]="'HR.Add List'"></button>
         </div>
     </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" (click)="displaydoc=false" [label]="'HR.No' | translate" styleClass="p-button-text">
+        <p-button icon="pi pi-check" (click)="displaydoc=false" [label]="'HR.No' | translate"
+            styleClass="p-button-text">
         </p-button>
     </ng-template>
 

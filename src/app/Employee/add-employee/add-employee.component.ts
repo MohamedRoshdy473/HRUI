@@ -28,7 +28,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AddEmployeeComponent implements OnInit {
   title = 'FormValidation';  
-  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";  
+  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$"; 
+  NationalIdPatern= "^[0-9]{14}$"; 
+  phonePatern= "^((\\+91-?)|0)?[0-9]{9}$"; 
  isValidFormSubmitted = false;  
 
   profession: any;
@@ -76,7 +78,7 @@ export class AddEmployeeComponent implements OnInit {
 
     this.selectedGender = { name: '' };
     this.selectedMaritalStatus = { name: '' };
-    this.selectedProfession = { id: 0, name: '' };
+    this.selectedProfession = { id: 0, name: '',managerID:0,managerName:"" };
 
   }
  onFormSubmit(form: NgForm) {  

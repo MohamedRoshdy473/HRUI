@@ -5,15 +5,14 @@
         </div>
         <ul class="list-unstyled components">
             <li>
-                <a class="active"  class="pi pi-bars" routerLink='mainPage'> {{ 'HR.Dashboard' |
+                <a class="active" class="pi pi-bars" routerLink='mainPage'> {{ 'HR.Dashboard' |
                     translate}} </a>
             </li>
             <li>
                 <a class="active" class="pi pi-user" routerLink='/employee'> {{ 'HR.Employees' | translate }}</a>
             </li>
             <li class="active">
-                <a href="#Excuses" data-toggle="collapse" aria-expanded="false"
-                    class="dropdown-toggle pi pi-book"> {{
+                <a href="#Excuses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-book"> {{
                     'HR.Excuses' | translate}}</a>
                 <ul class="collapse list-unstyled" id="Excuses">
                     <li>
@@ -29,8 +28,7 @@
                 </ul>
             </li>
             <li class="active">
-                <a href="#Leaves" data-toggle="collapse" aria-expanded="false"
-                    class="dropdown-toggle pi pi-home"> {{
+                <a href="#Leaves" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-home"> {{
                     'HR.Leaves' | translate}}</a>
                 <ul class="collapse list-unstyled" id="Leaves">
                     <li>
@@ -96,7 +94,7 @@
                         </a>
                     </li>
                     <li>
-                        <a  [routerLink]="['/EvaluationsProfession']">
+                        <a [routerLink]="['/EvaluationsProfession']">
                             <span [translate]="'HR.Evaluations Profession'"></span>
                         </a>
                     </li>
@@ -108,14 +106,13 @@
                 </ul>
             </li>
             <li *ngIf="role=='Admin'">
-                <a [routerLink]="['/Certificates']"
-                class=" pi pi-envelope"> {{
-                'HR.Certificates' | translate}}</a>
+                <a [routerLink]="['/Certificates']" class=" pi pi-envelope"> {{
+                    'HR.Certificates' | translate}}</a>
             </li>
 
             <li class="active" *ngIf="role=='Admin'">
-                <a href="#Trainings" data-toggle="collapse" aria-expanded="false"
-                    class="dropdown-toggle pi pi-pencil"> {{
+                <a href="#Trainings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-pencil">
+                    {{
                     'HR.Trainings' | translate}}</a>
                 <ul class="collapse list-unstyled" id="Trainings">
                     <li>
@@ -136,7 +133,7 @@
                 </ul>
             </li>
             <li *ngIf="role=='Admin'">
-                <a  [routerLink]="['/Courses']" class="pi pi-sitemap"> {{'HR.Courses'|translate}}
+                <a [routerLink]="['/Courses']" class="pi pi-sitemap"> {{'HR.Courses'|translate}}
                 </a>
             </li>
             <li class="active" *ngIf="role=='Admin'">
@@ -148,8 +145,40 @@
                         <a class="active" class="pi pi-users" routerLink='/AllLUsers'> {{ 'HR.Users' | translate }}</a>
                     </li>
                     <li>
+                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayPositionLevels']" class="pi pi-users">
+                            {{'HR.DisplayPositionLevels'| translate}}
+                        </a>
+                    </li>
+                     <li>
+                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayPositions']" class="pi pi-users">
+                            {{'HR.DisplayPositions'| translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayProfessions']" class="pi pi-users">
+                            {{'HR.DisplayProfessions'| translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayUniversities']" class="pi pi-users">
+                            {{'HR.DisplayUniversities'| translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayFaculties']" class="pi pi-users">
+                            {{'HR.DisplayFaculties'| translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayFacultydepartments']" class="pi pi-users">
+                            {{'HR.DisplayFacultydepartments'| translate}}
+                        </a>
+                    </li>
+
+                    
+                    <li>
                         <a *ngIf="role=='Admin'" [routerLink]="['/Instructor']" class="pi pi-users">
-                            {{'HR.Instructors'| translate}}                   
+                            {{'HR.Instructors'| translate}}
                         </a>
                     </li>
                     <li class="active" *ngIf="role=='Admin'">
@@ -233,14 +262,14 @@
                         style="font-size: large;color: brown;">{{userName}}
                         <!-- <img class="img-thumbnail" class="roounded" src="{{getimage}}api/employees/getImage/{{imgName}}" alt=""
                           width="50px" height="50px" style="border-radius: 50%;"> -->
-                      </div>
+                    </div>
                     <div class="col">
                         <a class="btn btn-warning" style="font-size: 15px;margin-right: 10px;margin-bottom: 7px;"
                             (click)="logout()">{{
                             'HR.Logout' |
                             translate }}
                         </a>
-                    </div>                  
+                    </div>
                 </div>
                 <div>
                     <label>

@@ -5,7 +5,6 @@ import { RegisterComponent } from './Auth/register/register.component';
 import { SideNavComponent } from './side-nav/side-nav.component';
 import { Child1Component } from './main/child1/child1.component';
 import { AddEmployeeComponent } from './Employee/add-employee/add-employee.component';
-import { AddProfessionComponent } from './Profession/add-profession/add-profession.component';
 import { DisplayAllEmployeesComponent } from './Employee/display-all-employees/display-all-employees.component';
 import { EditEmployeeComponent } from './Employee/edit-employee/edit-employee.component';
 import { AddExcuseComponent } from './Excuse/add-excuse/add-excuse.component';
@@ -68,6 +67,13 @@ import { AddInstructorComponent } from './Instructors/add-instructor/add-instruc
 import { EditInstructorComponent } from './Instructors/edit-instructor/edit-instructor.component';
 import { MainPageComponent } from './main-page/main-page.component';
 import { ProfileComponent } from './Auth/profile/profile.component';
+import { DisplayPositionLevelsComponent } from './PositionLevel/display-position-levels/display-position-levels.component';
+import { DisplayAllPositionsComponent } from './Positions/display-all-positions/display-all-positions.component';
+import { DisplayProfessionsComponent } from './Profession/display-professions/display-professions.component';
+import { DisplayUniversitiesComponent } from './Universities/display-universities/display-universities.component';
+import { DisplayFacultiesComponent } from './Faculties/display-faculties/display-faculties.component';
+import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
+
 
 const routes: Routes = [
   {path:'Register' , component:RegisterComponent  },
@@ -78,7 +84,6 @@ const routes: Routes = [
     { path: 'addemployee', component:AddEmployeeComponent },
     { path: 'mainPage', component:MainPageComponent },
     {path:'Profile',component:ProfileComponent},
-    { path: 'profession', component:AddProfessionComponent},
     { path: 'editEmployee/:empId', component:EditEmployeeComponent },
     { path: 'AddExcuse', component:AddExcuseComponent,canActivate:[AuthGuard] },
     { path: 'previousExcuse', component:PreviosExcuseComponent,canActivate:[AuthGuard] },
@@ -134,6 +139,15 @@ const routes: Routes = [
     {path:'Instructor',component:InstructorComponent},
     {path:'AddInstructor',component:AddInstructorComponent},
     {path:'EditInstructor/:id',component:EditInstructorComponent},
+    {path:'DisplayPositionLevels',component:DisplayPositionLevelsComponent},
+    {path:'DisplayPositions',component:DisplayAllPositionsComponent},
+    {path:'DisplayProfessions',component:DisplayProfessionsComponent},
+    {path:'DisplayUniversities',component:DisplayUniversitiesComponent},
+    {path:'DisplayFaculties',component:DisplayFacultiesComponent},
+    {path:'DisplayFacultydepartments',component:DisplayFacultydepartmentsComponent},
+
+
+
    ]},
 ];
 

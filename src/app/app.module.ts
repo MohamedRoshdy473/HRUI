@@ -29,7 +29,6 @@ import { DialogModule } from 'primeng/dialog';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { AddEmployeeComponent } from './Employee/add-employee/add-employee.component';
 import { AuthGuard } from 'src/app/Guards/auth.guard'
-import { AddProfessionComponent } from './Profession/add-profession/add-profession.component';
 import { DisplayAllEmployeesComponent } from './Employee/display-all-employees/display-all-employees.component';
 import { from } from 'rxjs';
 import { EditEmployeeComponent } from './Employee/edit-employee/edit-employee.component';
@@ -154,6 +153,12 @@ import { EditInstructorComponent } from './Instructors/edit-instructor/edit-inst
 import { MainPageComponent } from './main-page/main-page.component';
 import { ProfileComponent } from './Auth/profile/profile.component';
 import { NgxPrintModule } from 'ngx-print';
+import { DisplayPositionLevelsComponent } from './PositionLevel/display-position-levels/display-position-levels.component';
+import { DisplayAllPositionsComponent } from './Positions/display-all-positions/display-all-positions.component';
+import { DisplayProfessionsComponent } from './Profession/display-professions/display-professions.component';
+import { DisplayUniversitiesComponent } from './Universities/display-universities/display-universities.component';
+import { DisplayFacultiesComponent } from './Faculties/display-faculties/display-faculties.component';
+import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
 
 
 
@@ -177,7 +182,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RegisterComponent,
     Child1Component,
     AddEmployeeComponent,
-    AddProfessionComponent,
     DisplayAllEmployeesComponent,
     EditEmployeeComponent,
     AllExcusesComponent,
@@ -239,6 +243,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EditInstructorComponent,
     MainPageComponent,
     ProfileComponent,
+    DisplayPositionLevelsComponent,
+    DisplayAllPositionsComponent,
+    DisplayProfessionsComponent,
+    DisplayUniversitiesComponent,
+    DisplayFacultiesComponent,
+    DisplayFacultydepartmentsComponent,
 
   ],
   imports: [

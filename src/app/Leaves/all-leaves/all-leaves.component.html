@@ -23,14 +23,17 @@
         </div>
     </ng-template>
 </p-toast>
-
-<div class="container card">
+<br>
+<div class="container card" *ngIf="role=='HR'">
     <div style="margin-top: 20px;">
         <div class="row">
             <!-- <mat-icon style="color: #007bff; margin: 1px; display: inline; ">note_add</mat-icon> -->
+            <div class="col-md-8">
             <h5 class="col-md-8" style="display: inline;  font-size: 30px; 
             color: #2674a8;margin-left: 2%;" [translate]="'HR.Leaves'"></h5>
-            <div class="col-md-2 ml-5">
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
                 <button id="addEmpBtn" (click)="NewLeaveDialog()" class="btn btn-outline-primary btn-md btn-block">
                     <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
             </div>
@@ -42,11 +45,11 @@
                 <i class="pi pi-th-large" style="margin:-5px 10px 0px 10px;"></i>
                 <label>{{ 'HR.All' | translate }}</label>
             </ng-template>
-            <p-table id="my-table" class="container card" #dt  dataKey="id" [rows]="5" [showCurrentPageReport]="true"
-           [rowsPerPageOptions]="[5,10,50]"  styleClass="p-datatable-customers" [paginator]="true"
-           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-            #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
-                 [value]="AllLeaves">
+            <p-table id="my-table" *ngIf="role=='HR'" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+                [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+                [value]="AllLeaves">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
                         <span class="p-input-icon-left">
@@ -63,15 +66,17 @@
                             <p-sortIcon field="employeeName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
-                            <p-sortIcon field=""></p-sortIcon>
+                            <p-sortIcon field="profession"></p-sortIcon>
                         </th>
                         <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
-                            <p-sortIcon field="code"></p-sortIcon></th>
-                        <th pSortableColumn="date"><span [translate]="'HR.Start'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
+                            <p-sortIcon field="date"></p-sortIcon>
                         </th>
-                        <th pSortableColumn="days" style="width: 9%"><span [translate]="'HR.Days'" ></span>
-                            <p-sortIcon field="days"></p-sortIcon></th>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="days" style="width: 9%"><span [translate]="'HR.Days'"></span>
+                            <p-sortIcon field="days"></p-sortIcon>
+                        </th>
                         <th pSortableColumn="alternativeEmp"><span [translate]="'HR.Alternative Employee'"></span>
                             <p-sortIcon field="alternativeEmp"></p-sortIcon>
                         </th>
@@ -88,20 +93,20 @@
                         <td>{{AllLeaves.days}}</td>
                         <td>{{AllLeaves.alternativeEmp}}</td>
                         <td id="status" *ngIf="AllLeaves.status=='approved'">
-                            <div style="cursor:unset;" class="btn btn-success" >
-                                {{'HR.Approved' | translate}}                             
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
                             </div>
                         </td>
                         <td id="status" *ngIf="AllLeaves.status=='disapproved'">
                             <div style="cursor:unset;" class="btn btn-danger">
                                 {{'HR.Rejected' | translate}}
-                                
+
                             </div>
                         </td>
                         <td id="status" *ngIf="AllLeaves.status=='pending'">
                             <div style="cursor:unset;" class="btn btn-warning">
                                 {{'HR.Pending' | translate}}
-                                
+
                             </div>
                         </td>
                         <!-- <td>
@@ -115,10 +120,11 @@
                             </div>
                         </td> -->
                         <td>
-                            <span class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(AllLeaves.id)"></span>
-                            <span class="btn pi pi-pencil" aria-hidden="true"
-                            (click)="EditLeaveDialog(AllLeaves.id)"></span>
-                            <span class="btn pi pi-times" (click)="confirm(AllLeaves.id)" aria-hidden="true"></span>
+                            <button [title]="'HR.Show' | translate" class="pi pi-compass " style="cursor: pointer;" aria-hidden="true" (click)="showBasicDialog(AllLeaves.id)"></button>
+                            <button [title]="'HR.Update' | translate" class=" pi pi-pencil" style="cursor: pointer;margin-left: 12px;" aria-hidden="true" [disabled]="AllLeaves.status!='pending'"
+                                (click)="EditLeaveDialog(AllLeaves.id)"></button>
+                            <button [title]="'HR.Delete' | translate" class=" pi pi-times" style="cursor: pointer;margin-left: 12px;" (click)="confirm(AllLeaves.id)" [disabled]="AllLeaves.status!='pending'"
+                                aria-hidden="true"></button>
                         </td>
                     </tr>
                 </ng-template>
@@ -129,7 +135,7 @@
                 <i class="pi pi-thumbs-up" style="margin:-5px 10px 0px 10px;"></i>
                 <label>{{ 'HR.Approved' | translate }}</label>
             </ng-template>
-            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+            <p-table scrollHeight="350px" *ngIf="role=='HR'" #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
                 [scrollable]="true" [value]="ApprovedLeaves">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -146,12 +152,12 @@
                             <p-sortIcon field="employeeName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
-                            <p-sortIcon field=""></p-sortIcon>
+                            <p-sortIcon field="profession"></p-sortIcon>
                         </th>
                         <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
-                        <th pSortableColumn="date"><span [translate]="'HR.Start'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
                         </th>
                         <th [translate]="'HR.Days'"></th>
                         <th [translate]="'HR.Alternative Employee'"></th>
@@ -167,20 +173,20 @@
                         <td>{{AllLeaves.days}}</td>
                         <td>{{AllLeaves.alternativeEmp}}</td>
                         <td id="status" *ngIf="AllLeaves.status=='approved'">
-                            <div style="cursor:unset;" class="btn btn-success" >
-                                {{'HR.Approved' | translate}}                             
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
                             </div>
                         </td>
                         <td id="status" *ngIf="AllLeaves.status=='disapproved'">
                             <div style="cursor:unset;" class="btn btn-danger">
                                 {{'HR.Rejected' | translate}}
-                                
+
                             </div>
                         </td>
                         <td id="status" *ngIf="AllLeaves.status=='pending'">
                             <div style="cursor:unset;" class="btn btn-warning">
                                 {{'HR.Pending' | translate}}
-                                
+
                             </div>
                         </td>
                     </tr>
@@ -192,7 +198,7 @@
                 <i class="pi pi-thumbs-down" style="margin:-5px 10px 0px 10px;"></i>
                 <label>{{ 'HR.Unapproved' | translate }}</label>
             </ng-template>
-            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+            <p-table scrollHeight="350px" *ngIf="role=='HR'" #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
                 [scrollable]="true" [value]="DisApprovedLeaves">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -209,12 +215,12 @@
                             <p-sortIcon field="employeeName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
-                            <p-sortIcon field=""></p-sortIcon>
+                            <p-sortIcon field="profession"></p-sortIcon>
                         </th>
                         <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
-                        <th pSortableColumn="date"><span [translate]="'HR.Start'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
                         </th>
                         <th [translate]="'HR.Days'"></th>
                         <th [translate]="'HR.Alternative Employee'"></th>
@@ -230,32 +236,32 @@
                         <td>{{AllLeaves.days}}</td>
                         <td>{{AllLeaves.alternativeEmp}}</td>
                         <td id="status" *ngIf="AllLeaves.status=='approved'">
-                            <div style="cursor:unset;" class="btn btn-success" >
-                                {{'HR.Approved' | translate}}                             
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
                             </div>
                         </td>
                         <td id="status" *ngIf="AllLeaves.status=='disapproved'">
                             <div style="cursor:unset;" class="btn btn-danger">
                                 {{'HR.Rejected' | translate}}
-                                
+
                             </div>
                         </td>
                         <td id="status" *ngIf="AllLeaves.status=='pending'">
                             <div style="cursor:unset;" class="btn btn-warning">
                                 {{'HR.Pending' | translate}}
-                                
+
                             </div>
                         </td>
                     </tr>
                 </ng-template>
             </p-table>
         </p-tabPanel>
-        <p-tabPanel >
+        <p-tabPanel>
             <ng-template pTemplate="header">
                 <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
                 <label>{{ 'HR.Pending Leave' | translate }}</label>
             </ng-template>
-            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+            <p-table scrollHeight="350px" *ngIf="role=='HR'" #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
                 [scrollable]="true" [value]="pendingLeaves">
                 <ng-template pTemplate="caption">
                     <div class="table-header">
@@ -272,12 +278,12 @@
                             <p-sortIcon field="employeeName"></p-sortIcon>
                         </th>
                         <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
-                            <p-sortIcon field=""></p-sortIcon>
+                            <p-sortIcon field="profession"></p-sortIcon>
                         </th>
                         <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
-                        <th pSortableColumn="date"><span [translate]="'HR.Start'"></span>
-                            <p-sortIcon field="code"></p-sortIcon>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
                         </th>
                         <th [translate]="'HR.Days'"></th>
                         <th [translate]="'HR.Alternative Employee'"></th>
@@ -293,9 +299,8 @@
                         <td>{{AllLeaves.days}}</td>
                         <td>{{AllLeaves.alternativeEmp}}</td>
                         <td>
-                            <button (click)="approve(AllLeaves.id)" class="btn btn-success">O</button>
-                            <button (click)="disapprove(AllLeaves.id)" style="margin-left: 5%;"
-                                class="btn btn-danger">X</button>
+                            <button (click)="approve(AllLeaves.id)" [title]="'HR.Approve' | translate" class="btn btn-success">O</button>
+                            <button (click)="disapprove(AllLeaves.id)" style="margin-left: 5%;"[title]="'HR.Reject' | translate"class="btn btn-danger">X</button>
                         </td>
                     </tr>
                 </ng-template>
@@ -303,7 +308,290 @@
         </p-tabPanel>
     </p-tabView>
 </div>
+<div class="container card" *ngIf="role=='Admin'">
+    <div style="margin-top: 20px;">
+        <div class="row">
+            <!-- <mat-icon style="color: #007bff; margin: 1px; display: inline; ">note_add</mat-icon> -->
+            <div class="col-md-8">
+            <h5 class="col-md-8" style="display: inline;  font-size: 30px; 
+            color: #2674a8;margin-left: 2%;" [translate]="'HR.Leaves'"></h5>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <button id="addEmpBtn" (click)="NewLeaveDialog()" class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+            </div>
+        </div>
+    </div>
+    <p-tabView styleClass="tabview-custom">
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-th-large" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.All' | translate }}</label>
+            </ng-template>
+            <p-table id="my-table" *ngIf="role=='Admin'" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+                [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+                [value]="AllLeavesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
 
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr style="height: 5px !important; ">
+                        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
+                            <p-sortIcon field="profession"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="days" style="width: 9%"><span [translate]="'HR.Days'"></span>
+                            <p-sortIcon field="days"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="alternativeEmp"><span [translate]="'HR.Alternative Employee'"></span>
+                            <p-sortIcon field="alternativeEmp"></p-sortIcon>
+                        </th>
+                        <th [translate]="'HR.Status'"></th>
+                        <th [translate]="'HR.Controls'" style="width: 14%"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-AllLeaves>
+                    <tr style="height: 5px !important;font-size: 17px;">
+                        <td>{{AllLeaves.employeeName}}</td>
+                        <td>{{AllLeaves.profession}}</td>
+                        <td>{{AllLeaves.date | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.start | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.days}}</td>
+                        <td>{{AllLeaves.alternativeEmp}}</td>
+                        <td id="status" *ngIf="AllLeaves.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="AllLeaves.status=='disapproved'">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="AllLeaves.status=='pending'">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                        <!-- <td>
+                            <div class="row">
+                                <button (click)="showBasicDialog(AllLeaves.id)" class="btn btn-success c-btn"><i
+                                        class="fa fa-eye" aria-hidden="true"></i></button>
+                                <button (click)="EditLeaveDialog(AllLeaves.id)" class="btn btn-primary c-btn"><i
+                                        class="fa fa-pencil-square-o " aria-hidden="true"></i></button>
+                                <button (click)="confirm(AllLeaves.id)" class="btn btn-danger c-btn"><i
+                                        class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </div>
+                        </td> -->
+                        <td>
+                            <button [title]="'HR.Show' | translate" class="pi pi-compass " style="cursor: pointer;" aria-hidden="true" (click)="showBasicDialog(AllLeaves.id)"></button>
+                            <button [title]="'HR.Update' | translate" class=" pi pi-pencil" style="cursor: pointer;margin-left: 12px;" aria-hidden="true" [disabled]="AllLeaves.status!='pending'"
+                                (click)="EditLeaveDialog(AllLeaves.id)"></button>
+                            <button [title]="'HR.Delete' | translate" class=" pi pi-times" style="cursor: pointer;margin-left: 12px;" (click)="confirm(AllLeaves.id)" [disabled]="AllLeaves.status!='pending'"
+                                aria-hidden="true"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-up" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Approved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" *ngIf="role=='Admin'" #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+                [scrollable]="true" [value]="ApprovedLeavesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
+                            <p-sortIcon field="profession"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
+                        </th>
+                        <th [translate]="'HR.Days'"></th>
+                        <th [translate]="'HR.Alternative Employee'"></th>
+                        <th [translate]="'HR.Status'">Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-AllLeaves>
+                    <tr>
+                        <td>{{AllLeaves.employeeName}}</td>
+                        <td>{{AllLeaves.profession}}</td>
+                        <td>{{AllLeaves.date | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.start | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.days}}</td>
+                        <td>{{AllLeaves.alternativeEmp}}</td>
+                        <td id="status" *ngIf="AllLeaves.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="AllLeaves.status=='disapproved'">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="AllLeaves.status=='pending'">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-down" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Unapproved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" *ngIf="role=='Admin'" #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+                [scrollable]="true" [value]="DisApprovedLeavesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
+                            <p-sortIcon field="profession"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
+                        </th>
+                        <th [translate]="'HR.Days'"></th>
+                        <th [translate]="'HR.Alternative Employee'"></th>
+                        <th [translate]="'HR.Status'">Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-AllLeaves>
+                    <tr>
+                        <td>{{AllLeaves.employeeName}}</td>
+                        <td>{{AllLeaves.profession}}</td>
+                        <td>{{AllLeaves.date | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.start | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.days}}</td>
+                        <td>{{AllLeaves.alternativeEmp}}</td>
+                        <td id="status" *ngIf="AllLeaves.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="AllLeaves.status=='disapproved'">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="AllLeaves.status=='pending'">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Pending Leave' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" *ngIf="role=='Admin'" #dt [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+                [scrollable]="true" [value]="pendingLeavesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
+                            <p-sortIcon field="profession"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+                            <p-sortIcon field="start"></p-sortIcon>
+                        </th>
+                        <th [translate]="'HR.Days'"></th>
+                        <th [translate]="'HR.Alternative Employee'"></th>
+                        <th [translate]="'HR.Status'">Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-AllLeaves>
+                    <tr>
+                        <td>{{AllLeaves.employeeName}}</td>
+                        <td>{{AllLeaves.profession}}</td>
+                        <td>{{AllLeaves.date | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.start | date :'dd-MM-yyyy'}}</td>
+                        <td>{{AllLeaves.days}}</td>
+                        <td>{{AllLeaves.alternativeEmp}}</td>
+                        <td>
+                            <button (click)="approve(AllLeaves.id)" [title]="'HR.Approve' | translate" class="btn btn-success">O</button>
+                            <button (click)="disapprove(AllLeaves.id)" style="margin-left: 5%;"[title]="'HR.Reject' | translate"class="btn btn-danger">X</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+</div>
 <p-dialog [header]="'HR.Details' | translate" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000">
 
     <tr class=" form-control">
@@ -338,26 +626,30 @@
         <th [translate]="'HR.Status'"></th>
         <td>{{Leave.status }}</td>
     </tr>
-    <!-- <tr>
+    <tr>
         <table class="table col-md-12">
             <thead class="table col-md-12 ">
-                <th>Document</th>
+                <th>File</th>
                 <th>Preview</th>
-                <th>Download</th>
-            </thead>
+                <th>Delete</th>
+            </thead> 
             <tbody class="table col-md-12" *ngFor="let item of getLeavesfiles let i=index">
-                <td>Document {{i}}</td>
-                <td><a href="http://localhost:50652/wwwroot/leaves/{{item}}">Preview</a> </td>
-                <td> <a href="http://localhost:50652/api/employees/getFile/{{item}}">Download</a></td>
-
+                <td>
+                <img class="img-thumbnail" src="{{getimage}}wwwroot/images/{{item.fileName}}" alt=""
+                width="100px" height="100px"></td>
+                <!-- <td><a href="http://localhost:50652/wwwroot/images/{{item}}">Preview</a> </td> -->
+                <td><a class="btn btn-info" (click)="OpenImage(item.fileName)">Preview</a> </td>
+                <!-- <td> <a href="http://localhost:50652/api/employees/getFile/{{item}}">Download</a></td> -->
+                <td><a class="btn btn-info" (click)="DeleteImage(item.id)">Delete</a> </td>
             </tbody>
 
         </table>
-    </tr> -->
+    </tr>
 
-    <ng-template pTemplate="footer">
-        <button (click)="approve(Leave.id)" class="btn btn-success" [translate]="'HR.Approve'"></button>
-        <button (click)="disapprove(Leave.id)" class="btn btn-danger" [translate]="'HR.Reject'"></button>
+    <ng-template pTemplate="footer" *ngIf="role=='Admin'">
+        <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
+        <!-- <button (click)="approve(Leave.id)" class="btn btn-success" [translate]="'HR.Approve'"></button>
+        <button (click)="disapprove(Leave.id)" class="btn btn-danger" [translate]="'HR.Reject'"></button> -->
     </ng-template>
 </p-dialog>
 
@@ -376,7 +668,8 @@
         <br>
         <div class="row">
             <span class="col-md-3" for="Employee" [translate]="'HR.Employee Name'"></span>
-            <select (change)="onAlternateChange(NewLeaveRequest.EmployeeID)" [(ngModel)]="NewLeaveRequest.EmployeeID" name="Employee" class="form-control col-md-6">Employee
+            <select (change)="onAlternateChange(NewLeaveRequest.employeeID)" [(ngModel)]="NewLeaveRequest.employeeID"
+                name="Employee" class="form-control col-md-6">Employee
                 <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
             </select>
         </div>
@@ -389,62 +682,75 @@
         <br>
         <div class="row">
             <span class="col-md-3" for="Days" [translate]="'HR.Days'"></span>
-            <input [(ngModel)]="NewLeaveRequest.Days" name="Days" type="number" min="1" value="1"
+            <input [(ngModel)]="NewLeaveRequest.days" name="Days" type="number" min="1" value="1"
                 class="col-md-6 form-control" inputId="Days">
         </div>
         <br>
         <div class="row">
             <span class="col-md-3" for="LeaveTypes" [translate]="'HR.Leave Type'"></span>
-            <select [(ngModel)]="NewLeaveRequest.LeaveTypeID" name="LeaveTypes" class="col-md-6 form-control">
+            <select [(ngModel)]="NewLeaveRequest.leaveTypeID" name="LeaveTypes" class="col-md-6 form-control">
                 <option *ngFor="let item of LeaveTypes" value="{{item.id}}">{{item.name}}</option>
             </select>
         </div>
         <br>
         <div class="row">
             <span class="col-md-3" for="Alternate" [translate]="'HR.Alternative Employee'"></span>
-            <select [(ngModel)]="NewLeaveRequest.AlternativeEmpID" name="Alternate" class="col-md-6 form-control">
-                <option *ngFor="let item of AllAlternativeEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
+            <select [(ngModel)]="NewLeaveRequest.alternativeEmpID" name="Alternate" class="col-md-6 form-control">
+                <option *ngFor="let item of AllAlternativeEmployeesByProfession" value="{{item.id}}">{{item.name}}
+                </option>
             </select>
         </div>
         <br>
-        <!-- <div class="row">
-            <span class="col-md-3" for="Note">Alternateive Address</span>
-            <input [(ngModel)]="NewLeaveRequest.AlternativeAddress" style="margin-top: 5px;margin-right: 10px;"
-                [(ngModel)]="OldAddress" type="checkbox" id="oldAddress" name="oldAddress">
-            <label for="oldAddress"> Old Address</label><br>
-        </div> -->
         <div class="row">
             <span class="col-md-3" for="Note" [translate]="'HR.Alternateive Address'"></span>
             <br>
-            <textarea [(ngModel)]="NewLeaveRequest.AlternativeAddress" *ngIf="!OldAddress" name="Note" type="text"
+            <textarea [(ngModel)]="NewLeaveRequest.alternativeAddress" *ngIf="!OldAddress" name="Note" type="text"
                 class="col-md-6 form-control" inputId="Note"></textarea>
         </div>
         <br>
         <div class="row">
             <span class="col-md-3" for="comment" [translate]="'HR.Note'"></span>
             <br>
-            <textarea [(ngModel)]="NewLeaveRequest.Comment" name="comment" type="text" class="col-md-6 form-control"
+            <textarea [(ngModel)]="NewLeaveRequest.comment" name="comment" type="text" class="col-md-6 form-control"
                 inputId="comment"></textarea>
         </div>
         <br>
-
-        <div class="form-row">
-            <span class="col-md-3" for="File" [translate]="'HR.Choose file'"></span>
-            <div class="col-md-7">
-                <div class="input-group mb-3">
-
-                    <div class="custom-file ">
-                        <input multiple accept="image/*" (change)="selectFiles($event)" type="file"
-                            class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile01" [translate]="'HR.Choose file'"></label>
+        <div class="form-row" style="margin-left: 23%;"> 
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header" [translate]="'HR.Choose file'">
+                        
                     </div>
-                </div>
+                    <div *ngFor="let progressInfo of progressInfos " class="mb-2">
+                        <span>{{ progressInfo.fileName }}</span>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                                attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                                [ngStyle]="{ width: progressInfo.value + '%' }">
+                                {{ progressInfo.value }}%
+                            </div>
+                        </div>
+                    </div>
+        
+                    <div class="input-group mb-3 ">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01" [translate]="'HR.Upload'"></span>
+                        </div>
+                        <div class="custom-file">
+                            <input multiple accept="image/*" (change)="selectFiles($event)" type="file"
+                                class="custom-file-input" id="inputGroupFile01"
+                                aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">{{img}}</label>
+                        </div>
+                    </div>
+                    <div class="alert alert-light" role="alert">{{ message }}</div>
+                </div><br>
             </div>
-        </div>
+        </div> 
         <ng-template pTemplate="footer">
             <p-button type="submit" icon="pi pi-check" [label]="'HR.Save' | translate" styleClass="p-button-text">
             </p-button>
-            <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
+            <p-button icon="pi pi-times" (click)="NewLeaveDialogbool=false" [label]="'HR.No' | translate"></p-button>
         </ng-template>
 
     </p-dialog>
@@ -484,12 +790,9 @@
         </div>
         <br>
         <div class="row">
-            <span class="col-md-3" for="Alternate"
-                [translate]="'HR.Alternative Employee'"></span>{{NewLeaveRequest.alternativeEmpID}}
-            <select [(ngModel)]="NewLeaveRequest.alternativeEmpID" name="Alternate" class="col-md-6 form-control">
-                <option *ngFor="let item of EmployeeByProfession"
-                    [attr.selected]="NewLeaveRequest.alternativeEmp==item.name ? true : null" value="{{item.id}}">
-                    {{item.name}}</option>
+            <label class="col-md-3" for="Alternate"[translate]="'HR.Alternative Employee'"></label>
+            <select [(ngModel)]="NewLeaveRequest.alternativeEmpID" name="EmployeeByProfession" class="col-md-6 form-control">
+                <option *ngFor="let item of EmployeeByProfession" value="{{item.id}}">{{item.name}}</option>
             </select>
         </div>
         <br>
@@ -512,10 +815,144 @@
             <textarea [(ngModel)]="NewLeaveRequest.comment" name="comment" type="text" class="col-md-6 form-control"
                 inputId="comment">{{NewLeaveRequest.comment}} </textarea>
         </div>
-        <ng-template pTemplate="footer">
-            <p-button type="submit" icon="pi pi-check" [label]="'HR.Update' | translate" styleClass="p-button-text">
+<br>
+
+<!-- <div class="form-row">
+    <span class="col-md-3" for="File" [translate]="'HR.Choose file'"></span>
+    <div class="col-md-7">
+        <div class="input-group mb-3">
+
+            <div class="custom-file ">
+                <input multiple accept="image/*" (change)="selectFiles($event)" type="file"
+                    class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                <label class="custom-file-label" for="inputGroupFile01" [translate]="'HR.Choose file'"></label>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="form-row" style="margin-left: 23%;"> 
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header" [translate]="'HR.Choose file'">
+                
+            </div>
+            <div *ngFor="let progressInfo of progressInfos " class="mb-2">
+                <span>{{ progressInfo.fileName }}</span>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar"
+                        attr.aria-valuenow="{{ progressInfo.value }}" aria-valuemin="0" aria-valuemax="100"
+                        [ngStyle]="{ width: progressInfo.value + '%' }">
+                        {{ progressInfo.value }}%
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group mb-3 ">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01" [translate]="'HR.Upload'"></span>
+                </div>
+                <div class="custom-file">
+                    <input multiple accept="image/*" (change)="selectFiles($event)" type="file"
+                        class="custom-file-input" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">{{img}}</label>
+                </div>
+            </div>
+            <div class="alert alert-light" role="alert">{{ message }}</div>
+        </div><br>
+    </div>
+</div> 
+<ng-template pTemplate="footer">
+            <p-button type="submit" (onClick)="EditLeaveRequest(NewLeaveRequest.id)" icon="pi pi-check" [label]="'HR.Update' | translate" styleClass="p-button-text">
             </p-button>
-            <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
+            <p-button icon="pi pi-times" (click)="EditLeave=false" [label]="'HR.No' | translate"></p-button>
         </ng-template>
     </p-dialog>
 </form>
+
+<div class="container" *ngIf="role=='User'">
+    <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+        [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+        [value]="LeavesForEmployee">
+        <ng-template pTemplate="caption">
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <button id="addEmpBtn" routerLink="/AddLeave" class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr style="height: 5px !important; ">
+                <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="employeeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="date">
+                    <span [translate]="'HR.Applied On'"></span>
+                    <p-sortIcon field="date"></p-sortIcon>
+                </th>
+                <th pSortableColumn="start">
+                    <span [translate]="'HR.Start'"></span>
+                    <p-sortIcon field="start"></p-sortIcon>
+                </th>
+                <th pSortableColumn="alternativeEmp">
+                    <span [translate]="'HR.Alternative Employee'"></span>
+                    <p-sortIcon field="alternativeEmp"></p-sortIcon>
+                </th>
+                <th pSortableColumn="days">
+                    <span [translate]="'HR.Days'"></span>
+                    <p-sortIcon field="days"></p-sortIcon>
+                </th>
+                <th [translate]="'HR.Status'">
+                </th>
+                <th [translate]="'HR.Controls'"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-leave>
+            <tr style="height: 5px !important;font-size: 17px;">
+                <td>{{leave.employeeName}}</td>
+                <td>{{leave.profession}}</td>
+                <td>{{leave.date | date :'dd-MM-yyyy'}}</td>
+                <td>{{Leave.start | date :'dd-MM-yyyy'}}</td>
+                <td>{{leave.alternativeEmp}}</td>
+                <td>{{leave.days}}</td>
+                <td id="status" *ngIf="leave.status=='approved'">
+                    <div style="cursor:unset;" class="btn btn-success">
+                        {{'HR.Approved' | translate}}
+                    </div>
+                </td>
+                <td id="status" *ngIf="leave.status=='disapproved' ">
+                    <div style="cursor:unset;" class="btn btn-danger">
+                        {{'HR.Rejected' | translate}}
+
+                    </div>
+                </td>
+                <td id="status" *ngIf="leave.status=='pending' ">
+                    <div style="cursor:unset;" class="btn btn-warning">
+                        {{'HR.Pending' | translate}}
+
+                    </div>
+                </td>
+                <td>
+                    <button [title]="'HR.Show' | translate" class="pi pi-compass " style="cursor: pointer;" aria-hidden="true" (click)="showBasicDialog(leave.id)"></button>
+                    <button [title]="'HR.Update' | translate" class=" pi pi-pencil" style="cursor: pointer;margin-left: 12px;" aria-hidden="true" [disabled]="leave.status!='pending'"
+                        (click)="EditLeaveDialog(leave.id)"></button>
+                    <button [title]="'HR.Delete' | translate" class=" pi pi-times" style="cursor: pointer;margin-left: 12px;" (click)="confirm(leave.id)" [disabled]="leave.status!='pending'"
+                        aria-hidden="true"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

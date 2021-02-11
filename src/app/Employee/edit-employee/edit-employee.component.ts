@@ -24,9 +24,9 @@ import { HttpClient } from '@angular/common/http';
 
 })
 export class EditEmployeeComponent implements OnInit {
-  title = 'FormValidation';  
-  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";  
- isValidFormSubmitted = false;  
+  title = 'FormValidation';
+  mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  isValidFormSubmitted = false;
   Employee: any;
   profession: any;
   positionLevellst: any;
@@ -36,32 +36,34 @@ export class EditEmployeeComponent implements OnInit {
   FacultyDepartments: any;
   empImage: EmployeeDocuments
   lstemployeeImages: EmployeeDocuments[]
-  lstoddocproj:EmployeeDocuments[]
+  lstoddocproj: EmployeeDocuments[]
   selectedFile: any;
   fileToUpload: File;
   uploadedFiles: any[] = [];
-  showAlert:boolean=true
+  showAlert: boolean = true
   displaydoc: boolean
   options: FormGroup;
+  employeeId: any;
 
   //docEmployee: EmployeeDocuments
-  lstTest:any[]=[]
+  lstTest: any[] = []
   EmployeeID = this.activeRoute.snapshot.params['empId'];
 
-  constructor(private empService: EmployeeService, private router: Router,private fb: FormBuilder
+  constructor(private empService: EmployeeService, private router: Router, private fb: FormBuilder
     , private activeRoute: ActivatedRoute, public datepipe: DatePipe,
     private confirmationService: ConfirmationService, private messageService: MessageService,
     private positionLevelService: PositionLevelService, private positionsService: PositionsService,
     private univertyService: UniversitiesService, private FacultyService: FacultyService,
-    private employeeDocumentservice:EmployeeDocumentsService,
-    private facultyDepartmentService: FacultyDepartmentService,private httpClient: HttpClient,
+    private employeeDocumentservice: EmployeeDocumentsService,
+    private facultyDepartmentService: FacultyDepartmentService, private httpClient: HttpClient,
 
-    ) {
-    this.Employee = {listOfdocuments:[],
+  ) {
+    this.Employee = {
+      listOfdocuments: [],
       Address: '', DateOfBirth: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Email: '', GraduatioYear: ''
       , HiringDateHiringDate: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), MaritalStatus: 'Marital Status', Name: '',
-      Phone: '', ProfessionID: 0, RelevantPhone: '', code: '', gender: 'Gender',PositionId:0  ,
-      PositionlevelId:0,FacultyDepartmentId:0
+      Phone: '', ProfessionID: 0, RelevantPhone: '', code: '', gender: 'Gender', PositionId: 0,
+      PositionlevelId: 0, FacultyDepartmentId: 0
     };
     this.options = this.fb.group({
       hideRequired: false,
@@ -69,28 +71,29 @@ export class EditEmployeeComponent implements OnInit {
     });
 
   }
-  onFormSubmit(form: NgForm) {  
-    this.isValidFormSubmitted = false;  
-    if (form.invalid) {  
-       return;  
-    }  
-    this.isValidFormSubmitted = true;  
-    form.resetForm();  
- }
+  onFormSubmit(form: NgForm) {
+    this.isValidFormSubmitted = false;
+    if (form.invalid) {
+      return;
+    }
+    this.isValidFormSubmitted = true;
+    form.resetForm();
+  }
   ngOnInit(): void {
 
-    this.lstemployeeImages=[]
-    this.lstoddocproj=[]
-    this.empImage={
-      documentName:'',employeeID:0,employeeName:'',fileName:'',id:0
+    this.lstemployeeImages = []
+    this.lstoddocproj = []
+    this.empImage = {
+      documentName: '', employeeID: 0, employeeName: '', fileName: '', id: 0
     }
     this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(this.EmployeeID).subscribe(d => {
       this.Employee.listOfdocuments = d;
-      this.lstTest=d
-      console.log("docs",this.Employee.listOfdocuments)
-     // this.project1.listOfdocuments = this.documents;
-    //  this.projectObj.listOfdocuments = d;
-     // console.log("doc", d)
+      this.lstTest = d
+      console.log("this.employeeId", this.EmployeeID)
+      console.log("docs", this.Employee.listOfdocuments)
+      // this.project1.listOfdocuments = this.documents;
+      //  this.projectObj.listOfdocuments = d;
+      // console.log("doc", d)
     }), err => console.log(err)
 
 
@@ -98,9 +101,10 @@ export class EditEmployeeComponent implements OnInit {
     this.empImage.employeeID = Number(this.EmployeeID)
 
     this.empService.getProfession().subscribe(
-      (res) => { 
+      (res) => {
         this.profession = res;
-         console.log("profession",this.profession) },
+        console.log("profession", this.profession)
+      },
       (err) => { console.log(err) }
     );
     this.empService.GetEmployee(this.EmployeeID).subscribe(
@@ -139,8 +143,7 @@ export class EditEmployeeComponent implements OnInit {
       err => console.log(err)
     )
   }
-  onchangeFaculty($event)
-  {
+  onchangeFaculty($event) {
     this.facultyDepartmentService.GetFacultyDepartmentsByFacultyId($event.target.value).subscribe(
       res => { this.FacultyDepartments = res; console.log("FacultyDepartments", this.FacultyDepartments) },
       err => console.log(err)
@@ -149,14 +152,14 @@ export class EditEmployeeComponent implements OnInit {
   update() {
     console.log(this.Employee);
     this.Employee.graduatioYear = String(this.Employee.graduatioYear);
-    this.Employee.professionID=Number(this.Employee.professionID);
-    this.Employee.dateOfBirth=this.dateOfBirth;
-    this.Employee.hiringDateHiringDate=this.hiringDateHiringDate;
+    this.Employee.professionID = Number(this.Employee.professionID);
+    this.Employee.dateOfBirth = this.dateOfBirth;
+    this.Employee.hiringDateHiringDate = this.hiringDateHiringDate;
 
-    this.Employee.nationalId=String(this.Employee.nationalId)
-    this.Employee.positionId=Number(this.Employee.positionId);
-    this.Employee.positionlevelId=Number(this.Employee.positionlevelId);
-    this.Employee.facultyDepartmentId=Number(this.Employee.facultyDepartmentId);
+    this.Employee.nationalId = String(this.Employee.nationalId)
+    this.Employee.positionId = Number(this.Employee.positionId);
+    this.Employee.positionlevelId = Number(this.Employee.positionlevelId);
+    this.Employee.facultyDepartmentId = Number(this.Employee.facultyDepartmentId);
 
     console.log(this.Employee.professionID)
     console.log(typeof (this.Employee.professionID))
@@ -207,35 +210,35 @@ export class EditEmployeeComponent implements OnInit {
   }
   closeAlert() {
     //this.alert.nativeElement.classList.remove('show');
-    this.showAlert=false
-}
+    this.showAlert = false
+  }
 
 
-SaveimageToDB() {
+  SaveimageToDB() {
 
-  this.employeeDocumentservice.AddEmployeeDocument(this.lstemployeeImages).subscribe(e => {
-    console.log(e)
-    this.Employee = {
-      Address: '', DateOfBirth: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Email: '', GraduatioYear: ''
-      , hiringDateHiringDate: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), MaritalStatus: 'Marital Status', Name: '',
-      Phone: '', ProfessionID: 0, RelevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender',PositionId:0  ,
-      PositionlevelId:0,FacultyDepartmentId:0
-    };
-    this.router.navigate(['/employee'])
-  })
+    this.employeeDocumentservice.AddEmployeeDocument(this.lstemployeeImages).subscribe(e => {
+      console.log(e)
+      this.Employee = {
+        Address: '', DateOfBirth: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Email: '', GraduatioYear: ''
+        , hiringDateHiringDate: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), MaritalStatus: 'Marital Status', Name: '',
+        Phone: '', ProfessionID: 0, RelevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', PositionId: 0,
+        PositionlevelId: 0, FacultyDepartmentId: 0
+      };
+      this.router.navigate(['/employee'])
+    })
 
-}
+  }
 
-dateOfBirth:string
-addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-  this.dateOfBirth = this.datepipe.transform(event.value, 'yyyy-MM-dd');
-  console.log(this.dateOfBirth)
-}
-hiringDateHiringDate:string
-addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>) {
-  this.hiringDateHiringDate = this.datepipe.transform(event.value, 'yyyy-MM-dd');
-  console.log(this.hiringDateHiringDate)
-}
+  dateOfBirth: string
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.dateOfBirth = this.datepipe.transform(event.value, 'yyyy-MM-dd');
+    console.log(this.dateOfBirth)
+  }
+  hiringDateHiringDate: string
+  addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.hiringDateHiringDate = this.datepipe.transform(event.value, 'yyyy-MM-dd');
+    console.log(this.hiringDateHiringDate)
+  }
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }
@@ -299,7 +302,10 @@ addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>)
   delDocument(id: number) {
     console.log(id)
     this.employeeDocumentservice.deletedocument(id).subscribe(res => {
-      this.ngOnInit()
+      this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(this.EmployeeID).subscribe(d => {
+        this.lstTest = d
+        console.log("this.employeeId", this.EmployeeID)
+      }), err => console.log(err)
     })
   }
 
@@ -307,13 +313,13 @@ addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>)
 
     this.employeeDocumentservice.AddEmployeeDocument(this.lstoddocproj).subscribe(e => {
       this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(this.EmployeeID).subscribe(d => {
-       // this.documents = d;
-      // this.lstoddocproj=d
-       // this.project1.listOfdocuments = this.documents;
+        // this.documents = d;
+        // this.lstoddocproj=d
+        // this.project1.listOfdocuments = this.documents;
         this.Employee.listOfdocuments = d;
-        this.lstTest=this.Employee.listOfdocuments
+        this.lstTest = this.Employee.listOfdocuments
         this.empImage = {
-          id: 0,documentName : '', employeeID:this.EmployeeID,fileName:'',employeeName:''
+          id: 0, documentName: '', employeeID: this.EmployeeID, fileName: '', employeeName: ''
         };
       }), err => console.log(err)
     })
@@ -321,14 +327,14 @@ addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>)
   Savedoctolist() {
     this.lstoddocproj.push(this.empImage);
     this.empImage = {
-      id: 0,documentName : '', employeeID:this.EmployeeID,fileName:'',employeeName:''
+      id: 0, documentName: '', employeeID: this.EmployeeID, fileName: '', employeeName: ''
     };
     console.log(this.lstoddocproj);
   }
 
   showdocDialog() {
     this.displaydoc = true
-  this.lstoddocproj=[]
+    this.lstoddocproj = []
 
   }
 

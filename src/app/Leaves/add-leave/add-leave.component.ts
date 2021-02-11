@@ -9,6 +9,7 @@ import { renderFlagCheckIfStmt } from '@angular/compiler/src/render3/view/templa
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { LeaveTypeService } from 'src/app/Services/leave-type.service';
+import { date } from '@rxweb/reactive-form-validators';
 
 @Component({
   selector: 'app-add-leave',
@@ -32,9 +33,9 @@ export class AddLeaveComponent implements OnInit {
   constructor(private EmpService: EmployeeService, private LeaveTypeService:LeaveTypeService,
     private Leaveservice: LeaveService,private router :Router,private messageService: MessageService
     ,private uploadService: UploadFilesService) {
-    this.LeaveRequestObj = {
-      Comment: '', AlternativeAddress: '', Status: 'pending', LeavesFiles: '',
-      AlternativeEmpID: 0, Days: 0, EmployeeID: 0, LeaveTypeID: 0, start: new Date(Date.now())
+    this.LeaveRequestObj = {id:0,alternativeEmp:"",date:new Date(),end:new Date(),
+      comment: '', alternativeAddress: '', status: 'pending', leavesFiles: '',employeeName:"",profession:"",
+      alternativeEmpID: 0, days: 0, employeeID: 0, leaveTypeID: 0, start: new Date(Date.now())
     }
   }
 
@@ -55,11 +56,11 @@ export class AddLeaveComponent implements OnInit {
 
   add() {
     console.log(this.LeaveRequestObj);
-    this.LeaveRequestObj.AlternativeEmpID = Number(this.LeaveRequestObj.AlternativeEmpID);
-    this.LeaveRequestObj.LeaveTypeID = Number(this.LeaveRequestObj.LeaveTypeID);
-    console.log(typeof (this.LeaveRequestObj.AlternativeEmpID))
-    console.log(this.LeaveRequestObj.AlternativeEmpID);
-    this.LeaveRequestObj.EmployeeID =Number(localStorage.getItem("id"));;
+    this.LeaveRequestObj.alternativeEmpID = Number(this.LeaveRequestObj.alternativeEmpID);
+    this.LeaveRequestObj.leaveTypeID = Number(this.LeaveRequestObj.leaveTypeID);
+    console.log(typeof (this.LeaveRequestObj.alternativeEmpID))
+    console.log(this.LeaveRequestObj.alternativeEmpID);
+    this.LeaveRequestObj.employeeID =Number(localStorage.getItem("id"));;
    console.log("this.LeaveRequest.EmployeeID",this.LeaveRequestObj)
     this.Leaveservice.addLeave(this.LeaveRequestObj).subscribe(
       data => { 
@@ -105,7 +106,7 @@ export class AddLeaveComponent implements OnInit {
       let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
       const lengthOfCode = 40;
       const newName = this.makeRandom(lengthOfCode, possible);
-      this.LeaveRequestObj.LeavesFiles=this.LeaveRequestObj.LeavesFiles.concat(','+ newName + fileExtension);
+      this.LeaveRequestObj.leavesFiles=this.LeaveRequestObj.leavesFiles.concat(','+ newName + fileExtension);
       Object.defineProperty(this.selectedFiles[i], 'name', {
         writable: true,
         value: newName + fileExtension

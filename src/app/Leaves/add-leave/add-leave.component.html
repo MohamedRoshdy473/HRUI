@@ -37,7 +37,7 @@
             </div>
             <div class="form-group col-md-6">
                 <span for="Days" [translate]="'HR.Days'"></span>
-                <input [(ngModel)]="LeaveRequestObj.Days" name="Days" type="number" min="1" value="1" class="form-control"
+                <input [(ngModel)]="LeaveRequestObj.days" name="Days" type="number" min="1" value="1" class="form-control"
                     inputId="Days">
             </div>
         </div>
@@ -45,7 +45,7 @@
 
             <div class="form-group col-md-6">
                 <span class="" for="LeaveTypes" [translate]="'HR.Leave Type'"></span>
-                <select [(ngModel)]="LeaveRequestObj.LeaveTypeID" name="LeaveTypes" class="form-control">
+                <select [(ngModel)]="LeaveRequestObj.leaveTypeID" name="LeaveTypes" class="form-control">
                     <option *ngFor="let item of LeaveTypes" value="{{item.id}}">{{item.name}}</option>
                 </select>
             </div>
@@ -53,7 +53,7 @@
 
             <div class="form-group col-md-6">
                 <span for="Alternate" [translate]="'HR.Alternate'"></span>
-                <select [(ngModel)]="LeaveRequestObj.AlternativeEmpID" name="Alternate" class="form-control">
+                <select [(ngModel)]="LeaveRequestObj.alternativeEmpID" name="Alternate" class="form-control">
                     <option *ngFor="let item of EmployeeByProfession" value="{{item.id}}">{{item.name}}</option>
                 </select>
             </div>
@@ -76,12 +76,12 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <span  for="Note" [translate]="'HR.Alternateive Address'"></span>
-                <textarea [(ngModel)]="LeaveRequestObj.AlternativeAddress" *ngIf="!OldAddress" name="Note" type="text"
+                <textarea [(ngModel)]="LeaveRequestObj.alternativeAddress" *ngIf="!OldAddress" name="Note" type="text"
                     class="form-control" inputId="Note"></textarea>
             </div>
             <div class="col-md-6">
                 <span  for="comment" [translate]="'HR.Note'"></span>
-                <textarea [(ngModel)]="LeaveRequestObj.Comment" name="comment" type="text" class="form-control"
+                <textarea [(ngModel)]="LeaveRequestObj.comment" name="comment" type="text" class="form-control"
                     inputId="comment"></textarea>
             </div>
         </div>

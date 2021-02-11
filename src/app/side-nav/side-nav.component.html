@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <nav id="sidebar" *ngIf="role=='Admin'">
+    <nav id="sidebar" *ngIf="role=='Admin' || role=='HR'">
         <div class="sidebar-header">
             <h3 style="font-size: 25px;">{{ 'HR.Human Resources' |translate}}</h3>
         </div>
@@ -21,7 +21,7 @@
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/AllExcuses']">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/AllExcuses']">
                             <span class="menu-collapsed" [translate]="'HR.All Excuses'"></span>
                         </a>
                     </li>
@@ -37,18 +37,18 @@
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/AllLeaves']">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/AllLeaves']">
                             <span class="menu-collapsed" [translate]="'HR.All Leaves'"></span>
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/LeavesType']">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/LeavesType']">
                             <span class="menu-collapsed" [translate]="'HR.LeavesType'"></span>
                         </a>
                     </li>
                 </ul>
             </li>
-            <li class="active" *ngIf="role=='Admin'">
+            <li class="active" *ngIf="role=='Admin' || role=='HR'">
                 <a href="#attendance" data-toggle="collapse" aria-expanded="false"
                     class="dropdown-toggle pi pi-sign-in"> {{
                     'HR.Attendance' | translate}}</a>
@@ -70,7 +70,7 @@
                     class="dropdown-toggle pi pi-ticket"> {{
                     'HR.Need Request' | translate}}</a>
                 <ul class="collapse list-unstyled" id="NeedRequest">
-                    <li *ngIf="role=='Admin'">
+                    <li *ngIf="role=='Admin' || role=='HR'">
                         <a [routerLink]="['/NeedRequest']">
                             <span [translate]="'HR.Need Request'"></span>
                         </a>
@@ -83,7 +83,7 @@
                 </ul>
             </li>
 
-            <li class="active" *ngIf="role=='Admin'">
+            <li class="active" *ngIf="role=='Admin' || role=='HR'">
                 <a href="#Evaluations" data-toggle="collapse" aria-expanded="false"
                     class="dropdown-toggle pi pi-user-edit"> {{
                     'HR.Evaluations' | translate}}</a>
@@ -105,12 +105,12 @@
                     </li>
                 </ul>
             </li>
-            <li *ngIf="role=='Admin'">
+            <li *ngIf="role=='Admin' || role=='HR'">
                 <a [routerLink]="['/Certificates']" class=" pi pi-envelope"> {{
                     'HR.Certificates' | translate}}</a>
             </li>
 
-            <li class="active" *ngIf="role=='Admin'">
+            <li class="active" *ngIf="role=='Admin' || role=='HR'">
                 <a href="#Trainings" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-pencil">
                     {{
                     'HR.Trainings' | translate}}</a>
@@ -121,7 +121,7 @@
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/TrainingProfessions']">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/TrainingProfessions']">
                             <span [translate]="'HR.TrainingProfessions'"></span>
                         </a>
                     </li>
@@ -132,11 +132,11 @@
                     </li>
                 </ul>
             </li>
-            <li *ngIf="role=='Admin'">
+            <li *ngIf="role=='Admin' || role=='HR'">
                 <a [routerLink]="['/Courses']" class="pi pi-sitemap"> {{'HR.Courses'|translate}}
                 </a>
             </li>
-            <li class="active" *ngIf="role=='Admin'">
+            <li class="active" *ngIf="role=='Admin' || role=='HR'">
                 <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-cog">
                     {{
                     'HR.Settings' | translate}}</a>
@@ -145,43 +145,43 @@
                         <a class="active" class="pi pi-users" routerLink='/AllLUsers'> {{ 'HR.Users' | translate }}</a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayPositionLevels']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayPositionLevels']" class="pi pi-users">
                             {{'HR.DisplayPositionLevels'| translate}}
                         </a>
                     </li>
                      <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayPositions']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayPositions']" class="pi pi-users">
                             {{'HR.DisplayPositions'| translate}}
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayProfessions']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayProfessions']" class="pi pi-users">
                             {{'HR.DisplayProfessions'| translate}}
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayUniversities']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayUniversities']" class="pi pi-users">
                             {{'HR.DisplayUniversities'| translate}}
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayFaculties']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayFaculties']" class="pi pi-users">
                             {{'HR.DisplayFaculties'| translate}}
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/DisplayFacultydepartments']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayFacultydepartments']" class="pi pi-users">
                             {{'HR.DisplayFacultydepartments'| translate}}
                         </a>
                     </li>
 
                     
                     <li>
-                        <a *ngIf="role=='Admin'" [routerLink]="['/Instructor']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/Instructor']" class="pi pi-users">
                             {{'HR.Instructors'| translate}}
                         </a>
                     </li>
-                    <li class="active" *ngIf="role=='Admin'">
+                    <li class="active" *ngIf="role=='Admin' || role=='HR'">
                         <a href="#Categories/SubCategories" data-toggle="collapse" aria-expanded="false"
                             class="dropdown-toggle pi pi-th-large"> {{
                             'HR.Categories SubCategories' | translate}}</a>
@@ -221,25 +221,25 @@
                             </a>
                         </li>
                         <li style="margin-left: 20px; font-size: 20px;color: #2674a8;">
-                            <a [routerLink]="['/AddLeave']">
-                                <span class="menu-collapsed" [translate]="'HR.Add Leave'"></span>
+                            <a  [routerLink]="['/AllLeaves']">
+                                <span class="menu-collapsed" [translate]="'HR.All Leaves'"></span>
                             </a>
                         </li>
                         <li style="margin-left: 20px; font-size: 20px;color: #2674a8;">
                             <a [routerLink]="['/NeedRequestEmp']">
-                                <span [translate]="'HR.Need Request Employee'"></span>
+                                <span [translate]="'HR.Need Request'"></span>
                             </a>
                         </li>
                     </ul>
 
-                    <ul class="navbar-nav" *ngIf="role=='Admin'">
+                    <ul class="navbar-nav" *ngIf="role=='Admin' || role=='HR'">
                         <li style="margin-left: 20px; font-size: 20px;color: #2674a8;">
                             <a [routerLink]="['/AllExcuses']">
                                 <span class="menu-collapsed" [translate]="'HR.All Excuses'"></span>
                             </a>
                         </li>
                         <li style="margin-left: 20px; font-size: 20px;color: #2674a8;">
-                            <a *ngIf="role=='Admin'" [routerLink]="['/AllLeaves']">
+                            <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/AllLeaves']">
                                 <span class="menu-collapsed" [translate]="'HR.All Leaves'"></span>
                             </a>
                         </li>

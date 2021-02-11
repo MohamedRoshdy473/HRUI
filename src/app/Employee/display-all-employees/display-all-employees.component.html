@@ -151,10 +151,11 @@
                     <!-- <button icon="pi pi-print" printSectionId="print-section" ngxPrint styleClass="p-button-text"
                     [translate]="'HR.Print'" (click)="PrintEmployee(employee.id)"></button>  -->
                     <!-- <span class="pi pi-print btn" printSectionId="print-section" ngxPrint></span>-->
-                    <span style="margin-left: 20px;" class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(employee.id)"></span>
-                    <span class="btn pi pi-pencil" aria-hidden="true"
+                    <span style="margin-left: 20px;" [title]="'HR.Show' | translate"
+                    class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(employee.id)"></span>
+                    <span class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate"
                         [routerLink]="['/editEmployee',employee.id]"></span>
-                    <span class="btn pi pi-times" (click)="confirm(employee.id)" aria-hidden="true"></span>
+                    <span class="btn pi pi-times" [title]="'HR.Delete' | translate" (click)="confirm(employee.id)" aria-hidden="true"></span>
                    <!-- <span class="btn" (click)="viewAllImages(employee.id)">View</span> -->
                 </td>
                 <td style="width: 50px;">
@@ -419,6 +420,8 @@
                     </td>
                     <td><button class="btn btn-info" style="margin-right: 30px;float: right;" (click)="viewSingleDoc(i)" [translate]="'HR.View'"></button>
                     </td>
+                    <button pButton pRipple icon="pi pi-trash" style="min-width: 5px;" class="p-button-danger"
+                            (click)="delDocument(i.id)"></button>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">

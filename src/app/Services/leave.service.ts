@@ -24,18 +24,31 @@ export class LeaveService {
   {
     return this.httpclient.get(`${environment.ApiURL}/LeaveRequests`,this.httpHeader);
 
-  }
-  getLeaveByID(id)
+  } 
+  GetLeaveRequestsByManager()
   {
-    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/`+id,this.httpHeader);
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByManager`,this.httpHeader);
+
+  }
+  getLeaveByID(id):Observable<LeaveRequest>
+  {
+    return this.httpclient.get<LeaveRequest>(`${environment.ApiURL}/LeaveRequests/`+id,this.httpHeader);
   }
   getrequestLeaveByID(id)
   {
     return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/getLeaveRequestfiles/`+id,this.httpHeader);
   }
+  GetAllLeavesForEmployeeId(EmployeeId):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/GetAllLeavesForEmployeeId/`+EmployeeId,this.httpHeader)
+  }
   addLeave(LeaveRequest)
   {
     return this.httpclient.post(`${environment.ApiURL}/LeaveRequests/AddLeaveRequest`,LeaveRequest,this.httpHeader);
+  }
+  updateLeave(id,LeaveRequest)
+  {
+    return this.httpclient.put(`${environment.ApiURL}/LeaveRequests/`+id,LeaveRequest,this.httpHeader);
   }
   GetLeaveTypes()
   {
@@ -53,6 +66,18 @@ export class LeaveService {
   {
     return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/PendingLeaves`,this.httpHeader)
   }
+  ApprovedLeavesByManager():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/ApprovedLeavesByManager`,this.httpHeader)
+  }
+  DisApprovedLeavesByManager():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/DisApprovedLeavesByManager`,this.httpHeader)
+  }
+  PendingLeavesByManager():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/PendingLeavesByManager`,this.httpHeader)
+  }
   approve(id):Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/AcceptLeave/`+id,this.httpHeader)
@@ -68,5 +93,9 @@ export class LeaveService {
   delete(id)
   {
     return this.httpclient.delete(`${environment.ApiURL}/LeaveRequests/`+id,this.httpHeader)
+  }
+  DeleteLeaveImage(LeaveImageId)
+  {
+    return this.httpclient.delete(`${environment.ApiURL}/LeaveRequests/DeleteLeaveImage/`+LeaveImageId,this.httpHeader)
   }
 }

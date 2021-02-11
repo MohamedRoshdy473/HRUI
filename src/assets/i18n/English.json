@@ -187,8 +187,10 @@
     "New University":"New University",
     "DisplayFacultydepartments":"Faculty Departments",
     "Faculty Department Name":"Faculty Department Name",
-    "managerName":"Manager Name"
-    
+    "managerName":"Manager Name",
+    "HR":"HR",
+    "Show":"Show",
+    "Delete":"Delete"
 
 
   }

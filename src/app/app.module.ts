@@ -159,6 +159,7 @@ import { DisplayProfessionsComponent } from './Profession/display-professions/di
 import { DisplayUniversitiesComponent } from './Universities/display-universities/display-universities.component';
 import { DisplayFacultiesComponent } from './Faculties/display-faculties/display-faculties.component';
 import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
+import { EditLeaveRequestComponent } from './Leaves/edit-leave-request/edit-leave-request.component';
 
 
 
@@ -249,6 +250,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DisplayUniversitiesComponent,
     DisplayFacultiesComponent,
     DisplayFacultydepartmentsComponent,
+    EditLeaveRequestComponent,
 
   ],
   imports: [

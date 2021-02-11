@@ -17,7 +17,7 @@ export class UploadFilesService {
 
     console.log(file.name);
     formData.append('file', file,file.name);
-    const endpoint = `${environment.ApiURL}UploadImage`;
+    const endpoint = `${environment.ApiURL}/Employees/UploadImage`;
 
     const req = new HttpRequest('POST', endpoint, formData, {
       reportProgress: true,

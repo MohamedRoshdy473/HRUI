@@ -103,6 +103,13 @@
                         {{ 'HR.User' | translate }} 
                     </label>
                   </div>
+                  <div class="form-check">
+                    <input checked [(ngModel)]="NewUser.role" class="form-check-input" type="radio" name="exampleRadios"
+                     id="exampleRadios2" value="HR">
+                    <label class="form-check-label" for="exampleRadios2">
+                        {{ 'HR.HR' | translate }} 
+                    </label>
+                  </div>
             </div>
         </div>
         <ng-template pTemplate="footer">

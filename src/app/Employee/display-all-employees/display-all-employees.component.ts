@@ -39,7 +39,8 @@ export class DisplayAllEmployeesComponent implements OnInit {
     submitted: boolean;
     representatives: { name: string; image: string; }[];
     getimage: string;
-  empImages: EmployeeDocuments[]
+  empImages: EmployeeDocuments[];
+  employeeId:any;
 
   NewEmployeeDocumentDialogbool: boolean = false
 
@@ -225,6 +226,7 @@ PrintEmployee(id)
         this.messageService.clear();
     }
     viewAllImages(employeeId:number){
+         this.employeeId = employeeId
         this.NewEmployeeDocumentDialogbool=true;
         this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(employeeId).subscribe(e => {
             this.empImages = e
@@ -235,6 +237,12 @@ PrintEmployee(id)
 
         var filePath = `${environment.getImageByName}wwwroot/documentFiles/${imgObj.fileName}`;
          window.open(filePath);
+      }
+      delDocument(id: number) {
+        console.log(id)
+        this.employeeDocumentservice.deletedocument(id).subscribe(res => {
+            this.viewAllImages(this.employeeId)
+        })
       }
 
 }

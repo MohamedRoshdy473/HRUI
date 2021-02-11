@@ -77,11 +77,9 @@
             <div class="col-md-4">
                 <label  [translate]="'HR.EmailCompany'"></label>
                 <input type="email" class="form-control" name="EmailCompany" [(ngModel)]="Employee.emailCompany"
-                #mailcompany="ngModel" minlength="10"
-                    [class.is-invalid]="mailcompany.invalid && mailcompany.touched" [class.is-valid]="mailcompany.valid" required
-                    [placeholder]="'HR.EmailCompany' | translate">
-                    <small [hidden]="mailcompany.valid || mailcompany.untouched" id="helpId" class="text-muted"
-                    [translate]="'HR.messegeEmail'"></small>
+                     [placeholder]="'HR.EmailCompany' | translate">
+                    <!-- <small [hidden]="mailcompany.valid || mailcompany.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegeEmail'"></small> -->
             </div>
         </div><br>
         <div class="form-row">
@@ -273,9 +271,8 @@
                     <td (click)="downloadFile(i.fileName)"
                         style="color: blue; cursor: pointer; text-decoration: blue  underline;">{{i.fileName}}
                     </td>
-
-                    <!-- <button pButton pRipple icon="pi pi-trash" style="min-width: 5px;" class="p-button-danger"
-                        (click)="delDocument(i.id)"></button> -->
+                    <button pButton pRipple icon="pi pi-trash" style="min-width: 5px;" class="p-button-danger"
+                            (click)="delDocument(i.id)"></button>
 
                 </tr>
             </ng-template>

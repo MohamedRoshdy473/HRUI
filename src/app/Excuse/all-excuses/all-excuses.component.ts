@@ -9,6 +9,7 @@ import { jsPDF } from "jspdf";
 
 import 'jspdf-autotable'
 import autoTable from 'jspdf-autotable';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker';
 //import autoTable from 'jspdf-autotable'
 // import autoTable from 'jspdf-autotable';
 
@@ -17,7 +18,7 @@ import autoTable from 'jspdf-autotable';
   selector: 'app-all-excuses',
   templateUrl: './all-excuses.component.html',
   styleUrls: ['./all-excuses.component.css'],
-  providers: [DatePipe]
+  providers: [DatePipe],
 })
 
 
@@ -26,10 +27,17 @@ export class AllExcusesComponent implements OnInit {
   EditLeave: boolean;
   NewExcuseDialogbool: boolean;
   NewExcuse: any;
+
   Allexcuses: any;
   Approvedexcuses: any;
   DisApprovedexcuses: any;
-  PendingExcuse: any;
+  PendingExcuseByHR: any;
+
+  AllexcusesByManager: any;
+  ApprovedexcusesByManager: any;
+  DisApprovedexcusesByManager: any;
+  PendingExcuseByManager: any;
+
   Excuse: any;
   EditExcuse: Excuse;
   EditExcuseboolean: boolean;
@@ -68,7 +76,10 @@ export class AllExcusesComponent implements OnInit {
       data => { this.Allexcuses = data; console.log(data) },
       error => console.log(error)
     );
-
+    this.ExcuseService.GetExcusesByManager().subscribe(
+      data => { this.AllexcusesByManager = data; console.log(data) },
+      error => console.log(error)
+    );
     this.ExcuseService.GetAllExcuseForEmployeeId(this.empId).subscribe(
       data => { this.ExcusesForEmployee = data; console.log(data) },
       error => console.log(error)
@@ -78,17 +89,26 @@ export class AllExcusesComponent implements OnInit {
       data => { this.Approvedexcuses = data; console.log(data) },
       error => console.log(error)
     );
-
+    this.ExcuseService.ApprovedExcusesByManager().subscribe(
+      data => { this.ApprovedexcusesByManager = data; console.log(data) },
+      error => console.log(error)
+    );
     this.ExcuseService.DisApprovedExcuses().subscribe(
       data => { this.DisApprovedexcuses = data; console.log(data) },
       error => console.log(error)
     );
-
-    this.ExcuseService.PendingExcuses().subscribe(
-      data => { this.PendingExcuse = data; console.log("PendingExcuses",data) },
+    this.ExcuseService.DisApprovedExcusesByManager().subscribe(
+      data => { this.DisApprovedexcusesByManager = data; console.log(data) },
       error => console.log(error)
     );
-    
+    this.ExcuseService.PendingExcusesByManager().subscribe(
+      data => { this.PendingExcuseByManager = data; console.log("PendingExcuseByManager",data) },
+      error => console.log(error)
+    );
+    this.ExcuseService.PendingExcusesByHR().subscribe(
+      data => { this.PendingExcuseByHR= data; console.log("PendingExcuseByHR",data) },
+      error => console.log(error)
+    );
     this.checkExcuseDate();
 
   }
@@ -131,7 +151,7 @@ export class AllExcusesComponent implements OnInit {
   update(id) {
 
     var data = {
-      ID: this.NewExcuse.id, Approved: this.NewExcuse.approved, Comment: this.NewExcuse.comment, Date: this.NewExcuse.date,
+      ID: this.NewExcuse.id, Approved: this.NewExcuse.approved, Comment: this.NewExcuse.comment, Date: this.excuseDate,
       Hours: this.NewExcuse.hours, Time: this.NewExcuse.time
     };
     this.ExcuseService.Update(data, id).subscribe(
@@ -182,7 +202,11 @@ export class AllExcusesComponent implements OnInit {
       }
     });
   }
-
+  excuseDate: string
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.excuseDate = this.datePipe.transform(event.value, 'yyyy-MM-dd');
+    console.log(this.excuseDate)
+  }
   //Toast
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });

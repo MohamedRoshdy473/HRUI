@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LeaveRequest } from 'src/app/Data_Types/leave-request';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { LeaveService } from 'src/app/Services/leave.service';
@@ -12,27 +12,18 @@ import { Observable } from 'rxjs';
 import { LeaveTypeService } from 'src/app/Services/leave-type.service'
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environment';
-
 @Component({
-  selector: 'app-all-leaves',
-  templateUrl: './all-leaves.component.html',
-  styleUrls: ['./all-leaves.component.css'],
-  providers: [DatePipe]
-
+  selector: 'app-edit-leave-request',
+  templateUrl: './edit-leave-request.component.html',
+  styleUrls: ['./edit-leave-request.component.css']
 })
-export class AllLeavesComponent implements OnInit {
+export class EditLeaveRequestComponent implements OnInit {
   AllLeaves: any;
   ApprovedLeaves: any;
-  DisApprovedLeaves: any;
-  pendingLeaves: any;
-  
-  AllLeavesByManager: any;
-  ApprovedLeavesByManager: any;
-  DisApprovedLeavesByManager: any;
-  pendingLeavesByManager: any;
-  
   Professions: any;
   Leave: any;
+  DisApprovedLeaves: any;
+  pendingLeaves: any;
   displayBasic: boolean;
   EditLeave: boolean;
   NewLeaveRequest: LeaveRequest;
@@ -55,75 +46,41 @@ export class AllLeavesComponent implements OnInit {
   role: string;
   LeavesForEmployee: any;
   img:string
- Allimages:string;
- requestLeaveId:number
-  getimage: string;
+
   constructor(private EmpService: EmployeeService, private Leaveservice: LeaveService, private LeaveTypeService: LeaveTypeService
     , private router: Router, private messageService: MessageService, private datePipe: DatePipe
     , private uploadService: UploadFilesService, private sanitizer: DomSanitizer,
-    private confirmationService: ConfirmationService) {
+    private confirmationService: ConfirmationService,private activeRoute: ActivatedRoute) {
     this.Leave = {
       Comment: '', AlternativeAddress: '', Status: 'pending',
       AlternativeEmpID: 0, Days: 0, EmployeeID: 0, LeaveTypeID: 0, start: new Date(Date.now())
     };
-
-    // this.Leaveservice.PendingLeaves().subscribe(
-    //   data => { this.pendingLeaves = data },
-    //   error => console.log(error)
-    // );
-
   }
+  LeaveId = this.activeRoute.snapshot.params['id'];
 
   ngOnInit(): void {
-    this.Allimages="";
-    this.getimage = environment.getImageByName
-
     this.NewLeaveRequest = {id:0,profession:"",alternativeEmp:"",date:new Date(),end:new Date(),
     comment: '', alternativeAddress: '', status: 'pending', leavesFiles: '',employeeName:"",
     alternativeEmpID: 0, days: 0, employeeID: 0, leaveTypeID: 0, start: new Date(Date.now())
   };
+
+  this.Leaveservice.getLeaveByID(this.LeaveId).subscribe(
+    data => {
+      this.NewLeaveRequest = data
+      //,this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+    },
+    error => { console.log(error) }
+  );
+  this.Leaveservice.getrequestLeaveByID(this.LeaveId).subscribe(
+    data => { this.getLeavesfiles = data; },
+    error => console.log(error)
+  )
     this.AllAlternativeEmployeesByProfession=[]
 
     this.Leaveservice.AllLeaves().subscribe(
       data => { this.AllLeaves = data },
       error => console.log(error)
     );
-
-    this.Leaveservice.ApprovedLeaves().subscribe(
-      data => { this.ApprovedLeaves = data },
-      error => console.log(error)
-    );
-
-    this.Leaveservice.DisApprovedLeaves().subscribe(
-      data => { this.DisApprovedLeaves = data},
-      error => console.log(error)
-    );
-
-    this.Leaveservice.PendingLeaves().subscribe(
-      data => { this.pendingLeaves = data },
-      error => console.log(error)
-    );
-
-    this.Leaveservice.GetLeaveRequestsByManager().subscribe(
-      data => { this.AllLeavesByManager = data },
-      error => console.log(error)
-    );
-
-    this.Leaveservice.ApprovedLeavesByManager().subscribe(
-      data => { this.ApprovedLeavesByManager = data },
-      error => console.log(error)
-    );
-
-    this.Leaveservice.DisApprovedLeavesByManager().subscribe(
-      data => { this.DisApprovedLeavesByManager = data},
-      error => console.log(error)
-    );
-
-    this.Leaveservice.PendingLeavesByManager().subscribe(
-      data => { this.pendingLeavesByManager = data },
-      error => console.log(error)
-    );
-    
     this.EmpService.getProfession().subscribe(
       data => { this.Professions = data },
       error => console.log(error)
@@ -135,12 +92,6 @@ export class AllLeavesComponent implements OnInit {
     );
     this.EmpService.EmployeeByProfession().subscribe(
       data => {  this.EmployeeByProfession = data,console.log("EmployeeByProfession",this.EmployeeByProfession) },
-      error => console.log(error)
-    );
-    this.empId = Number(localStorage.getItem('id'))
-    this.role=localStorage.getItem("roles");
-    this.Leaveservice.GetAllLeavesForEmployeeId(this.empId).subscribe(
-      data => { this.LeavesForEmployee = data; },
       error => console.log(error)
     );
   }
@@ -162,20 +113,7 @@ export class AllLeavesComponent implements OnInit {
 
   showBasicDialog(id) {
     this.displayBasic = true;
-    this.Leaveservice.getLeaveByID(id).subscribe(
-      data => {
-        this.Leave = data,
-        console.log("Leave",this.Leave) 
-        //,this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
-      },
-      error => { console.log(error) }
-    );
-    this.Leaveservice.getrequestLeaveByID(id).subscribe(
-      data => { this.getLeavesfiles = data;
-        this.requestLeaveId=id;
-        console.log("getLeavesfiles",this.getLeavesfiles) },
-      error => console.log(error)
-    )
+
   }
 
   NewLeaveDialog() {
@@ -235,24 +173,19 @@ export class AllLeavesComponent implements OnInit {
     this.Leaveservice.getLeaveByID(id).subscribe(
       data => {
          this.NewLeaveRequest = data,
-         console.log("NewLeaveRequest",data)
          console.log("editNewLeaveRequest1",this.NewLeaveRequest)
          },
       error => { console.log(error) }
     )
-    this.EmpService.EmployeeByProfession().subscribe(
-      data => {  this.EmployeeByProfession = data,console.log("EmployeeByProfession",this.EmployeeByProfession) },
+    this.Leaveservice.getrequestLeaveByID(id).subscribe(
+      data => { this.getLeavesfiles = data; console.log("images",data) },
       error => console.log(error)
-    );
-    // this.Leaveservice.getrequestLeaveByID(id).subscribe(
-    //   data => { this.getLeavesfiles = data; console.log("images",data) },
-    //   error => console.log(error)
-    // )
+    )
   }
   EditLeaveRequest(id)
   {
     console.log("editNewLeaveRequest",this.NewLeaveRequest);
-    // this.NewLeaveRequest.alternativeEmpID = Number(this.NewLeaveRequest.alternativeEmpID);
+     this.NewLeaveRequest.alternativeEmpID = Number(this.NewLeaveRequest.alternativeEmpID);
      this.Leaveservice.updateLeave(id,this.NewLeaveRequest).subscribe(
       data => {
         console.log("Updated data",data);
@@ -283,7 +216,7 @@ export class AllLeavesComponent implements OnInit {
     this.progressInfos = [];
     this.selectedFiles = event.target.files;
     // console.log(this.LeaveRequest.Files);
-     console.log(this.selectedFiles);
+    // console.log(this.selectedFiles);
     this.uploadFiles()
   }
 
@@ -301,8 +234,6 @@ export class AllLeavesComponent implements OnInit {
       const newName = this.makeRandom(lengthOfCode, possible);
       console.log("newName",newName);
       console.log("fileExtension",fileExtension);
-      console.log("this.NewLeaveRequest.leavesFiles",this.NewLeaveRequest.leavesFiles);
-      this.NewLeaveRequest.leavesFiles="";
       console.log("image",this.NewLeaveRequest.leavesFiles.concat(',',newName + fileExtension));
       this.NewLeaveRequest.leavesFiles=this.NewLeaveRequest.leavesFiles.concat(','+ newName + fileExtension);
       Object.defineProperty(this.selectedFiles[i], 'name', {
@@ -342,19 +273,6 @@ export class AllLeavesComponent implements OnInit {
   }
   openURl(url) {
     window.open(url)
-  }
-
-  DeleteImage(LeaveImageId)
-  {
-    this.Leaveservice.DeleteLeaveImage(LeaveImageId).subscribe(
-      data => {
-          this.messageService.add({ severity: 'info', summary: 'Image Deleted!', detail: 'Image Deleted!' });
-          this.Leaveservice.getrequestLeaveByID(this.requestLeaveId).subscribe(
-            data => { this.getLeavesfiles = data;console.log("getLeavesfiles",this.getLeavesfiles) },
-            error => console.log(error)
-          )
-      }
-    )
   }
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });

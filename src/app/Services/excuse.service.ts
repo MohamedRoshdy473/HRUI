@@ -33,6 +33,10 @@ export class ExcuseService {
     return this.httpclient.post(`${environment.ApiURL}/Excuses`, excuse, httpOptions);
   }
 
+  GetExcusesByManager():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcusesByManager`,this.httpOptions)
+  }
   AllExcuses():Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses`,this.httpOptions)
@@ -57,13 +61,25 @@ export class ExcuseService {
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/ApprovedExcuses`,this.httpOptions)
   }
+  ApprovedExcusesByManager():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/ApprovedExcusesByManager`,this.httpOptions)
+  }
   DisApprovedExcuses():Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/DisApprovedExcuses`,this.httpOptions)
   }
-  PendingExcuses():Observable<any>
+    DisApprovedExcusesByManager():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/DisApprovedExcusesByManager`,this.httpOptions)
+  }
+  PendingExcusesByManager():Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/PendingExcuses`,this.httpOptions)
+  }
+  PendingExcusesByHR():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/PendingExcusesByHR`,this.httpOptions)
   }
   approve(id):Observable<any>
   {

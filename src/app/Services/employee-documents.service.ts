@@ -43,6 +43,6 @@ export class EmployeeDocumentsService {
     return this.httpclient.get<EmployeeDocuments[]>(`${environment.GetEmployeeDocumentsByEmployeeId}${employeeId}`, this.httpHeader);
   }
   deletedocument(id:number):Observable<any>{ 
-    return this.httpclient.delete<any>(`${environment.ApiURL}${id}`,this.httpHeader);
+    return this.httpclient.delete<any>(`${environment.ApiURL}/EmployeeDocuments/${id}`,this.httpHeader);
   }
 }

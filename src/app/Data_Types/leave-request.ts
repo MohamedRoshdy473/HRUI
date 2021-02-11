@@ -1,12 +1,19 @@
 export class LeaveRequest {
-    EmployeeID:number;
-    LeaveTypeID:number;
+    id:number
+    employeeID:number;
+    employeeName:string
+    profession:string;
+    leaveTypeID:number;
     start:Date;
-    Days:number;
-    AlternativeEmpID:number;
-    Comment:string;
-    AlternativeAddress:string;
-    Status:string;
-    LeavesFiles:string;
+    days:number;
+    alternativeEmpID:number;
+    comment:string;
+    alternativeAddress:string;
+    status:string;
+    leavesFiles:string;
+
+    end:Date;
+    date:Date;
+    alternativeEmp:string
 
 }

@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { LeaveTypeService } from 'src/app/Services/leave-type.service'
 import { DatePipe } from '@angular/common';
 import { environment } from 'src/environments/environment';
+import { ProfessionService } from 'src/app/Services/profession.service';
 
 @Component({
   selector: 'app-all-leaves',
@@ -58,8 +59,9 @@ export class AllLeavesComponent implements OnInit {
  Allimages:string;
  requestLeaveId:number
   getimage: string;
+  ProfessionByEmployeeId: any;
   constructor(private EmpService: EmployeeService, private Leaveservice: LeaveService, private LeaveTypeService: LeaveTypeService
-    , private router: Router, private messageService: MessageService, private datePipe: DatePipe
+    , private router: Router, private messageService: MessageService, private datePipe: DatePipe,private professionService:ProfessionService
     , private uploadService: UploadFilesService, private sanitizer: DomSanitizer,
     private confirmationService: ConfirmationService) {
     this.Leave = {
@@ -186,6 +188,10 @@ export class AllLeavesComponent implements OnInit {
   };
     this.EmpService.getProfession().subscribe(
       data => this.AllProfessions = data,
+      error => console.log(error)
+    );
+    this.professionService.GetProfessionByEmployeeId(this.empId).subscribe(
+      data=>{this.ProfessionByEmployeeId=data,console.log("ProfessionByEmployeeId",data)},
       error => console.log(error)
     );
     // this.EmpService.EmployeeByProfession().subscribe(

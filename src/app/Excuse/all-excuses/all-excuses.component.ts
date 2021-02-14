@@ -10,6 +10,7 @@ import { jsPDF } from "jspdf";
 import 'jspdf-autotable'
 import autoTable from 'jspdf-autotable';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker';
+import { ProfessionService } from 'src/app/Services/profession.service';
 //import autoTable from 'jspdf-autotable'
 // import autoTable from 'jspdf-autotable';
 
@@ -50,12 +51,13 @@ export class AllExcusesComponent implements OnInit {
   empId: number;
   role: string;
   ExcusesForEmployee:any;
+  ProfessionByEmployeeId: any;
   @HostListener('window:beforeunload')
   doSomething() {
     alert('dfjkf');
   }
 
-  constructor(private ExcuseService: ExcuseService, private router: Router
+  constructor(private ExcuseService: ExcuseService, private router: Router,private professionService:ProfessionService
     , private EmpService: EmployeeService, private confirmationService: ConfirmationService,
     private messageService: MessageService, private datePipe: DatePipe) {
     //this.PendingExcuse=[];
@@ -110,7 +112,6 @@ export class AllExcusesComponent implements OnInit {
       error => console.log(error)
     );
     this.checkExcuseDate();
-
   }
   checkExcuseDate() {
 
@@ -160,10 +161,14 @@ export class AllExcusesComponent implements OnInit {
     );
     this.EditExcuseboolean = false;
   }
-  NewLeaveDialog() {
+  NewExcuseDialog() {
     this.NewExcuseDialogbool = true;
     this.EmpService.getProfession().subscribe(
       data => this.AllProfessions = data,
+      error => console.log(error)
+    );
+    this.professionService.GetProfessionByEmployeeId(this.empId).subscribe(
+      data=>{this.ProfessionByEmployeeId=data,console.log("ProfessionByEmployeeId",data)},
       error => console.log(error)
     );
   }

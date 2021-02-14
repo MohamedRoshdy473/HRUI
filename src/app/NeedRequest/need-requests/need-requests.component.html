@@ -242,7 +242,7 @@
         <p-tabPanel>
             <ng-template pTemplate="header">
                 <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
-                <label>{{ 'HR.PendingExcuse' | translate }}</label>
+                <label>{{ 'HR.Pending' | translate }}</label>
             </ng-template>
             <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
                 [scrollable]="true" [value]="lstPendingNeedsRequestsManager">
@@ -508,7 +508,7 @@
         <p-tabPanel>
             <ng-template pTemplate="header">
                 <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
-                <label>{{ 'HR.PendingExcuse' | translate }}</label>
+                <label>{{ 'HR.Pending' | translate }}</label>
             </ng-template>
             <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
                 [scrollable]="true" [value]="lstPendingNeedsRequests">
@@ -595,7 +595,7 @@
                     </span>
                 </div>
                 <div class="col-md-2">
-                    <button id="addEmpBtn" routerLink="/AddExcuse" class="btn btn-outline-primary btn-md btn-block">
+                    <button id="addEmpBtn" routerLink="/addNeedRequest" class="btn btn-outline-primary btn-md btn-block">
                         <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
                 </div>
             </div>

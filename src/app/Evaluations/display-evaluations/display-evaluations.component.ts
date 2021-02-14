@@ -5,8 +5,8 @@ import { EvaluationTypeService } from 'src/app/Services/evaluation-type.service'
 import { EvaluationProfessionService } from 'src/app/Services/evaluation-profession.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { EvaluationService } from 'src/app/Services/evaluation.service';
-import {RatingModule} from 'primeng/rating';
-import{Evaluation} from 'src/app/Data_Types/Evaluation'
+import { RatingModule } from 'primeng/rating';
+import { Evaluation } from 'src/app/Data_Types/Evaluation'
 
 
 
@@ -18,9 +18,12 @@ import{Evaluation} from 'src/app/Data_Types/Evaluation'
 export class DisplayEvaluationsComponent implements OnInit {
   EvaluationObj: any;
   EvaluationList: any;
+  EvaluationManager: any;
+  EvaluationUser: any;
+
   EvaluationProfessionObj: any;
   Professions: any;
-  Employees:any;
+  Employees: any;
   EvaluationType: any
   ProfessionID: Number;
   displayBasic: boolean;
@@ -30,48 +33,66 @@ export class DisplayEvaluationsComponent implements OnInit {
 
   representatives: { name: string; image: string; }
   @ViewChild('dt') table: Table;
+  empId: number;
+  role: string;
   constructor(private EvaluationTypeService: EvaluationTypeService,
     private EvaluationService: EvaluationService,
     private EvaluationProfessionService: EvaluationProfessionService,
     private EmployeeService: EmployeeService, private confirmationService: ConfirmationService,
     private messageService: MessageService) {
-      this.EvaluationObj={id:0,employeeID:0,employeeName:"",evaluationProfessionID:0,evaluationTypeName:""
-    ,professionName:"",evaluationDegreee:0,evaluationDate:new Date(),note:""}
-     }
+    this.EvaluationObj = {
+      id: 0, employeeID: 0, employeeName: "", evaluationProfessionID: 0, evaluationTypeName: ""
+      , professionName: "", evaluationDegreee: 0, evaluationDate: new Date(), note: ""
+    }
+  }
 
   ngOnInit(): void {
+    this.empId = Number(localStorage.getItem('id'))
+    this.role = localStorage.getItem("roles");
+
     this.EvaluationService.GetAllEvaluations().subscribe(
       data => {
-        this.EvaluationList = data        
-          //, console.log(data)
+        this.EvaluationList = data
+      },
+      error => { console.log(error) }
+    )
+    this.EvaluationService.GetEvaluationByManager().subscribe(
+      data => {
+        this.EvaluationManager = data
+      },
+      error => { console.log(error) }
+    )
+    this.EvaluationService.GetEvaluationForEmployee(this.empId).subscribe(
+      data => {
+        this.EvaluationUser = data
       },
       error => { console.log(error) }
     )
     this.EmployeeService.GetAllEmployees().subscribe(
       data => {
-        this.Employees = data       
-          //, console.log(data)
+        this.Employees = data
+        //, console.log(data)
       },
       error => { console.log(error) }
     )
     this.EmployeeService.getProfession().subscribe(
       data => {
-        this.Professions = data         
+        this.Professions = data
         // , console.log(data)
       },
       error => { console.log(error) }
     )
     this.EvaluationTypeService.GetAllEvalutaionType().subscribe(
       data => {
-        this.EvaluationType = data        
-          //,console.log(data)
+        this.EvaluationType = data
+        //,console.log(data)
       },
       error => { console.log(error) }
     )
     this.EvaluationProfessionService.GetEvaluationProfession().subscribe(
       data => {
-        this.EvaluationProfessionObj = data          
-         // ,console.log(data)
+        this.EvaluationProfessionObj = data
+        // ,console.log(data)
       },
       error => { console.log(error) }
     )

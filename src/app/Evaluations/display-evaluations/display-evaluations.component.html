@@ -24,38 +24,39 @@
     </ng-template>
 </p-toast>
 
-<div class="container card">
-<p-table #dt [value]="EvaluationList" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">
-    <ng-template pTemplate="caption">
-        <h1 [translate]="'HR.Evaluations'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
-        <div class="row">
-            <div class="table-header col-md-10">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                        [placeholder]="'HR.Global Search' | translate" />
-                </span>
-            </div>
+<div class="container card" *ngIf="role=='Admin'">
+    <p-table #dt [value]="EvaluationManager" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">
+        <ng-template pTemplate="caption">
+            <h1 [translate]="'HR.Evaluations'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
 
-        </div><br>
-        <div class="row">
-            <div class="col-md-3">
-                <label [translate]="'HR.See evaluations by employee name'"></label>
-                <select [(ngModel)]="EvaluationObj.EmployeeID" [ngModelOptions]="{standalone: true}" id="sel2"
-                    class="form-control" (change)='onOptionsSelected(EvaluationObj.EmployeeID)'>
-                    <option value="" selected>{{'HR.Employee Name'|translate}}</option>
-                    <option *ngFor="let item of Employees" value="{{item.id}}">{{item.name}}</option>
-                </select>
-            </div>
-            <div class="col-md-7"></div>
-            <div class="col-md-2">
-                <button id="AddEvaluation" routerLink="/AddEvaluation" class="btn btn-outline-primary btn-md btn-block">
-                    <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
-            </div>
-            <!-- <div class="col-3">
+            </div><br>
+            <div class="row">
+                <div class="col-md-3">
+                    <label [translate]="'HR.See evaluations by employee name'"></label>
+                    <select [(ngModel)]="EvaluationObj.EmployeeID" [ngModelOptions]="{standalone: true}" id="sel2"
+                        class="form-control" (change)='onOptionsSelected(EvaluationObj.EmployeeID)'>
+                        <option value="" selected>{{'HR.Employee Name'|translate}}</option>
+                        <option *ngFor="let item of Employees" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-7"></div>
+                <div class="col-md-2">
+                    <button id="AddEvaluation" routerLink="/AddEvaluation"
+                        class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                </div>
+                <!-- <div class="col-3">
             <label class="labelstyle">Select Profession</label>
             <select [(ngModel)]="EvaluationObj.professionID" name="sub" class="form-control"
                 >
@@ -63,115 +64,387 @@
                 <option *ngFor="let Prof of Professions" value="{{Prof.id}}">{{Prof.name}}</option>
             </select>
         </div> -->
-        </div>
-        <!-- <div class="col-3">
+            </div>
+            <!-- <div class="col-3">
                 <label class="labelstyle">Evaluation Type</label>
                 <select [(ngModel)]="EvaluationObj.EvaluationTypID" name="sub" class="form-control" >
                     <option value="" selected disabled hidden>EvaluationType Type</option>
                     <option *ngFor="let cat of EvaluationType" value="{{cat.id}}">{{cat.evaluationTypeName}}</option>
                   </select>
               </div>  -->
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th [translate]="'HR.Employee Name'"></th>
-            <th [translate]="'HR.Profession Name'"></th>
-            <th [translate]="'HR.Evaluation Type'"></th>
-            <th [translate]="'HR.Evaluation Degree'"></th>
-            <th [translate]="'HR.Evaluation Date'"></th>
-            <th [translate]="'HR.Note'"></th>
-            <th></th>
-        </tr>
-        <tr>
-            <th>
-                <input style="width: 100%" pInputText type="text"
-                    (input)="dt.filter($event.target.value, 'employeeName', 'contains')"
-                    [placeholder]="'HR.Employee Name' | translate" class="p-column-filter">
-            </th>
-            <th>
-                <input style="width: 100%" pInputText type="text"
-                    (input)="dt.filter($event.target.value, 'professionName', 'contains')"
-                    [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
-            </th>
-            <th>
-                <input style="width: 100%" pInputText type="text"
-                    (input)="dt.filter($event.target.value, 'evaluationTypeName', 'contains')"
-                    [placeholder]="'HR.Evaluation Type' | translate" class="p-column-filter">
-            </th>
-            <th>
-                <input style="width: 100%" pInputText type="text"
-                    (input)="dt.filter($event.target.value, 'evaluationDegreee', 'contains')"
-                    [placeholder]="'HR.Evaluation Degree' | translate" class="p-column-filter">
-            </th>
-            <th>
-                <p-calendar (onSelect)="onDateSelect($event)" (onClearClick)="dt.filter('', 'evaluatioDate', 'equals')"
-                    [showButtonBar]="true" styleClass="p-column-filter" [placeholder]="'HR.Evaluation Date' | translate"
-                    [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
-            </th>
-            <th>
-                <input style="width: 100%" pInputText type="text"
-                    (input)="dt.filter($event.target.value, 'note', 'contains')" [placeholder]="'HR.Note' | translate"
-                    class="p-column-filter">
-            </th>
-            <th></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-EvaluationObj>
-        <tr>
-            <td>
-                {{EvaluationObj.employeeName}}
-            </td>
-            <td>
-                {{EvaluationObj.professionName}}
-            </td>
-            <td>
-                {{EvaluationObj.evaluationTypeName}}
-            </td>
-            <td>
-                <div style="position: relative">
-                    <mat-progress-bar color="accent" mode="determinate" [value]="EvaluationObj.evaluationDegreee">
-                    </mat-progress-bar>
-                    <span
-                        style="position: absolute; top: 0.15em; padding-left: 5px;">{{EvaluationObj.evaluationDegreee}}%</span>
-                </div>
-                <!-- <p-rating  [ngModel]="EvaluationObj.evaluationDegreee" [readonly]="true" [cancel]="false"></p-rating> -->
-                <!-- {{EvaluationObj.degree}} -->
-                <!-- <mat-progress-bar  color="accent"  mode="determinate" [value]="(EvaluationObj.evaluationDegreee*100)/10"></mat-progress-bar> -->
-            </td>
-            <td>
-                {{EvaluationObj.evaluationDate | date :'dd-MM-yyyy'}}
-            </td>
-            <td>
-                {{EvaluationObj.note}}
-            </td>
-            <!-- <td>
-                <div style="margin-left: 10%;" class="row">
-                    <button (click)="showBasicDialog(EvaluationObj.id)" class="btn btn-success c-btn">
-                        <i class="fa fa-eye" aria-hidden="true"></i></button>
-                    <button [routerLink]="['/EditEvaluation',EvaluationObj.id]" class="btn btn-primary c-btn">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                    <button (click)="confirm(EvaluationObj.id)" style="display: flex;" class="btn btn-danger c-btn">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                </div>
-            </td> -->
-            <td>
-                <span class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(EvaluationObj.id)"></span>
-                <span class="btn pi pi-pencil" aria-hidden="true"
-                    [routerLink]="['/EditEvaluation',EvaluationObj.id]"></span>
-                <span class="btn pi pi-times" (click)="confirm(EvaluationObj.id)" aria-hidden="true"></span>
-            </td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="6" [translate]="'HR.No data found'">.</td>
-        </tr>
-    </ng-template>
-</p-table>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="employeeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluationTypeName"><span [translate]="'HR.Evaluation Type'"></span>
+                    <p-sortIcon field="evaluationTypeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluationDegreee"><span [translate]="'HR.Evaluation Degree'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluatioDate"><span [translate]="'HR.Evaluation Date'"></span>
+                    <p-sortIcon field="evaluatioDate"></p-sortIcon>
+                </th>
+                <!-- <th pSortableColumn="note"><span [translate]="'HR.Note'"></span>
+                    <p-sortIcon field="note"></p-sortIcon>
+                </th> -->
+                <th [translate]="'HR.Controls'"></th>
+            </tr>
+            <tr>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'employeeName', 'contains')"
+                        [placeholder]="'HR.Employee Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'professionName', 'contains')"
+                        [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'evaluationTypeName', 'contains')"
+                        [placeholder]="'HR.Evaluation Type' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'evaluationDegreee', 'contains')"
+                        [placeholder]="'HR.Evaluation Degree' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                    (input)="dt.filter($event.target.value, 'evaluationDate', 'contains')"
+                    [placeholder]="'HR.Evaluation Date' | translate" class="p-column-filter">
+                    <!-- <p-calendar (onSelect)="onDateSelect($event)"
+                        (onClearClick)="dt.filter('', 'evaluatioDate', 'equals')" [showButtonBar]="true"
+                        styleClass="p-column-filter" [placeholder]="'HR.Evaluation Date' | translate"
+                        [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar> -->
+                </th>
+                <!-- <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'note', 'contains')"
+                        [placeholder]="'HR.Note' | translate" class="p-column-filter">
+                </th> -->
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-EvaluationObj>
+            <tr>
+                <td>
+                    {{EvaluationObj.employeeName}}
+                </td>
+                <td>
+                    {{EvaluationObj.professionName}}
+                </td>
+                <td>
+                    {{EvaluationObj.evaluationTypeName}}
+                </td>
+                <td>
+                    <div style="position: relative">
+                        <mat-progress-bar color="accent" mode="determinate" [value]="EvaluationObj.evaluationDegreee">
+                        </mat-progress-bar>
+                        <span
+                            style="position: absolute; top: 0.15em; padding-left: 5px;">{{EvaluationObj.evaluationDegreee}}%</span>
+                    </div>
+                    <!-- <p-rating  [ngModel]="EvaluationObj.evaluationDegreee" [readonly]="true" [cancel]="false"></p-rating> -->
+                    <!-- {{EvaluationObj.degree}} -->
+                    <!-- <mat-progress-bar  color="accent"  mode="determinate" [value]="(EvaluationObj.evaluationDegreee*100)/10"></mat-progress-bar> -->
+                </td>
+                <td>
+                    {{EvaluationObj.evaluationDate | date :'dd-MM-yyyy'}}
+                </td>
+                <!-- <td>
+                    {{EvaluationObj.note}}
+                </td> -->
+                <td>
+                    <span class="pi pi-compass btn" aria-hidden="true"
+                        (click)="showBasicDialog(EvaluationObj.id)"></span>
+                    <span class="btn pi pi-pencil" aria-hidden="true"
+                        [routerLink]="['/EditEvaluation',EvaluationObj.id]"></span>
+                    <span class="btn pi pi-times" (click)="confirm(EvaluationObj.id)" aria-hidden="true"></span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" [translate]="'HR.No data found'">.</td>
+            </tr>
+        </ng-template>
+    </p-table>
 </div>
 
+<div class="container card" *ngIf="role=='HR'">
+    <p-table #dt [value]="EvaluationList" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">
+        <ng-template pTemplate="caption">
+            <h1 [translate]="'HR.Evaluations'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
 
+            </div><br>
+            <div class="row">
+                <div class="col-md-3">
+                    <label [translate]="'HR.See evaluations by employee name'"></label>
+                    <select [(ngModel)]="EvaluationObj.EmployeeID" [ngModelOptions]="{standalone: true}" id="sel2"
+                        class="form-control" (change)='onOptionsSelected(EvaluationObj.EmployeeID)'>
+                        <option value="" selected>{{'HR.Employee Name'|translate}}</option>
+                        <option *ngFor="let item of Employees" value="{{item.id}}">{{item.name}}</option>
+                    </select>
+                </div>
+                <div class="col-md-7"></div>
+                <div class="col-md-2">
+                    <button id="AddEvaluation" routerLink="/AddEvaluation"
+                        class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                </div>
+                <!-- <div class="col-3">
+            <label class="labelstyle">Select Profession</label>
+            <select [(ngModel)]="EvaluationObj.professionID" name="sub" class="form-control"
+                >
+                <option value="" selected disabled hidden>Profession</option>
+                <option *ngFor="let Prof of Professions" value="{{Prof.id}}">{{Prof.name}}</option>
+            </select>
+        </div> -->
+            </div>
+            <!-- <div class="col-3">
+                <label class="labelstyle">Evaluation Type</label>
+                <select [(ngModel)]="EvaluationObj.EvaluationTypID" name="sub" class="form-control" >
+                    <option value="" selected disabled hidden>EvaluationType Type</option>
+                    <option *ngFor="let cat of EvaluationType" value="{{cat.id}}">{{cat.evaluationTypeName}}</option>
+                  </select>
+              </div>  -->
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="employeeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluationTypeName"><span [translate]="'HR.Evaluation Type'"></span>
+                    <p-sortIcon field="evaluationTypeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluationDegreee"><span [translate]="'HR.Evaluation Degree'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluatioDate"><span [translate]="'HR.Evaluation Date'"></span>
+                    <p-sortIcon field="evaluatioDate"></p-sortIcon>
+                </th>
+                <!-- <th pSortableColumn="note"><span [translate]="'HR.Note'"></span>
+                    <p-sortIcon field="note"></p-sortIcon>
+                </th> -->
+                <th [translate]="'HR.Controls'"></th>
+            </tr>
+            <tr>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'employeeName', 'contains')"
+                        [placeholder]="'HR.Employee Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'professionName', 'contains')"
+                        [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'evaluationTypeName', 'contains')"
+                        [placeholder]="'HR.Evaluation Type' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'evaluationDegreee', 'contains')"
+                        [placeholder]="'HR.Evaluation Degree' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                    (input)="dt.filter($event.target.value, 'evaluationDate', 'contains')"
+                    [placeholder]="'HR.Evaluation Date' | translate" class="p-column-filter">
+                    <!-- <p-calendar (onSelect)="onDateSelect($event)"
+                        (onClearClick)="dt.filter('', 'evaluatioDate', 'equals')" [showButtonBar]="true"
+                        styleClass="p-column-filter" [placeholder]="'HR.Evaluation Date' | translate"
+                        [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar> -->
+                </th>
+                <!-- <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'note', 'contains')"
+                        [placeholder]="'HR.Note' | translate" class="p-column-filter">
+                </th> -->
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-EvaluationObj>
+            <tr>
+                <td>
+                    {{EvaluationObj.employeeName}}
+                </td>
+                <td>
+                    {{EvaluationObj.professionName}}
+                </td>
+                <td>
+                    {{EvaluationObj.evaluationTypeName}}
+                </td>
+                <td>
+                    <div style="position: relative">
+                        <mat-progress-bar color="accent" mode="determinate" [value]="EvaluationObj.evaluationDegreee">
+                        </mat-progress-bar>
+                        <span
+                            style="position: absolute; top: 0.15em; padding-left: 5px;">{{EvaluationObj.evaluationDegreee}}%</span>
+                    </div>
+                    <!-- <p-rating  [ngModel]="EvaluationObj.evaluationDegreee" [readonly]="true" [cancel]="false"></p-rating> -->
+                    <!-- {{EvaluationObj.degree}} -->
+                    <!-- <mat-progress-bar  color="accent"  mode="determinate" [value]="(EvaluationObj.evaluationDegreee*100)/10"></mat-progress-bar> -->
+                </td>
+                <td>
+                    {{EvaluationObj.evaluationDate | date :'dd-MM-yyyy'}}
+                </td>
+                <!-- <td>
+                    {{EvaluationObj.note}}
+                </td> -->
+                <td>
+                    <span class="pi pi-compass btn" aria-hidden="true"
+                        (click)="showBasicDialog(EvaluationObj.id)"></span>
+                    <span class="btn pi pi-pencil" aria-hidden="true"
+                        [routerLink]="['/EditEvaluation',EvaluationObj.id]"></span>
+                    <span class="btn pi pi-times" (click)="confirm(EvaluationObj.id)" aria-hidden="true"></span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" [translate]="'HR.No data found'">.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+<div class="container card" *ngIf="role=='User'">
+    <p-table #dt [value]="EvaluationUser" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+        [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">
+        <ng-template pTemplate="caption">
+            <h1 [translate]="'HR.Evaluations'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
 
+            </div><br>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="employeeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluationTypeName"><span [translate]="'HR.Evaluation Type'"></span>
+                    <p-sortIcon field="evaluationTypeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluationDegreee"><span [translate]="'HR.Evaluation Degree'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="evaluatioDate"><span [translate]="'HR.Evaluation Date'"></span>
+                    <p-sortIcon field="evaluatioDate"></p-sortIcon>
+                </th>
+                <!-- <th pSortableColumn="note"><span [translate]="'HR.Note'"></span>
+                    <p-sortIcon field="note"></p-sortIcon>
+                </th> -->
+                <th [translate]="'HR.Controls'"></th>
+            </tr>
+            <tr>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'employeeName', 'contains')"
+                        [placeholder]="'HR.Employee Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'professionName', 'contains')"
+                        [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'evaluationTypeName', 'contains')"
+                        [placeholder]="'HR.Evaluation Type' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                        (input)="dt.filter($event.target.value, 'evaluationDegreee', 'contains')"
+                        [placeholder]="'HR.Evaluation Degree' | translate" class="p-column-filter">
+                </th>
+                <th>
+                    <input style="width: 100%" pInputText type="text"
+                    (input)="dt.filter($event.target.value, 'evaluationDate', 'contains')"
+                    [placeholder]="'HR.Evaluation Date' | translate" class="p-column-filter">
+                    <!-- <p-calendar (onSelect)="onDateSelect($event)"
+                        (onClearClick)="dt.filter('', 'evaluatioDate', 'equals')" [showButtonBar]="true"
+                        styleClass="p-column-filter" [placeholder]="'HR.Evaluation Date' | translate"
+                        [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar> -->
+                </th>
+                <th></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-EvaluationObj>
+            <tr>
+                <td>
+                    {{EvaluationObj.employeeName}}
+                </td>
+                <td>
+                    {{EvaluationObj.professionName}}
+                </td>
+                <td>
+                    {{EvaluationObj.evaluationTypeName}}
+                </td>
+                <td>
+                    <div style="position: relative">
+                        <mat-progress-bar color="accent" mode="determinate" [value]="EvaluationObj.evaluationDegreee">
+                        </mat-progress-bar>
+                        <span
+                            style="position: absolute; top: 0.15em; padding-left: 5px;">{{EvaluationObj.evaluationDegreee}}%</span>
+                    </div>
+                    <!-- <p-rating  [ngModel]="EvaluationObj.evaluationDegreee" [readonly]="true" [cancel]="false"></p-rating> -->
+                    <!-- {{EvaluationObj.degree}} -->
+                    <!-- <mat-progress-bar  color="accent"  mode="determinate" [value]="(EvaluationObj.evaluationDegreee*100)/10"></mat-progress-bar> -->
+                </td>
+                <td>
+                    {{EvaluationObj.evaluationDate | date :'dd-MM-yyyy'}}
+                </td>
+                <!-- <td>
+                    {{EvaluationObj.note}}
+                </td> -->
+                <td>
+                    <span class="pi pi-compass btn" aria-hidden="true" style="margin-left: 30px;"
+                        (click)="showBasicDialog(EvaluationObj.id)"></span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6" [translate]="'HR.No data found'">.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
 <p-dialog [header]="'HR.Details' | translate" [(visible)]="displayBasic" [style]="{width: '70vw'}" [baseZIndex]="10000">
     <div class="row">
         <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Employee Name'">
@@ -184,16 +457,20 @@
         <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Evaluation Type'"> </span>:
             &nbsp;:{{EvaluationObj.evaluationTypeName}}</div>
         <br>
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Evaluation Date'"> </span>:
+            &nbsp;:{{EvaluationObj.evaluationDate | date :'dd-MM-yyyy'}}</div>
+        <br>
         <!-- <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Evaluation Degree'"> </span>
             <p-rating [ngModel]="EvaluationObj.evaluationDegreee" [readonly]="true" [cancel]="false"></p-rating>
         </div>
         <br> -->
-        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Note'"> </span>&nbsp;:{{EvaluationObj.note}}
+        <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Note'">
+            </span>&nbsp;:{{EvaluationObj.note}}
         </div>
         <br>
     </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-check" [routerLink]="['/EditEvaluation',EvaluationObj.id]"
+        <p-button icon="pi pi-check" [routerLink]="['/EditEvaluation',EvaluationObj.id]" *ngIf="role!='User'"
             [label]="'HR.Update' | translate" styleClass="p-button-text"></p-button>
         <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
     </ng-template>

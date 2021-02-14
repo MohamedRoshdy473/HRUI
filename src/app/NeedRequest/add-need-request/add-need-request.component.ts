@@ -16,16 +16,27 @@ export class AddNeedRequestComponent implements OnInit {
   employees: any;
   categories: any;
   subcategorydisplay: any;
+  role: string;
+  EmployeesByHR: Object;
+  EmployeesByManager: Object;
   constructor(private subCategoryService: SubCategoryServiceService, private needrequestservice: NeedRequestService, private categoryservice: CategoryService, private router: Router, private employeeservice: EmployeeService) {
     this.needRequests = { id: 0, EmployeeId: 0, CategoryId: 0, SubCategoryId: 0, EmployeeName: '', CategoryName: '', SubCategoryName: '', needRequestDate: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Comment: '',Status:"pending" }
   }
   ngOnInit(): void {
+    this.role = localStorage.getItem("roles");
     this.employeeservice.GetAllEmployees().subscribe(
-      (res) => {
-        console.log(res)
-        this.employees = res;
+      data => {
+        this.EmployeesByHR = data
+        //, console.log(data)
       },
-      (err) => console.log(err)
+      error => { console.log(error) }
+    )
+    this.employeeservice.EmployeeByProfession().subscribe(
+      data => {
+        this.EmployeesByManager = data
+        , console.log("EmployeeByProfession",data)
+      },
+      error => { console.log(error) }
     )
     this.categoryservice.getAllcategory().subscribe(
       (res) => { this.categories = res; },

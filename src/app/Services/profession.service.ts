@@ -19,6 +19,9 @@ export class ProfessionService {
     console.log(Id);
     return this.httpclient.get(`${environment.ApiURL}/Professions/` + Id, this.httpHeader);
   }
+  GetProfessionByEmployeeId(EmployeeId) {
+    return this.httpclient.get(`${environment.ApiURL}/Professions/GetProfessionByEmployeeId/` + EmployeeId, this.httpHeader);
+  }
   addProfession(Profession) {
     const httpOptions = {
       headers: new HttpHeaders({

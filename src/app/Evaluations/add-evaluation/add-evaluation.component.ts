@@ -28,12 +28,15 @@ export class AddEvaluationComponent implements OnInit {
   EvaluationProfessionObj: any;
   Professions: any;
   ProfessionsEmployee:any;
-  Employees: any;
+  EmployeesByManager: any;
+  EmployeesByHR: any;
   EvaluationType: any
   //evaluationDegreee: Number;
   displayBasic: boolean;
   loading: boolean = true;
   submitted: boolean;
+  empId: number;
+  role: string;
   constructor(private EvaluationTypeService: EvaluationTypeService,private snackBar: MatSnackBar,
     private EvaluationService: EvaluationService,
     private EvaluationProfessionService: EvaluationProfessionService,
@@ -59,10 +62,19 @@ export class AddEvaluationComponent implements OnInit {
     //   },
     //   error => { console.log(error) }
     // )
+    this.empId = Number(localStorage.getItem('id'))
+    this.role = localStorage.getItem("roles");
     this.EmployeeService.GetAllEmployees().subscribe(
       data => {
-        this.Employees = data
+        this.EmployeesByHR = data
         //, console.log(data)
+      },
+      error => { console.log(error) }
+    )
+    this.EmployeeService.EmployeeByProfession().subscribe(
+      data => {
+        this.EmployeesByManager = data
+        , console.log("EmployeeByProfession",data)
       },
       error => { console.log(error) }
     )

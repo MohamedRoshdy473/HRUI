@@ -16,6 +16,12 @@ export class EvaluationService {
   GetAllEvaluations() {
     return this.httpclient.get(`${environment.ApiURL}/Evaluation`, this.httpHeader)
   };
+  GetEvaluationByManager() {
+    return this.httpclient.get(`${environment.ApiURL}/Evaluation/GetEvaluationByManager`, this.httpHeader)
+  };
+  GetEvaluationForEmployee(EmployeeId) {
+    return this.httpclient.get(`${environment.ApiURL}/Evaluation/GetEvaluationForEmployee/`+EmployeeId, this.httpHeader)
+  };
   GetEvaluationID(EvalutaionID) {
     return this.httpclient.get(`${environment.ApiURL}/Evaluation/` + EvalutaionID, this.httpHeader);
   }

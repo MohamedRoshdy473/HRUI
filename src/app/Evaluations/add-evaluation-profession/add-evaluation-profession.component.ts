@@ -34,7 +34,7 @@ export class AddEvaluationProfessionComponent implements OnInit {
       data => {
         this.EvaluationType = data
           
-          //console.log(data)
+          console.log("EvaluationType",data)
       },
       error => { console.log(error) }
     )
@@ -47,21 +47,21 @@ export class AddEvaluationProfessionComponent implements OnInit {
       error => { console.log(error) }
     )
   }
-  onOptionsSelected(ProfessionID:Number){
-      console.log("the EvaluationTypeByProfessionId value is " + ProfessionID);
-      this.EvaluationProfessionService.GetEvaluationNotByProfessionId(ProfessionID).subscribe(
-          res=> {
-           // console.log(res);
-            this.EvaluationType=res     
-          },
-          err=>console.log(err)
-        )
-}
+//   onOptionsSelected(ProfessionID:Number){
+//       console.log("the EvaluationTypeByProfessionId value is " + ProfessionID);
+//       this.EvaluationProfessionService.GetEvaluationNotByProfessionId(ProfessionID).subscribe(
+//           res=> {
+//            // console.log(res);
+//             this.EvaluationType=res     
+//           },
+//           err=>console.log(err)
+//         )
+// }
 
 typeId:number
 onTypeSelected(typeId:number){
   this.typeId = typeId;
-  console.log(this.typeId);
+  console.log("this.typeId",this.typeId);
 }
 
 

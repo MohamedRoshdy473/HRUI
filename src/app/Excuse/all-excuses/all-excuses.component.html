@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <button id="addEmpBtn" (click)="NewLeaveDialog()" class="btn btn-outline-primary btn-md btn-block">
+                <button id="addEmpBtn" (click)="NewExcuseDialog()" class="btn btn-outline-primary btn-md btn-block">
                     <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
             </div>
         </div>
@@ -292,7 +292,7 @@
             </div>
             <div class="col-md-2"></div>
             <div class="col-md-2">
-                <button id="addEmpBtn" (click)="NewLeaveDialog()" class="btn btn-outline-primary btn-md btn-block">
+                <button id="addEmpBtn" (click)="NewExcuseDialog()" class="btn btn-outline-primary btn-md btn-block">
                     <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
             </div>
         </div>
@@ -627,7 +627,8 @@
     </p-dialog>
 </form>
 
-<form #frm="ngForm">
+
+<form #frm="ngForm" *ngIf="role=='HR'">
     <p-dialog [header]="'HR.New Excuse' | translate" [(visible)]="NewExcuseDialogbool" [style]="{width: '50vw'}"
         [baseZIndex]="10000">
 
@@ -637,6 +638,58 @@
                 class="form-control col-md-6">Profession
                 <option value="" selected disabled hidden>Profession</option>
                 <option *ngFor="let item of AllProfessions" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Employee" [translate]="'HR.Employee Name'"></span>
+            <select [(ngModel)]="NewExcuse.EmployeeID" name="Employee" class="form-control col-md-6">Employee
+                <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="time" [translate]="'HR.Date'"></span>
+            <input name="date" value={{NewExcuse.date}} type="date" class="col-md-6 form-control"
+                [(ngModel)]="NewExcuse.date" inputId="date">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="time" [translate]="'HR.Time'"></span>
+            <input name="time" type="time" class="col-md-6 form-control" [(ngModel)]="NewExcuse.time" inputId="time">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Hours" [translate]="'HR.Hours'"></span>
+            <input name="Hours" type="number" value=3 class="col-md-6 form-control" [(ngModel)]="NewExcuse.hours"
+                inputId="Hours">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Note" [translate]="'HR.Note'"></span>
+            <textarea name="Note" type="text" class="col-md-6 form-control" [(ngModel)]="NewExcuse.comment"
+                inputId="Note"></textarea>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (onClick)="add()" [disabled]="frm.invalid" type="submit" icon="pi pi-check"
+                [label]="'HR.Save' | translate" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="NewExcuseDialogbool=false" [label]="'HR.Cancel' | translate"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</form>
+
+<form #frm="ngForm" *ngIf="role=='Admin'">
+    <p-dialog [header]="'HR.New Excuse' | translate" [(visible)]="NewExcuseDialogbool" [style]="{width: '50vw'}"
+        [baseZIndex]="10000">
+
+        <div class="row">
+            <span class="col-md-3" for="Profession" [translate]="'HR.Profession Name'"></span>
+            <select (change)="onChange($event.target.value)" [(ngModel)]="ProfessionID" name="Profession"
+                class="form-control col-md-6">Profession
+                <option value="" selected disabled hidden>Profession</option>
+                <option *ngFor="let item of ProfessionByEmployeeId" value="{{item.id}}">{{item.name}}</option>
             </select>
         </div>
         <br>

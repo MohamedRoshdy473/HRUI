@@ -31,25 +31,22 @@ export class EditEvaluationProfessionComponent implements OnInit {
 
   ngOnInit(): void {
    this.resultId=0;
-    this.EvaluationProfessionService.GetEvaluationProfessionByID(this.EvaluationProfessionsID).subscribe(
-      data => {
-        this.EvaluationProfessionObj = data,
-        this.resultId = this.EvaluationProfessionObj.professionID
-            console.log("resultId",this.resultId)
+    // this.EvaluationProfessionService.GetEvaluationProfessionByID(this.EvaluationProfessionsID).subscribe(
+    //   data => {
+    //     this.EvaluationProfessionObj = data,
+    //     this.resultId = this.EvaluationProfessionObj.professionID
+    //         console.log("resultId",this.resultId)
 
-            this.EvaluationProfessionService.GetEvaluationNotByProfessionId(this.resultId).subscribe(
-              res => {
-                this.EvaluationProfessions = res
-                ,console.log("resultId in onOptionsSelected ", this.resultId);
-              },
-              err => console.log(err)
-            )
-
-
-          //,console.log(data);
-      },
-      error => { console.log(error) }
-    )
+    //         this.EvaluationProfessionService.GetEvaluationNotByProfessionId(this.resultId).subscribe(
+    //           res => {
+    //             this.EvaluationProfessions = res
+    //             ,console.log("resultId in onOptionsSelected ", this.resultId);
+    //           },
+    //           err => console.log(err)
+    //         )
+    //   },
+    //   error => { console.log(error) }
+    // )
     //this.ProfessionID=this.resultId;
     // this.EvaluationProfessionService.GetEvaluationNotByProfessionId(this.resultId).subscribe(
     //   res => {

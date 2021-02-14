@@ -23,115 +23,554 @@
         </div>
     </ng-template>
 </p-toast>
-
-<p-table #dt [value]="needRequests" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
-    [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
-    [globalFilterFields]="['EmployeeName','CategoryName','SubCategoryName','Date','Comment']">
-    <ng-template pTemplate="caption">
+<div class="container card" *ngIf="role=='Admin'">
+    <div style="margin-top: 20px;">
         <div class="row">
-            <div class="table-header col-md-10" [translate]="'HR.List of Need Requests'">
-                <span class="p-input-icon-left">
-                    <i class="pi pi-search"></i>
-                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                        [placeholder]="'HR.Global Search' | translate" />
-                </span>
+            <!-- <mat-icon style="color: #007bff; margin: 1px; display: inline; ">note_add</mat-icon> -->
+            <div class="col-md-8">
+                <h5 style="display: inline;margin-left: 2%;  font-size: 30px;
+             color: #2674a8;" [translate]="'HR.Need Request'"></h5>
             </div>
+            <div class="col-md-2"></div>
             <div class="col-md-2">
-                <button id="addNeedRequestBtn" routerLink="/addNeedRequest"
-                    class="btn btn-outline-primary btn-md btn-block">
-                    <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                <button id="addEmpBtn" routerLink="/addNeedRequest" class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
             </div>
         </div>
-    </ng-template>
-    <ng-template pTemplate="header">
-        <tr>
-            <th [translate]="'HR.Employee Name'"></th>
-            <th [translate]="'HR.Category Name'"></th>
-            <th [translate]="'HR.SubCategory Name'"> </th>
-            <th [translate]="'HR.Category Date'"></th>
-            <!-- <th>Comment</th> -->
-            <th></th>
-        </tr>
-        <tr>
-            <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'employeeName', 'startsWith')"
-                    [placeholder]="'HR.Employee Name' | translate" class="p-column-filter">
-            </th>
-            <th>
-                <select [(ngModel)]="needRequest.categoryId" name="sub" class="form-control"
-                    (change)='onOptionsSelected(needRequest.categoryId)'>
-                    <option value="" selected disabled hidden>Category</option>
-                    <option *ngFor="let cat of Categories" value="{{cat.id}}">{{cat.name}}</option>
-                </select>
-            </th>
-            <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'subCategoryName', 'startsWith')"
-                    [placeholder]="'HR.SubCategory Name' | translate" class="p-column-filter">
-            </th>
-            <th>
-                <p-calendar (onSelect)="onDateSelect($event)" (onClearClick)="dt.filter('', 'date', 'equals')"
-                    [showButtonBar]="true" styleClass="p-column-filter" placeholder="Search by Date"
-                    [readonlyInput]="true" dateFormat="yy-mm-dd"></p-calendar>
-            </th>
-            <!-- <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'comment', 'startsWith')"
-                    placeholder="Search by Comment" class="p-column-filter">
-            </th> -->
-            <th></th>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-needRequest>
-        <tr>
-            <td>
-                {{needRequest.employeeName}}
-            </td>
-            <td>
-                {{needRequest.categoryName}}
-            </td>
-            <td>
-                {{needRequest.subCategoryName}}
-            </td>
-            <td>
-                {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
-            </td>
-            <!-- <td>
-                {{needRequest.comment}}
-            </td> -->
-            <td>
-                <div style="margin-left: 10%;" class="row">
-                    <button (click)="showBasicDialog(needRequest.id)" class="btn btn-success c-btn">
-                        <i class="fa fa-eye" aria-hidden="true"></i></button>
-                    <button [routerLink]="['/editNeedRequest',needRequest.id]" class="btn btn-primary c-btn">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+    </div>
 
-                    <button (click)="confirm(needRequest.id)" style="display: flex;" class="btn btn-danger c-btn">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i></button>
-                </div>
-            </td>
-        </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-        <tr>
-            <td colspan="6" [translate]="'HR.No data found'"></td>
-        </tr>
-    </ng-template>
-</p-table>
+    <p-tabView styleClass="tabview-custom" *ngIf="role=='Admin'">
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-th-large" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.All' | translate }}</label>
+            </ng-template>
+            <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+                [globalFilterFields]="['EmployeeName','CategoryName','SubCategoryName','Date','Comment']"
+                [value]="lstNeedsRequestsManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr style="height: 5px !important; ">
+                        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="categoryName"><span [translate]="'HR.Category Name'"></span>
+                            <p-sortIcon field="categoryName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subCategoryName">
+                            <span [translate]="'HR.SubCategory Name'"></span>
+                            <p-sortIcon field="subCategoryName"></p-sortIcon>
+
+                        </th>
+                        <th pSortableColumn="needRequestDate">
+                            <span [translate]="'HR.Category Date'"></span>
+                            <p-sortIcon field="needRequestDate"></p-sortIcon>
+                        </th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                        <th [translate]="'HR.Controls'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr style="height: 5px !important;font-size: 17px;">
+                        <td>{{needRequest.employeeName}}</td>
+                        <td>{{needRequest.categoryName}}</td>
+                        <td>{{needRequest.subCategoryName}}</td>
+                        <td>{{needRequest.needRequestDate | date :'dd-MM-yyyy'}}</td>
+                        <td id="status" *ngIf="needRequest.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='disapproved' ">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='pending' ">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                        <td>
+                            <span class="pi pi-compass btn" aria-hidden="true" [title]="'HR.Show' | translate"
+                                (click)="showBasicDialog(needRequest.id)"></span>
+                            <button class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate"
+                                [disabled]="needRequest.status!='pending'"
+                                [routerLink]="['/editNeedRequest',needRequest.id]"></button>
+                            <button class="btn pi pi-times" (click)="confirm(needRequest.id)"
+                                [title]="'HR.Delete' | translate" [disabled]="needRequest.status!='pending'"
+                                aria-hidden="true"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-up" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Approved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="lstApprovedNeedsRequestsManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Category Name'"></th>
+                        <th [translate]="'HR.SubCategory Name'"> </th>
+                        <th [translate]="'HR.Category Date'"></th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr>
+                        <td>
+                            {{needRequest.employeeName}}
+                        </td>
+                        <td>
+                            {{needRequest.categoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.subCategoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-down" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Unapproved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="lstDisApprovedNeedsRequestsManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Category Name'"></th>
+                        <th [translate]="'HR.SubCategory Name'"> </th>
+                        <th [translate]="'HR.Category Date'"></th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr>
+                        <td>
+                            {{needRequest.employeeName}}
+                        </td>
+                        <td>
+                            {{needRequest.categoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.subCategoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.PendingExcuse' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="lstPendingNeedsRequestsManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Category Name'"></th>
+                        <th [translate]="'HR.SubCategory Name'"> </th>
+                        <th [translate]="'HR.Category Date'"></th>
+                        <th [translate]="'HR.Status'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr>
+                        <td>
+                            {{needRequest.employeeName}}
+                        </td>
+                        <td>
+                            {{needRequest.categoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.subCategoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+                        </td>
+                        <td>
+                            <button (click)="approve(needRequest.id)" [title]="'HR.Approve' | translate" class="btn btn-success">O</button>
+                            <button (click)="disapprove(needRequest.id)" style="margin-left: 5%;"[title]="'HR.Reject' | translate"class="btn btn-danger">X</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>
+<div class="container card" *ngIf="role=='HR'">
+    <div style="margin-top: 20px;">
+        <div class="row">
+            <!-- <mat-icon style="color: #007bff; margin: 1px; display: inline; ">note_add</mat-icon> -->
+            <div class="col-md-8">
+                <h5 style="display: inline;margin-left: 2%;  font-size: 30px;
+             color: #2674a8;" [translate]="'HR.Need Request'"></h5>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <button id="addEmpBtn" routerLink="/addNeedRequest" class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <p-tabView styleClass="tabview-custom">
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-th-large" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.All' | translate }}</label>
+            </ng-template>
+            <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+                [globalFilterFields]="['EmployeeName','CategoryName','SubCategoryName','Date','Comment']"
+                [value]="needRequests">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr style="height: 5px !important; ">
+                        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="categoryName"><span [translate]="'HR.Category Name'"></span>
+                            <p-sortIcon field="categoryName"></p-sortIcon>
+                        </th>
+                        <th pSortableColumn="subCategoryName">
+                            <span [translate]="'HR.SubCategory Name'"></span>
+                            <p-sortIcon field="subCategoryName"></p-sortIcon>
+
+                        </th>
+                        <th pSortableColumn="needRequestDate">
+                            <span [translate]="'HR.Category Date'"></span>
+                            <p-sortIcon field="needRequestDate"></p-sortIcon>
+                        </th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                        <th [translate]="'HR.Controls'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr style="height: 5px !important;font-size: 17px;">
+                        <td>{{needRequest.employeeName}}</td>
+                        <td>{{needRequest.categoryName}}</td>
+                        <td>{{needRequest.subCategoryName}}</td>
+                        <td>{{needRequest.needRequestDate | date :'dd-MM-yyyy'}}</td>
+                        <td id="status" *ngIf="needRequest.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='disapproved' ">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='pending' ">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                        <td>
+                            <span class="pi pi-compass btn" aria-hidden="true" [title]="'HR.Show' | translate"
+                                (click)="showBasicDialog(needRequest.id)"></span>
+                            <button class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate"
+                                [disabled]="needRequest.status!='pending'"
+                                [routerLink]="['/editNeedRequest',needRequest.id]"></button>
+                            <button class="btn pi pi-times" (click)="confirm(needRequest.id)"
+                                [title]="'HR.Delete' | translate" [disabled]="needRequest.status!='pending'"
+                                aria-hidden="true"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-up" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Approved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="lstApprovedNeedsRequests">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Category Name'"></th>
+                        <th [translate]="'HR.SubCategory Name'"> </th>
+                        <th [translate]="'HR.Category Date'"></th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr>
+                        <td>
+                            {{needRequest.employeeName}}
+                        </td>
+                        <td>
+                            {{needRequest.categoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.subCategoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-down" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Unapproved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="lstDisApprovedNeedsRequests">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Category Name'"></th>
+                        <th [translate]="'HR.SubCategory Name'"> </th>
+                        <th [translate]="'HR.Category Date'"></th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr>
+                        <td>
+                            {{needRequest.employeeName}}
+                        </td>
+                        <td>
+                            {{needRequest.categoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.subCategoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="needRequest.status=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.PendingExcuse' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="lstPendingNeedsRequests">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                placeholder="Global Search" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Category Name'"></th>
+                        <th [translate]="'HR.SubCategory Name'"> </th>
+                        <th [translate]="'HR.Category Date'"></th>
+                        <th [translate]="'HR.Status'">
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-needRequest>
+                    <tr>
+                        <td>
+                            {{needRequest.employeeName}}
+                        </td>
+                        <td>
+                            {{needRequest.categoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.subCategoryName}}
+                        </td>
+                        <td>
+                            {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}
+                        </td>
+                        <td>
+                            <button (click)="approve(needRequest.id)" [title]="'HR.Approve' | translate" class="btn btn-success">O</button>
+                            <button (click)="disapprove(needRequest.id)" style="margin-left: 5%;"[title]="'HR.Reject' | translate"class="btn btn-danger">X</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>
 <p-dialog header="Need request Details" [(visible)]="displayBasic" [style]="{width: '70vw'}" [baseZIndex]="10000">
     <div class="row">
         <div class="col-md-6 form-control"><span class="bold"
-                [translate]="'HR.Employee Name'"></span>&nbsp;{{needRequest.employeeName}}</div>
+                [translate]="'HR.Employee Name'"></span>&nbsp; : {{needRequest.employeeName}}</div>
         <br>
         <div class="col-md-6 form-control"><span class="bold"
-                [translate]="'HR.Category Name'"></span>&nbsp;{{needRequest.categoryName}}</div>
+                [translate]="'HR.Category Name'"></span>&nbsp; : {{needRequest.categoryName}}</div>
         <br>
         <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.SubCategory Name'">
-            </span>&nbsp;{{needRequest.subCategoryName}}
+            </span>&nbsp; : {{needRequest.subCategoryName}}
         </div>
         <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Category Date'">
-            </span>&nbsp;{{needRequest.needRequestDate | date :'dd-MM-yyyy'}}</div>
+            </span>&nbsp; : {{needRequest.needRequestDate | date :'dd-MM-yyyy'}}</div>
         <div class="col-md-6 form-control"><span class="bold" [translate]="'HR.Note'">
-            </span>&nbsp;{{needRequest.comment}}</div>
+            </span>&nbsp; : {{needRequest.comment}}</div>
     </div>
     <ng-template pTemplate="footer">
         <p-button icon="pi pi-check" [routerLink]="['/editNeedRequest',needRequest.id]"
@@ -139,3 +578,84 @@
         <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.No' | translate"></p-button>
     </ng-template>
 </p-dialog>
+<br>
+<div class="container" *ngIf="role=='User'">
+    <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+        [globalFilterFields]="['EmployeeName','CategoryName','SubCategoryName','Date','Comment']"
+        [value]="lstNeedsRequestsByEmployee">
+        <ng-template pTemplate="caption">
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <button id="addEmpBtn" routerLink="/AddExcuse" class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr style="height: 5px !important; ">
+                <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="employeeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="categoryName"><span [translate]="'HR.Category Name'"></span>
+                    <p-sortIcon field="categoryName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="subCategoryName">
+                    <span [translate]="'HR.SubCategory Name'"></span>
+                    <p-sortIcon field="subCategoryName"></p-sortIcon>
+
+                </th>
+                <th pSortableColumn="needRequestDate">
+                    <span [translate]="'HR.Category Date'"></span>
+                    <p-sortIcon field="needRequestDate"></p-sortIcon>
+                </th>
+                <th [translate]="'HR.Status'">
+                </th>
+                <th [translate]="'HR.Controls'"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-needRequest>
+            <tr style="height: 5px !important;font-size: 17px;">
+                <td>{{needRequest.employeeName}}</td>
+                <td>{{needRequest.categoryName}}</td>
+                <td>{{needRequest.subCategoryName}}</td>
+                <td>{{needRequest.needRequestDate | date :'dd-MM-yyyy'}}</td>
+                <td id="status" *ngIf="needRequest.status=='approved'">
+                    <div style="cursor:unset;" class="btn btn-success">
+                        {{'HR.Approved' | translate}}
+                    </div>
+                </td>
+                <td id="status" *ngIf="needRequest.status=='disapproved' ">
+                    <div style="cursor:unset;" class="btn btn-danger">
+                        {{'HR.Rejected' | translate}}
+
+                    </div>
+                </td>
+                <td id="status" *ngIf="needRequest.status=='pending' ">
+                    <div style="cursor:unset;" class="btn btn-warning">
+                        {{'HR.Pending' | translate}}
+
+                    </div>
+                </td>
+                <td>
+                    <span class="pi pi-compass btn" aria-hidden="true" [title]="'HR.Show' | translate"
+                        (click)="showBasicDialog(needRequest.id)"></span>
+                    <button class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate"
+                        [disabled]="needRequest.status!='pending'"
+                        [routerLink]="['/editNeedRequest',needRequest.id]"></button>
+                    <button class="btn pi pi-times" (click)="confirm(needRequest.id)"
+                        [title]="'HR.Delete' | translate" [disabled]="needRequest.status!='pending'"
+                        aria-hidden="true"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

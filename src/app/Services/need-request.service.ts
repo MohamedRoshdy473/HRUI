@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import {NeedRequest} from '../Data_Types/NeedRequest'
 
@@ -8,6 +9,13 @@ import {NeedRequest} from '../Data_Types/NeedRequest'
 })
 export class NeedRequestService {
 
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Accept': '*/*',
+      "Authorization": "bearer " + localStorage.getItem('token')
+    })
+  };
   constructor(private httpclient:HttpClient) { }
   httpHeader={headers: new HttpHeaders({
     'content-type':'application/json',
@@ -16,21 +24,49 @@ export class NeedRequestService {
   })};
   getNeedrequest()
   {
-    const httpHeader={headers: new HttpHeaders({
-      'content-type':'application/json',
-      'Accept': '*/*'
-
-    })};
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes`,httpHeader)
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes`,this.httpHeader)
   }
+  GetNeedRequestByManager()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetNeedRequestByManager`,this.httpHeader)
+  }
+  GetPendingNeedRequest()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetPendingNeedRequest`,this.httpHeader)
+  }
+  GetPendingNeedRequestByManager()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetPendingNeedRequestByManager`,this.httpHeader)
+  }
+  GetApprovedNeedRequest()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetApprovedNeedRequest`,this.httpHeader)
+  }
+  GetApprovedNeedRequestByManager()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetApprovedNeedRequestByManager`,this.httpHeader)
+  }
+
+  GetDisApprovedNeedRequest()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetDisApprovedNeedRequest`,this.httpHeader)
+  }
+  GetDisApprovedNeedRequestByManager()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetDisApprovedNeedRequestByManager`,this.httpHeader)
+  }
+  approve(id):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/AcceptNeedRequest/`+id,this.httpOptions)
+  }
+  disapprove(id):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/RejectNeedRequest/`+id,this.httpOptions)
+  }
+
   getNeedrequestcategories()
   {
-    const httpHeader={headers: new HttpHeaders({
-      'content-type':'application/json',
-      'Accept': '*/*'
-
-    })};
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetNeedRequestCategories`,httpHeader)
+    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetNeedRequestCategories`,this.httpHeader)
   }
   getNeedrequestByID(Id)
   {

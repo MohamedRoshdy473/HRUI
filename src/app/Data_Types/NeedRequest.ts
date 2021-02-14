@@ -8,4 +8,5 @@ SubCategoryId:Number;
 SubCategoryName:String;
 Date:Date;
 Comment:String;
+Status:string
 }

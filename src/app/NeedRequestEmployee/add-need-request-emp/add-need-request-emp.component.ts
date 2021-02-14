@@ -16,7 +16,7 @@ export class AddNeedRequestEmpComponent implements OnInit {
   categories: any;
   subcategorydisplay: any;
   constructor(private subCategoryService: SubCategoryServiceService, private needrequestservice: NeedRequestService, private categoryservice: CategoryService, private router: Router, private employeeservice: EmployeeService) {
-    this.needRequests = { id: 0, EmployeeId: 0, CategoryId: 0, SubCategoryId: 0, EmployeeName: '', CategoryName: '', SubCategoryName: '', Date: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Comment: '' }
+    this.needRequests = { id: 0, EmployeeId: 0, CategoryId: 0, SubCategoryId: 0, EmployeeName: '', CategoryName: '', SubCategoryName: '', Date: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Comment: '',Status:"pending" }
   }
 
   ngOnInit(): void {

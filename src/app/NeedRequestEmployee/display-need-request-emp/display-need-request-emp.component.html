@@ -52,6 +52,7 @@
             <th [translate]="'HR.SubCategory Name'"> </th>
             <th [translate]="'HR.Category Date'"></th>
             <th [translate]="'HR.Note'"></th>
+            <th [translate]="'HR.Status'"></th>
             <th [translate]="'HR.Controls'"></th>
         </tr>
         <tr>
@@ -83,6 +84,7 @@
                     [placeholder]="'HR.Note' | translate" class="p-column-filter">
             </th>
             <th></th>
+            <th></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-needRequest>
@@ -102,23 +104,32 @@
             <td>
                 {{needRequest.comment}}
             </td>
-            <!-- <td>
-                <div style="margin-left: 10%;" class="row">
-                    <button (click)="showBasicDialog(needRequest.id)" class="btn btn-success c-btn">
-                        <i class="fa fa-eye" aria-hidden="true"></i></button>
-                    <button [routerLink]="['/EditNeedRequestEmp',needRequest.id]" class="btn btn-primary c-btn">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-
-                    <button (click)="confirm(needRequest.id)" style="display: flex;" class="btn btn-danger c-btn">
-                        <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+            <td id="status" *ngIf="needRequest.status=='approved'">
+                <div style="cursor:unset;" class="btn btn-success">
+                    {{'HR.Approved' | translate}}
                 </div>
-            </td> -->
+            </td>
+            <td id="status" *ngIf="needRequest.status=='disapproved' ">
+                <div style="cursor:unset;" class="btn btn-danger">
+                    {{'HR.Rejected' | translate}}
+
+                </div>
+            </td>
+            <td id="status" *ngIf="needRequest.status=='pending' ">
+                <div style="cursor:unset;" class="btn btn-warning">
+                    {{'HR.Pending' | translate}}
+
+                </div>
+            </td>
             <td>
-                <span class="pi pi-compass btn" aria-hidden="true"
+                <span class="pi pi-compass btn" aria-hidden="true" [title]="'HR.Show' | translate"
                     (click)="showBasicDialog(needRequest.id)"></span>
-                <span class="btn pi pi-pencil" aria-hidden="true"
-                [routerLink]="['/EditNeedRequestEmp',needRequest.id]" ></span>
-                <span class="btn pi pi-times" (click)="confirm(needRequest.id)" aria-hidden="true"></span>
+                <button class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate"
+                    [disabled]="needRequest.status!='pending'"
+                    [routerLink]="['/editNeedRequest',needRequest.id]"></button>
+                <button class="btn pi pi-times" (click)="confirm(needRequest.id)"
+                    [title]="'HR.Delete' | translate" [disabled]="needRequest.status!='pending'"
+                    aria-hidden="true"></button>
             </td>
         </tr>
     </ng-template>

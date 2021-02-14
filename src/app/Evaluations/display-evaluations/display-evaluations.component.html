@@ -23,9 +23,8 @@
         </div>
     </ng-template>
 </p-toast>
-
 <div class="container card" *ngIf="role=='Admin'">
-    <p-table #dt [value]="EvaluationManager" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    <p-table #dt [value]="EvaluationManager" class="container card" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
         [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">
@@ -178,7 +177,7 @@
     </p-table>
 </div>
 
-<div class="container card" *ngIf="role=='HR'">
+<div class="container card" *ngIf="role=='HR'" >
     <p-table #dt [value]="EvaluationList" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
@@ -331,7 +330,7 @@
         </ng-template>
     </p-table>
 </div>
-<div class="container card" *ngIf="role=='User'">
+<div class="container card" *ngIf="role=='User'" >
     <p-table #dt [value]="EvaluationUser" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"

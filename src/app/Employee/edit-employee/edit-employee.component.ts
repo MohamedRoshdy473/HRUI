@@ -26,8 +26,10 @@ import { HttpClient } from '@angular/common/http';
 export class EditEmployeeComponent implements OnInit {
   title = 'FormValidation';
   mobNumberPattern = "^((\\+91-?)|0)?[0-9]{10}$";
+  NationalIdPatern = "^[0-9]{14}$";
+  phonePatern = "^((\\+91-?)|0)?[0-9]{9}$";
   isValidFormSubmitted = false;
-  Employee: any;
+  Employee: Employee;
   profession: any;
   positionLevellst: any;
   Positions: any;
@@ -44,7 +46,15 @@ export class EditEmployeeComponent implements OnInit {
   displaydoc: boolean
   options: FormGroup;
   employeeId: any;
-
+  
+  error: any = { isError: false, errorMessage: '' };
+  isValidDate: any;
+  hiringdate:any;
+  bithdate: Date;
+  year:any;
+  month :any;
+  day :any;
+  maxDate:any;
   //docEmployee: EmployeeDocuments
   lstTest: any[] = []
   EmployeeID = this.activeRoute.snapshot.params['empId'];
@@ -54,17 +64,17 @@ export class EditEmployeeComponent implements OnInit {
     private confirmationService: ConfirmationService, private messageService: MessageService,
     private positionLevelService: PositionLevelService, private positionsService: PositionsService,
     private univertyService: UniversitiesService, private FacultyService: FacultyService,
-    private employeeDocumentservice: EmployeeDocumentsService,
+    private employeeDocumentservice: EmployeeDocumentsService,private datePipe: DatePipe,
     private facultyDepartmentService: FacultyDepartmentService, private httpClient: HttpClient,
 
   ) {
     this.Employee = {
-      listOfdocuments: [],
-      Address: '', DateOfBirth: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Email: '', GraduatioYear: ''
-      , HiringDateHiringDate: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), MaritalStatus: 'Marital Status', Name: '',
-      Phone: '', ProfessionID: 0, RelevantPhone: '', code: '', gender: 'Gender', PositionId: 0,
-      PositionlevelId: 0, FacultyDepartmentId: 0
+      address: '', email: '', graduatioYear: '',nationalId:'',mobile:'',dateOfBirth:'',emailCompany:'',facultyDepartmentName:''
+      , maritalStatus: 'Marital Status', name: '',facultyId:0,facultyName:'',hiringDateHiringDate:'',id:0,positionLevelName:'',positionName:'',
+      phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0,universityId:0,universityName:'',listOfdocuments:[],
+      positionlevelId: 0, facultyDepartmentId: 0
     };
+
     this.options = this.fb.group({
       hideRequired: false,
       floatLabel: 'always',
@@ -80,6 +90,14 @@ export class EditEmployeeComponent implements OnInit {
     form.resetForm();
   }
   ngOnInit(): void {
+    this.hiringdate = new Date();
+    this.bithdate = new Date();
+    this.year = this.bithdate.getFullYear();
+    this.month = this.bithdate.getMonth();
+    this.day = this.bithdate.getDay();
+    this.maxDate=(this.year-16)+"/"+(this.month)+"/"+this.day
+    console.log("maxDate",this.maxDate);
+
 
     this.lstemployeeImages = []
     this.lstoddocproj = []
@@ -153,16 +171,24 @@ export class EditEmployeeComponent implements OnInit {
     console.log(this.Employee);
     this.Employee.graduatioYear = String(this.Employee.graduatioYear);
     this.Employee.professionID = Number(this.Employee.professionID);
-    this.Employee.dateOfBirth = this.dateOfBirth;
-    this.Employee.hiringDateHiringDate = this.hiringDateHiringDate;
+    // this.Employee.dateOfBirth = this.dateOfBirth;
+    // this.Employee.hiringDateHiringDate = this.hiringDateHiringDate;
 
-    this.Employee.nationalId = String(this.Employee.nationalId)
+    this.Employee.nationalId = String(this.Employee.nationalId);
+    this.Employee.phone = String(this.Employee.phone)
+    this.Employee.mobile = String(this.Employee.mobile)
+    this.Employee.relevantPhone = String(this.Employee.relevantPhone)
+
     this.Employee.positionId = Number(this.Employee.positionId);
     this.Employee.positionlevelId = Number(this.Employee.positionlevelId);
     this.Employee.facultyDepartmentId = Number(this.Employee.facultyDepartmentId);
 
     console.log(this.Employee.professionID)
     console.log(typeof (this.Employee.professionID))
+    this.Employee.dateOfBirth = this.datePipe.transform(this.dateOfB, "dd-MM-yyyy");
+    this.Employee.hiringDateHiringDate = this.datePipe.transform(this.hiringD, "dd-MM-yyyy")
+   // this.isValidDate = this.validateDates(this.Employee.dateOfBirth, this.Employee.hiringDateHiringDate);
+   // if (this.isValidDate) {
     this.empService.UpdateEmployee(this.EmployeeID, this.Employee).subscribe(
       res => {
         this.messageService.add({ severity: 'info', summary: 'Record Updated!', detail: 'Record Updated!' });
@@ -170,6 +196,32 @@ export class EditEmployeeComponent implements OnInit {
       },
       error => console.log(error),
     );
+  //}
+}
+
+  validateDates(sDate: string, eDate: string) {
+    this.isValidDate = true;
+    if ((sDate == null || eDate == null)) {
+      this.error = { isError: true, errorMessage: 'Start date and end date are required.' };
+      this.isValidDate = false;
+    }
+
+    if ((sDate != null && eDate != null) && (eDate) < (sDate)) {
+      this.error = { isError: true, errorMessage: 'End date should be grater then start date.' };
+      this.isValidDate = false;
+    }
+    return this.isValidDate;
+  }
+  comparedate() {
+    this.isValidDate = true;
+    this.isValidDate = this.validateDates(this.Employee.dateOfBirth, this.Employee.hiringDateHiringDate);
+    if (!this.isValidDate) {
+      this.error = { isError: true, errorMessage: 'End date should be grater then start date.' };
+    }
+    if (this.isValidDate) {
+      this.error = { isError: true, errorMessage: '' };
+    }
+    return this.isValidDate;
   }
 
   onFileSelected(files: FileList) {
@@ -219,25 +271,27 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeDocumentservice.AddEmployeeDocument(this.lstemployeeImages).subscribe(e => {
       console.log(e)
       this.Employee = {
-        Address: '', DateOfBirth: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), Email: '', GraduatioYear: ''
-        , hiringDateHiringDate: new Date(2018, 0O5, 0O5, 17, 23, 42, 11), MaritalStatus: 'Marital Status', Name: '',
-        Phone: '', ProfessionID: 0, RelevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', PositionId: 0,
-        PositionlevelId: 0, FacultyDepartmentId: 0
+        address: '', email: '', graduatioYear: '',nationalId:'',mobile:'',dateOfBirth:'',emailCompany:'',facultyDepartmentName:''
+        , maritalStatus: 'Marital Status', name: '',facultyId:0,facultyName:'',hiringDateHiringDate:'',id:0,positionLevelName:'',positionName:'',
+        phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0,universityId:0,universityName:'',listOfdocuments:[],
+        positionlevelId: 0, facultyDepartmentId: 0
       };
+  
+  
       this.router.navigate(['/employee'])
     })
 
   }
 
-  dateOfBirth: string
+  dateOfB: string
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.dateOfBirth = this.datepipe.transform(event.value, 'yyyy-MM-dd');
-    console.log(this.dateOfBirth)
+    this.dateOfB = this.datepipe.transform(event.value, 'yyyy-MM-dd');
+    console.log(this.dateOfB)
   }
-  hiringDateHiringDate: string
+  hiringD: string
   addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.hiringDateHiringDate = this.datepipe.transform(event.value, 'yyyy-MM-dd');
-    console.log(this.hiringDateHiringDate)
+    this.hiringD = this.datepipe.transform(event.value, 'yyyy-MM-dd');
+    console.log(this.hiringD)
   }
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });

@@ -3,26 +3,26 @@
     </h1>
 
     <br>
-    <form #frm="ngForm" (ngSubmit)="add()">
+    <form #frm="ngForm" (ngSubmit)="add(frm)">
         <div class="form-row">
             <div class="col-md-4">
                 <label for="name" [translate]="'HR.Employee Name'"></label>
                 <input type="text" #EmpName="ngModel" [class.is-invalid]="EmpName.invalid && EmpName.touched"
-                    [class.is-valid]="EmpName.valid" [(ngModel)]="Employee.Name" required minlength="3" name="Name"
+                    [class.is-valid]="EmpName.valid" [(ngModel)]="Employee.name" required minlength="3" name="Name"
                     id="EmpName" class="form-control" [placeholder]="'HR.name' | translate" aria-describedby="helpId">
                 <small [hidden]="EmpName.valid || EmpName.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messege'"></small>
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.PositionLevel'"></label>
-                <select [(ngModel)]="Employee.PositionlevelId" name="sel2" class="form-control">
+                <select [(ngModel)]="Employee.positionlevelId" name="sel2" class="form-control">
                     <option value="" selected disabled hidden></option>
                     <option *ngFor="let item of positionLevel" value="{{item.id}}">{{item.levelName}}</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.Position Name'"></label>
-                <select [(ngModel)]="Employee.PositionId" name="sel2" class="form-control">
+                <select [(ngModel)]="Employee.positionId" name="sel2" class="form-control">
                     <option value="" selected disabled hidden></option>
                     <option *ngFor="let item of Positions" value="{{item.id}}">{{item.positionName}}</option>
                 </select>
@@ -31,14 +31,14 @@
         <div class="form-row">
             <div class="col-md-4">
                 <label [translate]="'HR.Profession Name'"></label>
-                <select [(ngModel)]="Employee.ProfessionID" name="sel2" class="form-control">Profession
+                <select [(ngModel)]="Employee.professionID" name="sel2" class="form-control">Profession
                     <option value="" selected disabled hidden>Profession</option>
                     <option *ngFor="let item of profession" value="{{item.id}}">{{item.name}}</option>
                 </select>
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.Email'"></label>
-                <input type="email" class="form-control" name="email" [(ngModel)]="Employee.Email" #mail="ngModel"
+                <input type="email" class="form-control" name="email" [(ngModel)]="Employee.email" #mail="ngModel"
                     minlength="10" [class.is-invalid]="mail.invalid && mail.touched" [class.is-valid]="mail.valid"
                     required [placeholder]="'HR.Email' | translate">
                 <small [hidden]="mail.valid || mail.untouched" id="helpId" class="text-muted"
@@ -62,7 +62,7 @@
                     <small [hidden]="phn.valid || phn.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
                 <input type="number" [placeholder]="'HR.phone' | translate" class="form-control" name="mobileNumber"
-                    [ngModel]="Employee.Phone" [pattern]="phonePatern" #mobNumber="ngModel">
+                    [(ngModel)]="Employee.phone" [pattern]="phonePatern" #mobNumber="ngModel">
                 <div *ngIf="mobNumber.errors  && !isValidFormSubmitted" [ngClass]="'error'">
                     <div *ngIf="mobNumber.errors.pattern" [translate]="'HR.messegephnError'">
                     </div>
@@ -76,8 +76,8 @@
                     [placeholder]="'HR.relevantPhone' | translate">
                     <small [hidden]="relevantphn.valid || relevantphn.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
-                <input type="number" [placeholder]="'HR.relevantPhone' | translate" class="form-control"
-                    name="RelevantPhoneNumber" [ngModel]="Employee.RelevantPhone" [pattern]="mobNumberPattern"
+                <input type="number" [placeholder]="'HR.relevantPhone' | translate" class="form-control" (change)="check($event.target.value)"
+                    name="RelevantPhoneNumber" [(ngModel)]="Employee.relevantPhone" [pattern]="mobNumberPattern"
                     #RelevantNumber="ngModel">
 
                 <div *ngIf="RelevantNumber.errors  && !isValidFormSubmitted" [ngClass]="'error'">
@@ -93,8 +93,8 @@
                     [placeholder]="'HR.Mobile' | translate">
                     <small [hidden]="EmpMobile.valid || EmpMobile.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
-                <input type="number" [placeholder]="'HR.Mobile' | translate" class="form-control" name="MobileNumber"
-                    [ngModel]="Employee.Mobile" [pattern]="mobNumberPattern" #MobileNumber="ngModel">
+                <input type="number" [placeholder]="'HR.Mobile' | translate" class="form-control" name="MobileNumber" (change)="check($event.target.value)"
+                    [(ngModel)]="Employee.mobile" [pattern]="mobNumberPattern" #MobileNumber="ngModel">
                 <div *ngIf="MobileNumber.errors  && !isValidFormSubmitted" [ngClass]="'error'">
                     <div *ngIf="MobileNumber.errors.pattern" [translate]="'HR.messegephnError'">
                     </div>
@@ -113,19 +113,17 @@
             <div class="col-md-4">
                 <label [translate]="'HR.dateOfBirth'"></label>
                 <input type="date" class="form-control" [placeholder]="'HR.dateOfBirth' | translate" name="DOB"
-                    [(ngModel)]="Employee.DateOfBirth" #empdate="ngModel"
-                    [class.is-invalid]="empdate.invalid && empdate.touched" [class.is-valid]="empdate.valid"
-                    [(ngModel)]="Employee.dateOfBirth" required>
-                <small [hidden]="empdate.valid || empdate.untouched" id="helpId" class="text-muted"
-                    [translate]="'HR.messegeDate'"></small>
+                    [(ngModel)]="Employee.dateOfBirth" #empdate="ngModel"  max="{{maxDate | date:'yyyy-MM-dd'}}"
+                    [class.is-invalid]="empdate.invalid && empdate.touched" [class.is-valid]="empdate.valid" required>
+                <!-- <small [hidden]="empdate.valid || empdate.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messegeDate'"></small> -->
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.HiringDate'"></label>
-                <input type="date" class="form-control" name="HiringData" [(ngModel)]="Employee.HiringDateHiringDate"
+                <input type="date" (change)="comparedate()" max="{{hiringdate | date:'yyyy-MM-dd'}}" class="form-control" name="HiringData" [(ngModel)]="Employee.hiringDateHiringDate"
                     #EmpHdate="ngModel" [class.is-invalid]="EmpHdate.invalid && EmpHdate.touched"
                     [class.is-valid]="EmpHdate.valid" required [placeholder]="'HR.HiringDate' | translate">
-                <small [hidden]="EmpHdate.valid || EmpHdate.untouched" id="helpId" class="text-muted"
-                    [translate]="'HR.messegeDate'"></small>
+                    <div class="text-danger" *ngIf="error.isError">{{error.errorMessage}}</div>
             </div>
         </div>
         <br>
@@ -148,7 +146,7 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.FacultyDepartmentName'"></label>
-                <select [(ngModel)]="Employee.FacultyDepartmentId" name="sel2" class="form-control">
+                <select [(ngModel)]="Employee.facultyDepartmentId" name="sel2" class="form-control">
                     <option value="" selected disabled hidden></option>
                     <option *ngFor="let item of FacultyDepartments" value="{{item.id}}">{{item.facultyDepartmentName}}
                     </option>
@@ -159,7 +157,7 @@
             <div class="col-md-4">
                 <label [translate]="'HR.Address'"></label>
                 <input type="text" #EmpAddress="ngModel" [class.is-invalid]="EmpAddress.invalid && EmpAddress.touched"
-                    [class.is-valid]="EmpAddress.valid" [(ngModel)]="Employee.Address" required minlength="3"
+                    [class.is-valid]="EmpAddress.valid" [(ngModel)]="Employee.address" required minlength="3"
                     name="EmpAddress" id="EmpAddress" class="form-control" [placeholder]="'HR.Address' | translate"
                     aria-describedby="helpId">
                 <small [hidden]="EmpAddress.valid || EmpAddress.untouched" id="helpId" class="text-muted"
@@ -167,7 +165,7 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.graduatioYear'"></label>
-                <input type="number" name="GYear" [(ngModel)]="Employee.GraduatioYear" #EmpGdate="ngModel"
+                <input type="number" name="GYear" [(ngModel)]="Employee.graduatioYear" #EmpGdate="ngModel"
                     [class.is-invalid]="EmpGdate.invalid && EmpGdate.touched" [class.is-valid]="EmpGdate.valid" required
                     class="form-control" min="1890" [placeholder]="'HR.graduatioYear' | translate">
                 <small [hidden]="EmpGdate.valid || EmpGdate.untouched" id="helpId" class="text-muted"
@@ -175,13 +173,13 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.NationalId'"></label>
-                <input type="number" [placeholder]="'HR.NationalId' | translate" class="form-control"
-                    name="EmpNationalId" [ngModel]="Employee.NationalId" [pattern]="NationalIdPatern"
+                <input type="number" [placeholder]="'HR.NationalId' | translate" class="form-control" (change)="check($event.target.value)"
+                    name="EmpNationalIdd" [(ngModel)]="Employee.nationalId" [pattern]="NationalIdPatern"
                     #EmpNationalId="ngModel" >
                 <div *ngIf="EmpNationalId.errors  && !isValidFormSubmitted" [ngClass]="'error'">
                     <div *ngIf="EmpNationalId.errors.pattern" [translate]="'HR.messegeNationalId'">
                     </div>
-                </div>              
+                </div>
             </div>
         </div>
         <br>
@@ -208,7 +206,7 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.maritalStatus'"></label>
-                <select name="Mstatus" [(ngModel)]="Employee.MaritalStatus" class="form-control">
+                <select name="Mstatus" [(ngModel)]="Employee.maritalStatus" class="form-control">
                     <option disabled selected [translate]="'HR.maritalStatus'"></option>
                     <option value="Single" [translate]="'HR.Single'"></option>
                     <option value="married" [translate]="'HR.Married'"></option>
@@ -217,7 +215,8 @@
         </div>
         <br>
         <div>
-            <span><button id="Add" type="submit" [disabled]="frm.invalid" class="btn btn-primary"
+            <!-- [disabled]="frm.invalid" -->
+            <span><button id="Add" type="submit"  class="btn btn-primary" [disabled]="frm.invalid && diabledButton==false"
                     [translate]="'HR.Add'"></button>
             </span>
             <span *ngIf="fileToUpload!=undefined&&showAlert==true" #alert
@@ -238,7 +237,7 @@
 
 <br />
 <div style="margin: 20px;">
-    <p-button (click)="showdocDialog()" icon="pi pi-external-link" [label]="'HR.Add Document' | translate"></p-button>
+    <p-button (click)="showdocDialog()" *ngIf="diabledButton==true"  icon="pi pi-external-link" [label]="'HR.Add Document' | translate"></p-button>
 </div>
 <p-dialog [header]="'HR.Add Document' | translate" [(visible)]="displaydoc" [style]="{width: '50vw'}"
     [baseZIndex]="10000">
@@ -325,7 +324,7 @@
 
                 <tr *ngFor="let i of lstemployeeImages">
 
-                    <td>{{i.fileName}}</td> 
+                    <td>{{i.fileName}}</td>
 
                 </tr>
                 <tr>

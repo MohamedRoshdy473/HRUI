@@ -50,7 +50,7 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.Position Name'"></label>
-                <select [(ngModel)]="Employee.PositionId" name="sel2" class="form-control">
+                <select [(ngModel)]="Employee.positionId" name="sel2" class="form-control">
                     <option value="" selected disabled hidden></option>
                     <option *ngFor="let item of Positions" value="{{item.id}}">{{item.positionName}}</option>
                 </select>
@@ -91,11 +91,12 @@
                     [placeholder]="'HR.phone' | translate">
                     <small [hidden]="phn.valid || phn.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
-                    <input type="number"  [placeholder]="'HR.phone' | translate" class="form-control" name="mobileNumber" [ngModel]="Employee.phone" [pattern]="mobNumberPattern" #mobNumber="ngModel">  
-                    <div *ngIf="mobNumber.errors  && !isValidFormSubmitted" [ngClass] = "'error'">  
-                      <div *ngIf="mobNumber.errors.pattern" [translate]="'HR.messegephnError'">                         
-                      </div>   
+                    <input type="number" [placeholder]="'HR.phone' | translate" class="form-control" name="mobileNumber"
+                    [(ngModel)]="Employee.phone" [pattern]="phonePatern" #mobNumber="ngModel">
+                <div *ngIf="mobNumber.errors  && !isValidFormSubmitted" [ngClass]="'error'">
+                    <div *ngIf="mobNumber.errors.pattern" [translate]="'HR.messegephnError'">
                     </div>
+                </div>
             </div>
             <div class="col-md-4">
                 <label  [translate]="'HR.relevantPhone'"></label>
@@ -105,7 +106,8 @@
                     [placeholder]="'HR.relevantPhone' | translate">
                     <small [hidden]="relevantphn.valid || relevantphn.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
-                    <input type="number" [placeholder]="'HR.relevantPhone' | translate" class="form-control" name="RelevantPhoneNumber" [ngModel]="Employee.relevantPhone" [pattern]="mobNumberPattern" #RelevantNumber="ngModel">  
+                    <input type="number" [placeholder]="'HR.relevantPhone' | translate" class="form-control" name="RelevantPhoneNumber"
+                     [(ngModel)]="Employee.relevantPhone" [pattern]="mobNumberPattern" #RelevantNumber="ngModel">  
                     <div *ngIf="RelevantNumber.errors  && !isValidFormSubmitted" [ngClass] = "'error'">  
                       <div *ngIf="RelevantNumber.errors.pattern" [translate]="'HR.messegephnError'">                         
                       </div>   
@@ -119,7 +121,7 @@
                     [placeholder]="'HR.Mobile' | translate">
                     <small [hidden]="EmpMobile.valid || EmpMobile.untouched" id="helpId" class="text-muted"
                     [translate]="'HR.messegephn'"></small> -->
-                    <input type="number" [placeholder]="'HR.Mobile' | translate" class="form-control" name="MobileNumber" [ngModel]="Employee.mobile" [pattern]="mobNumberPattern" #MobileNumber="ngModel">  
+                    <input type="number" [placeholder]="'HR.Mobile' | translate" class="form-control" name="MobileNumber" [(ngModel)]="Employee.mobile" [pattern]="mobNumberPattern" #MobileNumber="ngModel">  
                     <div *ngIf="MobileNumber.errors  && !isValidFormSubmitted" [ngClass] = "'error'">  
                       <div *ngIf="MobileNumber.errors.pattern" [translate]="'HR.messegephnError'">                         
                       </div>   
@@ -139,7 +141,7 @@
             <div class="col-md-4">
                 <mat-label [translate]="'HR.dateOfBirth'"></mat-label><br>
                 <mat-form-field appearance="fill" [floatLabel]="options.value.floatLabel">
-                    <input matInput [matDatepicker]="picker" class="form-control"
+                    <input matInput [matDatepicker]="picker" class="form-control" max="{{maxDate | date:'yyyy-MM-dd'}}"
                         value="{{Employee.dateOfBirth | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
                         (dateChange)="addEvent('change', $event)">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -150,8 +152,8 @@
                 <mat-label>{{'HR.HiringDate'| translate}}</mat-label><br>
                  <!--<label [translate]="'HR.HiringDate'"></label> -->
                 <mat-form-field appearance="fill">
-                    <input matInput [matDatepicker]="picker1" class="form-control"
-                        value="{{Employee.hiringDateHiringDate | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
+                    <input matInput [matDatepicker]="picker1" class="form-control" max="{{hiringdate | date:'yyyy-MM-dd'}}"
+                        value="{{Employee.hiringDateHiringDate}}" placeholder="Input & change Date"
                         (dateChange)="addEventhiringDateHiringDate('change', $event)">
                     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                     <mat-datepicker #picker1></mat-datepicker>
@@ -205,12 +207,13 @@
             </div>
             <div class="col-md-4">
                 <label  [translate]="'HR.NationalId'"></label>
-                <input type="number" name="empNationalId" [(ngModel)]="Employee.nationalId"
-                #EmpNationalId="ngModel" [class.is-invalid]="EmpNationalId.invalid && EmpNationalId.touched"
-                [class.is-valid]="EmpNationalId.valid" required
-                class="form-control" min="1890"
-                    [placeholder]="'HR.graduatioYear' | translate">
-                    <small [hidden]="EmpNationalId.valid || EmpNationalId.untouched" id="helpId" class="text-muted" [translate]="'HR.messegeNationalId'"></small>
+                <input type="number" [placeholder]="'HR.NationalId' | translate" class="form-control"
+                name="EmpNationalId" [(ngModel)]="Employee.nationalId" [pattern]="NationalIdPatern"
+                #EmpNationalId="ngModel" >
+            <div *ngIf="EmpNationalId.errors  && !isValidFormSubmitted" [ngClass]="'error'">
+                <div *ngIf="EmpNationalId.errors.pattern" [translate]="'HR.messegeNationalId'">
+                </div>
+            </div>
             </div>
         </div>
         <div class="form-row">

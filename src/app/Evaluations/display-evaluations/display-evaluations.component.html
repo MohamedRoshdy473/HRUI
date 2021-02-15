@@ -178,7 +178,7 @@
 </div>
 
 <div class="container card" *ngIf="role=='HR'" >
-    <p-table #dt [value]="EvaluationList" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    <p-table #dt [value]="EvaluationList" class="container card" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
         [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">
@@ -331,7 +331,7 @@
     </p-table>
 </div>
 <div class="container card" *ngIf="role=='User'" >
-    <p-table #dt [value]="EvaluationUser" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    <p-table #dt [value]="EvaluationUser"  dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
         [globalFilterFields]="['employeeName','professionName','evaluationTypeName','evaluationDegreee','evaluationDate','note']">

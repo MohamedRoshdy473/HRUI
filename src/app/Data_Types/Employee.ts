@@ -1,32 +1,31 @@
 export class Employee {
-    Id:Number;
-    Name: string;
+    id:Number;
+    name: string;
     code: string;
-    ProfessionID: number;
+    professionID: number;
     gender: string;
-    Address: string;
-    DateOfBirth: Date;
-    MaritalStatus: string;
-    GraduatioYear: string;
-    Phone: string;
-    RelevantPhone: string;
+    address: string;
+    dateOfBirth: string;
+    maritalStatus: string;
+    graduatioYear: string;
+    phone: string;
+    relevantPhone: string;
     email: string;
-    HiringDateHiringDate: Date;
+    hiringDateHiringDate: string;
     photo:string;
-
-    Mobile:string;
-    EmailCompany:string;
-    NationalId:string;
-    PositionId:number;
-    PositionName:string;
-    PositionlevelId:number;
-    PositionLevel:string;
-    FacultyDepartmentId:number;
-    FacultyDepartmentName:string;
-    UniversityId:number
-    UniversityName:string;
-    FacultyName:string;
-    FacultyId:number;
+    mobile:string;
+    emailCompany:string;
+    nationalId:string;
+    positionId:number;
+    positionName:string;
+    positionlevelId:number;
+    positionLevelName:string;
+    facultyDepartmentId:number;
+    facultyDepartmentName:string;
+    universityId:number
+    universityName:string;
+    facultyName:string;
+    facultyId:number;
     listOfdocuments: []
 
 }

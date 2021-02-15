@@ -15,6 +15,7 @@ import{UniversitiesService} from 'src/app/Services/universities.service'
 import{FacultyService} from 'src/app/Services/faculty.service'
 import{FacultyDepartmentService} from 'src/app/Services/faculty-department.service'
 import { EmployeeDocumentsService } from 'src/app/Services/employee-documents.service';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-display-all-employees',
   templateUrl: './display-all-employees.component.html',
@@ -48,13 +49,13 @@ export class DisplayAllEmployeesComponent implements OnInit {
     constructor(private EmployeeService: EmployeeService,private router:Router,
         private positionLevelService:PositionLevelService,private positionsService:PositionsService,
         private univertyService:UniversitiesService,private FacultyService:FacultyService,
-        private facultyDepartmentService:FacultyDepartmentService,
+        private facultyDepartmentService:FacultyDepartmentService,private datePipe: DatePipe,
         private confirmationService: ConfirmationService,private messageService: MessageService,
     private employeeDocumentservice:EmployeeDocumentsService,
     )
      { 
-        this.Employee={Address:'',DateOfBirth:new Date(2018, 0O5, 0O5, 17, 23, 42, 11),Email:'',GraduatioYear:''
-      ,HiringDate:new Date(2018, 0O5, 0O5, 17, 23, 42, 11),MaritalStatus:'Marital Status',Name:'',
+        this.Employee={Address:'',DateOfBirth:"",Email:'',GraduatioYear:''
+      ,HiringDate:"",MaritalStatus:'Marital Status',Name:'',
     Phone:'',ProfessionID:0,RelevantPhone:'',code:'',gender:'Gender'};
     }
 
@@ -69,7 +70,8 @@ export class DisplayAllEmployeesComponent implements OnInit {
         this.IsShow=false;
       }
     ngOnInit() {
-
+        // this.Employee.dateOfBirth = this.datePipe.transform(this.Employee.dateOfBirth, "dd-MM-yyyy");
+        // this.Employee.hiringDateHiringDate = this.datePipe.transform(this.Employee.hiringDateHiringDate, "dd-MM-yyyy")
      this.positionLevelService.getAllPositionLevel().subscribe(
          res=>{this.positionLevel=res;console.log("levels",this.positionLevel)},
          err=>console.log(err)

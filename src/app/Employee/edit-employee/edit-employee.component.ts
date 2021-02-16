@@ -95,7 +95,7 @@ export class EditEmployeeComponent implements OnInit {
     this.year = this.bithdate.getFullYear();
     this.month = this.bithdate.getMonth();
     this.day = this.bithdate.getDay();
-    this.maxDate=(this.year-16)+"/"+(this.month)+"/"+this.day
+    this.maxDate=(this.year-16)+"/"+(this.month+1)+"/"+this.day
     console.log("maxDate",this.maxDate);
 
 

@@ -1,15 +1,15 @@
-
 <div class="col-md-12 datetime" >
-
-    {{now | date }}
-    <div style="padding-left: 10px;" >
-    {{now | date: 'hh:mm:ss' }}</div>
-    </div>
+    <br>
+       <span>{{now | date :'dd/MM/yyyy' }}</span> 
+        <span style="padding-left: 10px;" >
+        {{now | date: 'hh:mm:ss' }}</span>
+        </div>
     <!-- sourceFilterPlaceholder="Search by name" targetFilterPlaceholder="Search by name" -->
-    <p-pickList [source]="AllEmployees"  [target]="AttendINEmployees" sourceHeader="All Employees" 
-    targetHeader="IN" dragdrop="true" (onMoveToTarget)="moved($event.items)"
-        [responsive]="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="name"
-        >
+    <p-pickList [source]="AllEmployees"  [target]="AttendINEmployees" sourceHeader="{{'HR.Employees' | translate}}"
+    targetHeader="{{'HR.IN' | translate}}" dragdrop="true" (onMoveToTarget)="moved($event.items)"
+    sourceFilterPlaceholder="{{'HR.Employee Name' | translate}}" targetFilterPlaceholder="{{'HR.Employee Name' | translate}}" 
+        [responsive]="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="name">
+        <div> <label>{{ 'HR.All' | translate }}</label></div>
         <ng-template let-employee pTemplate="item">
             <div class="product-item">
             <div class="image-container">
@@ -17,16 +17,21 @@
                     [alt]="employee.name" class="employee-image" />
             </div>
                 <div class="product-list-detail">
-                    <h5 class="p-mb-2">{{employee.name}}</h5>
-                    <!-- <i class="pi pi-tag employee-category-icon"></i> -->
-                    <span class="product-category">{{employee.profession}}</span>
+                    <div class="product-list-detail">
+                        <h4 class="p-mb-2">{{employee.name}}</h4>
+                        <!-- <i class="pi pi-tag employee-category-icon"></i> -->
+                        <span *ngIf="employee.existInSource" class="product-category">{{'HR.Profession Name' | translate}} : {{employee.professionName}} || </span> 
+                        <span *ngIf="employee.existInSource" class="product-category">{{'HR.Time Now' | translate}} : {{now | date: 'hh:mm:ss' }}</span>
+                        <span *ngIf="!employee.existInSource" class="product-category">{{'HR.Profession Name' | translate}} : {{employee.profession}} || </span> 
+                        <span *ngIf="!employee.existInSource" class="product-category">{{'HR.IN' | translate}} : {{employee.time | date: 'hh:mm:ss' }}</span>
+                    </div>
                 </div>
-                <div *ngIf="employee.existInSource" class="product-list-action">
+                <!-- <div *ngIf="employee.existInSource" class="product-list-action">
                     <h6 class="p-mb-2">{{now | date: 'hh:mm:ss' }}</h6>
                 </div>
                 <div *ngIf="!employee.existInSource" class="product-list-action">
                     <h6 class="p-mb-2">{{employee.time| date: 'hh:mm:ss' }}</h6>
-                </div>
+                </div> -->
             </div>
         </ng-template>
     </p-pickList>

@@ -190,7 +190,9 @@
     "managerName":"Manager Name",
     "HR":"HR",
     "Show":"Show",
-    "Delete":"Delete"
+    "Delete":"Delete",
+    "Update Need Request":"Update Need Request",
+    "Time Now":"Time Now"
 
 
   }

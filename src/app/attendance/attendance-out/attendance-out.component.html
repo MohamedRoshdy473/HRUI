@@ -6,8 +6,8 @@
     </div>
     
     <p-pickList [source]="AttendOutEmployees" [target]="AttendINEmployees" sourceHeader="{{'HR.OUT' | translate}}"
-    targetHeader="{{'HR.IN' | translate}}" dragdrop="true" (onMoveToSource)="moved($event.items)"
-        [responsive]="true" [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}" filterBy="name"
+    targetHeader="{{'HR.IN' | translate}}" dragdrop="true" (onMoveToSource)="moved($event.items)" (onMoveToTarget)="movedInagain($event.items)"
+        [responsive]="true" [sourceStyle]="{'height':'350px'}" [targetStyle]="{'height':'350px'}" filterBy="name"
         sourceFilterPlaceholder="{{'HR.Employee Name' | translate}}" targetFilterPlaceholder="{{'HR.Employee Name' | translate}}" >
         <ng-template let-employee pTemplate="item">
             <div class="product-item">

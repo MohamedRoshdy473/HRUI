@@ -68,9 +68,25 @@ export class AttendanceOUTComponent implements OnInit {
     }
     console.log(data)
     this.AttService.MakeOUTAttend(data,event[0].attID).subscribe(
-      data=>console.log(data),
+      data=>{console.log(data),this.ngOnInit()},
       error=>console.log(error)
     );
   }
-
+  movedInagain(event)
+  {
+    console.log(event[0]);
+    event[0].existInSource=false;
+    event[0].time=this.now;
+    console.log(this.AttendINEmployees)
+    var data={
+      EmployeeID:event[0].id,
+      Arrival:new Date(Date.now()),
+    }
+    console.log(data)
+    this.AttService.MakeInAttend(data).subscribe(
+      data=>{console.log(data),
+      this.ngOnInit()},
+      error=>console.log(error)
+    );
+  }
 }

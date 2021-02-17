@@ -7,7 +7,7 @@ import { EmployeeDocuments } from 'src/app/Data_Types/EmployeeDocuments'
 import { Gender } from 'src/app/Data_Types/gender'
 import { MaritalStatus } from 'src/app/Data_Types/marital-status'
 import { Profession } from 'src/app/Data_Types/profession'
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
@@ -75,7 +75,7 @@ export class AddEmployeeComponent implements OnInit {
   constructor(private empService: EmployeeService, private router: Router, private datePipe: DatePipe,
     private positionLevelService: PositionLevelService, private positionsService: PositionsService,
     private univertyService: UniversitiesService, private FacultyService: FacultyService,
-    private httpClient: HttpClient,
+    private httpClient: HttpClient,private messageService: MessageService,
     private employeeDocumentservice: EmployeeDocumentsService,
 
     private facultyDepartmentService: FacultyDepartmentService,) {
@@ -172,6 +172,7 @@ export class AddEmployeeComponent implements OnInit {
       this.empService.AddEmployee(this.Employee).subscribe(
         res => { 
           console.log("after employeeres",this.Employee)
+          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee Added' });
            this.employeeId=res
            this.empImage.employeeID=this.employeeId,
            this.diabledButton=false
@@ -237,6 +238,7 @@ export class AddEmployeeComponent implements OnInit {
       // do something, if upload success
       //c(data);
       // alert("image Uploaded Successfuly")
+     // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded Successfully' });
     }, error => {
       console.log(error);
     });
@@ -272,11 +274,8 @@ export class AddEmployeeComponent implements OnInit {
 
     this.httpClient.post(environment.uploadImage, formData)
       .subscribe(res => {
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded Successfully' });
         console.log(res)
-        alert('Uploaded Successfully.');
-
-
-
       });
   }
 
@@ -300,6 +299,7 @@ export class AddEmployeeComponent implements OnInit {
   SaveDocuentToDB() {
 
     this.employeeDocumentservice.AddEmployeeDocument(this.lstoddocproj).subscribe(e => {
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Successfully To Employee' });
       this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(this.employeeId).subscribe(d => {
         // this.documents = d;
         // this.lstoddocproj=d
@@ -326,5 +326,38 @@ export class AddEmployeeComponent implements OnInit {
     this.lstoddocproj = []
   }
 
-
+  showSuccess() {
+    this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Record Added' });
+  }
+  showInfo() {
+    this.messageService.add({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+  }
+  showWarn() {
+    this.messageService.add({ severity: 'warn', summary: 'Warn', detail: 'Message Content' });
+  }
+  showError() {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
+  }
+  showCustom() {
+    this.messageService.add({ severity: 'custom', summary: 'Custom', detail: 'Message Content'});
+  }
+  showTopLeft() {
+    this.messageService.add({ key: 'tl', severity: 'info', summary: 'Info', detail: 'Message Content' });
+  }
+  showTopCenter() {
+    this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Warn', detail: 'Message Content' });
+  }
+  showBottomCenter() {
+    this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Message Content' });
+  }
+  showConfirm() {
+    this.messageService.clear();
+    this.messageService.add({ key: 'c', sticky: true, severity: 'warn', summary: 'Are you sure?', detail: 'Confirm to proceed' });
+  }
+  onConfirm() {
+    this.messageService.clear('c');
+  }
+  onReject() {
+    this.messageService.clear('c');
+  }
 }

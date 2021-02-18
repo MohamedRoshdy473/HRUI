@@ -1,0 +1,17 @@
+<div class="container">
+    <div class="row">
+        <div id="card" class="col">
+            <div id="chart">
+                <apx-chart [series]="chartOptions.series" [chart]="chartOptions.chart"
+                    [plotOptions]="chartOptions.plotOptions" [labels]="chartOptions.labels"
+                    [stroke]="chartOptions.stroke" [fill]="chartOptions.fill"></apx-chart>
+            </div>
+        </div>
+
+        <!--The content below is only a placeholder and can be replaced.-->
+        <div id="chart" class="col">
+            <apx-chart [series]="chartOptions2.series2" [chart]="chartOptions2.chart2" [labels]="chartOptions2.labels"
+                [responsive]="chartOptions2.responsive"></apx-chart>
+        </div>
+    </div>
+</div>

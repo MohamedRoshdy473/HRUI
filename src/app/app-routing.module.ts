@@ -74,6 +74,7 @@ import { DisplayUniversitiesComponent } from './Universities/display-universitie
 import { DisplayFacultiesComponent } from './Faculties/display-faculties/display-faculties.component';
 import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
 import { EditLeaveRequestComponent } from './Leaves/edit-leave-request/edit-leave-request.component';
+import { PieChartsComponent } from './pie-charts/pie-charts.component';
 
 
 const routes: Routes = [
@@ -148,6 +149,8 @@ const routes: Routes = [
     {path:'DisplayUniversities',component:DisplayUniversitiesComponent},
     {path:'DisplayFaculties',component:DisplayFacultiesComponent},
     {path:'DisplayFacultydepartments',component:DisplayFacultydepartmentsComponent},
+    {path:'PieCharts',component:PieChartsComponent},
+
 
 
 

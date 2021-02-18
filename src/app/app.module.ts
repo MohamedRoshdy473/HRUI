@@ -160,6 +160,8 @@ import { DisplayUniversitiesComponent } from './Universities/display-universitie
 import { DisplayFacultiesComponent } from './Faculties/display-faculties/display-faculties.component';
 import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
 import { EditLeaveRequestComponent } from './Leaves/edit-leave-request/edit-leave-request.component';
+import { PieChartsComponent } from './pie-charts/pie-charts.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 
 
@@ -251,10 +253,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DisplayFacultiesComponent,
     DisplayFacultydepartmentsComponent,
     EditLeaveRequestComponent,
+    PieChartsComponent,
 
   ],
   imports: [
     NgxPrintModule,
+    NgApexchartsModule,
     BrowserModule,RatingModule ,
     FormsModule,
     ReactiveFormsModule ,

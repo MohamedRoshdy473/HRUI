@@ -26,7 +26,7 @@
 <div class="container">
     <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
         [globalFilterFields]="['facultyName','universityName','facultyDepartmentName']" [value]="lstFacultyDepartments">
         <ng-template pTemplate="caption">
             <h1 [translate]="'HR.DisplayFacultydepartments'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>

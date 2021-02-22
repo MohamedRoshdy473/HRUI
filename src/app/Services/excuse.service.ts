@@ -79,7 +79,7 @@ export class ExcuseService {
   }
   PendingExcusesByHR():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/Excuses/PendingExcusesByHR`,this.httpOptions)
+    return this.httpclient.get<any>(`${environment.ApiURL}/Excuses/PendingExcusesByHR`,this.httpOptions)
   }
   approve(id):Observable<any>
   {

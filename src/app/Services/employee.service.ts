@@ -43,13 +43,13 @@ export class EmployeeService {
         })};
     return this.httpclient.post(`${environment.employees}`,emp,httpOptions);
   }
-  GetAllEmployees()
+  GetAllEmployees(): Observable<Employee[]>
   {
     const httpOptions = {headers: new HttpHeaders({
       'Content-Type': 'application/json',
       //"Authorization": "bearer " + localStorage.getItem('token')
         })};
-    return this.httpclient.get(`${environment.ApiURL}/Employees`,httpOptions);
+    return this.httpclient.get<Employee[]>(`${environment.ApiURL}/Employees`,httpOptions);
   }
   GetImageByName(imageName: string): Observable<any> {
     return this.httpclient.get<any>(`${environment.getImageByName}${imageName}`, this.httpHeader);
@@ -94,13 +94,13 @@ export class EmployeeService {
         })};
     return this.httpclient.get(`${environment.ApiURL}/Employees/EmployeeByProfession`,httpOptions);
   }
-  GetAllEmployeesByProfession(id)
+  GetAllEmployeesByProfession(id):Observable<any>
   {
     const httpOptions = {headers: new HttpHeaders({
       'Content-Type': 'application/json',
       "Authorization": "bearer " + localStorage.getItem('token')
         })};
-    return this.httpclient.get(`${environment.ApiURL}/Employees/GetAllEmployeesByProfession/`+id,this.httpHeader);
+    return this.httpclient.get<any>(`${environment.ApiURL}/Employees/GetAllEmployeesByProfession/`+id,this.httpHeader);
   }
   delete(id)
   {

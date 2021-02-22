@@ -9,6 +9,9 @@
                     translate}} </a>
             </li>
             <li>
+                <a class="active" class="pi pi-bars" routerLink='PieCharts'>PieCharts</a>
+            </li>
+            <li>
                 <a class="active" class="pi pi-user" routerLink='/employee'> {{ 'HR.Employees' | translate }}</a>
             </li>
             <li class="active">
@@ -145,22 +148,25 @@
                         <a class="active" class="pi pi-users" routerLink='/AllLUsers'> {{ 'HR.Users' | translate }}</a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayPositionLevels']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayPositionLevels']"
+                            class="pi pi-users">
                             {{'HR.DisplayPositionLevels'| translate}}
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayPositions']" class="pi pi-users">
                             {{'HR.DisplayPositions'| translate}}
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayProfessions']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayProfessions']"
+                            class="pi pi-users">
                             {{'HR.DisplayProfessions'| translate}}
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayUniversities']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayUniversities']"
+                            class="pi pi-users">
                             {{'HR.DisplayUniversities'| translate}}
                         </a>
                     </li>
@@ -170,12 +176,13 @@
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayFacultydepartments']" class="pi pi-users">
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/DisplayFacultydepartments']"
+                            class="pi pi-users">
                             {{'HR.DisplayFacultydepartments'| translate}}
                         </a>
                     </li>
 
-                    
+
                     <li>
                         <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/Instructor']" class="pi pi-users">
                             {{'HR.Instructors'| translate}}
@@ -221,7 +228,7 @@
                             </a>
                         </li>
                         <li style="margin-left: 20px; font-size: 20px;color: #2674a8;">
-                            <a  [routerLink]="['/AllLeaves']">
+                            <a [routerLink]="['/AllLeaves']">
                                 <span class="menu-collapsed" [translate]="'HR.All Leaves'"></span>
                             </a>
                         </li>

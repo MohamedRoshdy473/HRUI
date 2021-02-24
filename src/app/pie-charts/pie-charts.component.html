@@ -1,44 +1,121 @@
 <div class="container">
-    <div class="row">
-        <div id="card">
-            <div id="chart">
-                <apx-chart
-                 [series]="chartOptionsExcusesesNumber.series"
-                  [chart]="chartOptionsExcusesesNumber.chart"
-                    [plotOptions]="chartOptionsExcusesesNumber.plotOptions"
-                     [labels]="chartOptionsExcusesesNumber.labels"
-                    [stroke]="chartOptionsExcusesesNumber.stroke"
-                     [fill]="chartOptionsExcusesesNumber.fill"
-                     ></apx-chart>
-            </div>
-        </div>
 
-        <!--The content below is only a placeholder and can be replaced.-->
+    <div class="row">
+        <div id="chart" class="col" *ngIf="role=='HR'">
+            <apx-chart [series]="chartOptionsExcusesesNumber.series" [chart]="chartOptionsExcusesesNumber.chart"
+                [plotOptions]="chartOptionsExcusesesNumber.plotOptions" [labels]="chartOptionsExcusesesNumber.labels"
+                [stroke]="chartOptionsExcusesesNumber.stroke" [fill]="chartOptionsExcusesesNumber.fill"></apx-chart>
+        </div>
+        <div id="chart" class="col" *ngIf="role=='Admin'">
+            <apx-chart [series]="chartOptionsManagerExcusesesNumber.series"
+                [chart]="chartOptionsManagerExcusesesNumber.chart"
+                [plotOptions]="chartOptionsManagerExcusesesNumber.plotOptions"
+                [labels]="chartOptionsManagerExcusesesNumber.labels"
+                [stroke]="chartOptionsManagerExcusesesNumber.stroke" [fill]="chartOptionsManagerExcusesesNumber.fill">
+            </apx-chart>
+        </div>
+        <div id="chart" class="col" *ngIf="role=='HR'">
+            <apx-chart [series]="chartOptionsLeavesNumber.series" [chart]="chartOptionsLeavesNumber.chart"
+                [plotOptions]="chartOptionsLeavesNumber.plotOptions" [labels]="chartOptionsLeavesNumber.labels"
+                [stroke]="chartOptionsLeavesNumber.stroke" [fill]="chartOptionsLeavesNumber.fill"></apx-chart>
+        </div>
+        <div id="chart" class="col" *ngIf="role=='Admin'">
+            <apx-chart [series]="chartOptionsManagerLeavesNumber.series" [chart]="chartOptionsManagerLeavesNumber.chart"
+                [plotOptions]="chartOptionsManagerLeavesNumber.plotOptions" [labels]="chartOptionsManagerLeavesNumber.labels"
+                [stroke]="chartOptionsManagerLeavesNumber.stroke" [fill]="chartOptionsManagerLeavesNumber.fill"></apx-chart>
+        </div>
+        <div id="chart" class="col" *ngIf="role=='HR'">
+            <apx-chart [series]="chartOptionsNeedsRequetsNumber.series" [chart]="chartOptionsNeedsRequetsNumber.chart"
+                [plotOptions]="chartOptionsNeedsRequetsNumber.plotOptions"
+                [labels]="chartOptionsNeedsRequetsNumber.labels" [stroke]="chartOptionsNeedsRequetsNumber.stroke"
+                [fill]="chartOptionsNeedsRequetsNumber.fill"></apx-chart>
+        </div>
+        <div id="chart" class="col" *ngIf="role=='Admin'">
+            <apx-chart [series]="chartOptionsManagerNeedsRequetsNumber.series" [chart]="chartOptionsManagerNeedsRequetsNumber.chart"
+                [plotOptions]="chartOptionsManagerNeedsRequetsNumber.plotOptions"
+                [labels]="chartOptionsManagerNeedsRequetsNumber.labels" [stroke]="chartOptionsManagerNeedsRequetsNumber.stroke"
+                [fill]="chartOptionsManagerNeedsRequetsNumber.fill"></apx-chart>
+        </div>
+        <!--The content below is only a placeholder and can be replaced.
         <div class=" fontsty">
             <h4>                       
               <span class="circle">{{employeeNumber}}</span>{{"HR.Employees"|translate}}</h4>
             
-        </div>
-        <div id="chart" class="col">
-            <apx-chart
-             [series]="chartOptionsEmployees.series"
-              [chart]="chartOptionsEmployees.chart"
-               [labels]="chartOptionsEmployees.labels"
-                [responsive]="chartOptionsEmployees.responsive"></apx-chart>
-        </div>
+        </div>-->
+
     </div>
     <div class="row">
-        <div id="chart">
-            <apx-chart
-              [series]="ChartOptionsExcusesTypes.series"
-              [chart]="ChartOptionsExcusesTypes.chart"
-              [dataLabels]="ChartOptionsExcusesTypes.dataLabels"
-              [plotOptions]="ChartOptionsExcusesTypes.plotOptions"
-              [responsive]="ChartOptionsExcusesTypes.responsive"
-              [xaxis]="ChartOptionsExcusesTypes.xaxis"
-              [legend]="ChartOptionsExcusesTypes.legend"
-              [fill]="ChartOptionsExcusesTypes.fill"
-            ></apx-chart>
-          </div>
+        <div *ngIf="role=='HR'" id="chart">
+            <h2><span style="color: rgb(254, 176, 25);font-size: x-large;">{{"HR.Ex"|translate}}</span><span
+                    style="color: rgba(59, 130, 246, 0.5);font-size: x-large;">{{"HR.cus"|translate}}</span><span
+                    style="color: rgb(0, 143, 251);font-size: x-large;">{{"HR.es"|translate}}</span></h2>
+            <apx-chart [series]="ChartOptionsExcusesTypes.series" [chart]="ChartOptionsExcusesTypes.chart"
+                [dataLabels]="ChartOptionsExcusesTypes.dataLabels" [plotOptions]="ChartOptionsExcusesTypes.plotOptions"
+                [responsive]="ChartOptionsExcusesTypes.responsive" [xaxis]="ChartOptionsExcusesTypes.xaxis"
+                [legend]="ChartOptionsExcusesTypes.legend" [fill]="ChartOptionsExcusesTypes.fill"></apx-chart>
+        </div>
+        <div *ngIf="role=='Admin'" id="chart">
+            <h2><span style="color: rgb(254, 176, 25);font-size: x-large;">{{"HR.Ex"|translate}}</span><span
+                    style="color: rgba(59, 130, 246, 0.5);font-size: x-large;">{{"HR.cus"|translate}}</span><span
+                    style="color: rgb(0, 143, 251);font-size: x-large;">{{"HR.es"|translate}}</span></h2>
+            <apx-chart [series]="ChartOptionsManagerExcusesTypes.series" [chart]="ChartOptionsManagerExcusesTypes.chart"
+                [dataLabels]="ChartOptionsManagerExcusesTypes.dataLabels" [plotOptions]="ChartOptionsManagerExcusesTypes.plotOptions"
+                [responsive]="ChartOptionsManagerExcusesTypes.responsive" [xaxis]="ChartOptionsManagerExcusesTypes.xaxis"
+                [legend]="ChartOptionsManagerExcusesTypes.legend" [fill]="ChartOptionsManagerExcusesTypes.fill"></apx-chart>
+        </div>
+        <div *ngIf="role=='HR'" id="chart">
+            <h2><span style="color: rgb(254, 176, 25);font-size: x-large;">{{"HR.Le"|translate}}</span><span
+                    style="color: rgba(59, 130, 246, 0.5);font-size: x-large;">{{"HR.av"|translate}}</span><span
+                    style="color: rgb(0, 143, 251);font-size: x-large;">{{"HR.es"|translate}}</span></h2>
+            <apx-chart [series]="ChartOptionsLeavesTypes.series" [chart]="ChartOptionsLeavesTypes.chart"
+                [dataLabels]="ChartOptionsLeavesTypes.dataLabels" [plotOptions]="ChartOptionsLeavesTypes.plotOptions"
+                [responsive]="ChartOptionsLeavesTypes.responsive" [xaxis]="ChartOptionsLeavesTypes.xaxis"
+                [legend]="ChartOptionsLeavesTypes.legend" [fill]="ChartOptionsLeavesTypes.fill"></apx-chart>
+        </div>
+        <div *ngIf="role=='Admin'" id="chart">
+            <h2><span style="color: rgb(254, 176, 25);font-size: x-large;">{{"HR.Le"|translate}}</span><span
+                    style="color: rgba(59, 130, 246, 0.5);font-size: x-large;">{{"HR.av"|translate}}</span><span
+                    style="color: rgb(0, 143, 251);font-size: x-large;">{{"HR.es"|translate}}</span></h2>
+            <apx-chart [series]="ChartOptionsManagerLeavesTypes.series" [chart]="ChartOptionsManagerLeavesTypes.chart"
+                [dataLabels]="ChartOptionsManagerLeavesTypes.dataLabels" [plotOptions]="ChartOptionsManagerLeavesTypes.plotOptions"
+                [responsive]="ChartOptionsManagerLeavesTypes.responsive" [xaxis]="ChartOptionsManagerLeavesTypes.xaxis"
+                [legend]="ChartOptionsManagerLeavesTypes.legend" [fill]="ChartOptionsManagerLeavesTypes.fill"></apx-chart>
+        </div>
+        <div *ngIf="role=='HR'" id="chart">
+            <h2><span style="color: rgb(254, 176, 25);font-size: x-large;">{{"HR.Nee"|translate}}</span><span
+                    style="color: rgba(59, 130, 246, 0.5);font-size: x-large;">{{"HR.ds Rq"|translate}}</span><span
+                    style="color: rgb(0, 143, 251);font-size: x-large;">{{"HR.uests"|translate}}</span></h2>
+            <apx-chart [series]="ChartOptionsNeedsRequetsTypes.series" [chart]="ChartOptionsNeedsRequetsTypes.chart"
+                [dataLabels]="ChartOptionsNeedsRequetsTypes.dataLabels"
+                [plotOptions]="ChartOptionsNeedsRequetsTypes.plotOptions"
+                [responsive]="ChartOptionsNeedsRequetsTypes.responsive" [xaxis]="ChartOptionsNeedsRequetsTypes.xaxis"
+                [legend]="ChartOptionsNeedsRequetsTypes.legend" [fill]="ChartOptionsNeedsRequetsTypes.fill"></apx-chart>
+        </div>
+         <div *ngIf="role=='Admin'" id="chart">
+            <h2><span style="color: rgb(254, 176, 25);font-size: x-large;">{{"HR.Nee"|translate}}</span><span
+                    style="color: rgba(59, 130, 246, 0.5);font-size: x-large;">{{"HR.ds Rq"|translate}}</span><span
+                    style="color: rgb(0, 143, 251);font-size: x-large;">{{"HR.uests"|translate}}</span></h2>
+            <apx-chart [series]="ChartOptionsManagerNeedsRequetsTypes.series" [chart]="ChartOptionsManagerNeedsRequetsTypes.chart"
+                [dataLabels]="ChartOptionsManagerNeedsRequetsTypes.dataLabels"
+                [plotOptions]="ChartOptionsManagerNeedsRequetsTypes.plotOptions"
+                [responsive]="ChartOptionsManagerNeedsRequetsTypes.responsive" [xaxis]="ChartOptionsManagerNeedsRequetsTypes.xaxis"
+                [legend]="ChartOptionsManagerNeedsRequetsTypes.legend" [fill]="ChartOptionsManagerNeedsRequetsTypes.fill"></apx-chart>
+        </div>
+    </div>
+    <h2 *ngIf="role=='HR'" style="text-align: center;"><span
+            style="color: rgb(254, 176, 25);font-size: xx-large;">{{"HR.Emp"|translate}}</span><span
+            style="color: rgba(59, 130, 246, 0.5);font-size: xx-large;">{{"HR.loy"|translate}}</span><span
+            style="color: rgb(0, 143, 251);font-size: xx-large;">{{"HR.ees"|translate}}</span></h2>
+
+    <div class="row" *ngIf="role=='HR'">
+        <div id="chart" class="col">
+            <apx-chart [series]="chartOptionsEmployees.series" [chart]="chartOptionsEmployees.chart"
+                [labels]="chartOptionsEmployees.labels" [responsive]="chartOptionsEmployees.responsive"></apx-chart>
+        </div>
+        <div id="chart2">
+            <apx-chart [series]="chartoptionsEmployee2.series" [chart]="chartoptionsEmployee2.chart"
+                [dataLabels]="chartoptionsEmployee2.dataLabels" [plotOptions]="chartoptionsEmployee2.plotOptions"
+                [xaxis]="chartoptionsEmployee2.xaxis"></apx-chart>
+        </div>
     </div>
 </div>

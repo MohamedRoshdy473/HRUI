@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'HR';
   direction = '';
 
@@ -23,6 +23,7 @@ export class AppComponent implements OnInit{
   //   });
   // }
   constructor(public translate: TranslateService, public dir: Directionality) {
+
     // console.log(dir.value);
 
     // translate.addLangs(['English', 'العربية']);
@@ -38,7 +39,7 @@ export class AppComponent implements OnInit{
 
   changeDir($event) {
     debugger;
-    console.log("$event.target.value",$event.target.value);
+    console.log("$event.target.value", $event.target.value);
     // this.translate.use($event.target.value);
     sessionStorage.setItem("lang", $event.target.value);
 
@@ -50,7 +51,7 @@ export class AppComponent implements OnInit{
       localStorage.setItem('dir', 'rtl');
     }
 
-console.log("test",this.dir)
+    console.log("test", this.dir)
   }
 
   ngOnInit(): void {

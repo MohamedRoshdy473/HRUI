@@ -22,38 +22,38 @@ export class NeedRequestService {
     'Accept': '*/*'
        
   })};
-  getNeedrequest()
+  getNeedrequest():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes`,this.httpHeader)
   }
-  GetNeedRequestByManager()
+  GetNeedRequestByManager():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetNeedRequestByManager`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetNeedRequestByManager`,this.httpHeader)
   }
-  GetPendingNeedRequest()
+  GetPendingNeedRequest():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetPendingNeedRequest`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetPendingNeedRequest`,this.httpHeader)
   }
-  GetPendingNeedRequestByManager()
+  GetPendingNeedRequestByManager():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetPendingNeedRequestByManager`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetPendingNeedRequestByManager`,this.httpHeader)
   }
-  GetApprovedNeedRequest()
+  GetApprovedNeedRequest():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetApprovedNeedRequest`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetApprovedNeedRequest`,this.httpHeader)
   }
-  GetApprovedNeedRequestByManager()
+  GetApprovedNeedRequestByManager():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetApprovedNeedRequestByManager`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetApprovedNeedRequestByManager`,this.httpHeader)
   }
 
-  GetDisApprovedNeedRequest()
+  GetDisApprovedNeedRequest():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetDisApprovedNeedRequest`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetDisApprovedNeedRequest`,this.httpHeader)
   }
-  GetDisApprovedNeedRequestByManager()
+  GetDisApprovedNeedRequestByManager():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/NeedRequestDTOes/GetDisApprovedNeedRequestByManager`,this.httpHeader)
+    return this.httpclient.get<any>(`${environment.ApiURL}/NeedRequestDTOes/GetDisApprovedNeedRequestByManager`,this.httpHeader)
   }
   approve(id):Observable<any>
   {

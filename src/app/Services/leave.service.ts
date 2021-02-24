@@ -20,14 +20,14 @@ export class LeaveService {
        
   })};
 
-  AllLeaves()
+  AllLeaves():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests`,this.httpHeader);
+    return this.httpclient.get<any>(`${environment.ApiURL}/LeaveRequests`,this.httpHeader);
 
   } 
-  GetLeaveRequestsByManager()
+  GetLeaveRequestsByManager():Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByManager`,this.httpHeader);
+    return this.httpclient.get<any>(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByManager`,this.httpHeader);
 
   }
   getLeaveByID(id):Observable<LeaveRequest>

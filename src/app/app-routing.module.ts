@@ -85,7 +85,7 @@ const routes: Routes = [
     { path: 'employee', component:DisplayAllEmployeesComponent },
     // ,canActivate:[AdminGuard]
     { path: 'addemployee', component:AddEmployeeComponent },
-    { path: 'mainPage', component:MainPageComponent },
+    { path: 'mainPage', component:PieChartsComponent },
     {path:'Profile',component:ProfileComponent}, 
     { path: 'editEmployee/:empId', component:EditEmployeeComponent },
     { path: 'AddExcuse', component:AddExcuseComponent},

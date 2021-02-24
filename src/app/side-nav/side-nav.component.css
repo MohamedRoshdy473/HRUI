@@ -341,7 +341,7 @@ ul li{
     top: 50%;
     right: 20px;
     transform: translateY(-50%);
-} */
-.dropdown-toggle::after {
-    left: 20px;
 }
+.dropdown-toggle::after {
+    left: 20px ;
+} */

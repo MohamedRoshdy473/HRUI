@@ -320,3 +320,28 @@ ul li{
   background-color: black !important;
 }
   */
+
+  .english{
+      /* left:20px; */
+
+
+      left: 20px !important;
+
+    
+  }
+  .arabic{
+    /* right:20px; */
+
+
+    right: 20px !important;
+}
+/* .dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+} */
+.dropdown-toggle::after {
+    left: 20px;
+}

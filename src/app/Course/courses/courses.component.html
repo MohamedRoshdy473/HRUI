@@ -59,27 +59,27 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th [translate]="'HR.Training Type'"></th>
-            <th [translate]="'HR.Course Name'"></th>
+            <th [translate]="'HR.Training Type'" style="text-align: inherit;"></th>
+            <th [translate]="'HR.Course Name'" style="text-align: inherit;"></th>
         </tr>
         <tr>
             <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'trainingTypeName', 'contains')"
+                <input pInputText  style="text-align: inherit;" type="text" (input)="dt.filter($event.target.value, 'trainingTypeName', 'contains')"
                 [placeholder]="'HR.Training Type' | translate"
                 class="p-column-filter">
             </th> 
              <th>
-                <input pInputText type="text" (input)="dt.filter($event.target.value, 'courseName', 'contains')"
+                <input pInputText type="text" style="text-align: inherit;" (input)="dt.filter($event.target.value, 'courseName', 'contains')"
                 [placeholder]="'HR.Course Name' | translate" class="p-column-filter">
             </th> 
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-courseObj>
         <tr>
-            <td>
+            <td style="text-align: inherit;">
                 {{courseObj.trainingTypeName}}
             </td>
-            <td>
+            <td >
                 {{courseObj.courseName}}
             </td>
             <td>

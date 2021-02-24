@@ -1,21 +1,24 @@
-<div class="wrapper">
-    <nav id="sidebar" *ngIf="role=='Admin' || role=='HR'">
+<div class="wrapper" dir="{{textDir}}">
+    <nav id="sidebar" *ngIf="role=='Admin' || role=='HR'" [ngStyle]="{'text-align': selectedlang === 'English' ? 'left': 'right'}" >
         <div class="sidebar-header">
             <h3 style="font-size: 25px;">{{ 'HR.Human Resources' |translate}}</h3>
         </div>
-        <ul class="list-unstyled components">
+        <ul  style="list-style-type: none;">
             <li>
                 <a class="active" class="pi pi-bars" routerLink='mainPage'> {{ 'HR.Dashboard' |
                     translate}} </a>
             </li>
-            <!-- <li>
-                <a class="active" class="pi pi-bars" routerLink='PieCharts'>PieCharts</a>
-            </li> -->
             <li>
-                <a class="active" class="pi pi-user" routerLink='/employee'> {{ 'HR.Employees' | translate }}</a>
+                <a class="active" class="pi pi-users" routerLink='/employee'> {{ 'HR.Employees' |
+                    translate}} </a>
             </li>
-            <li class="active">
-                <a href="#Excuses" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-book"> {{
+            <!-- <li>
+                <a class="active" class="pi pi-user" routerLink='/employee'> {{ 'HR.Employees' |
+                    translate}} </a>
+            </li> -->
+            <li class="active" >
+                <a [ngClass]="{'dropdown-toggle' : selectedlang === 'العربية'}"
+                href="#Excuses" data-toggle="collapse" aria-expanded="false" class=" pi pi-book"> {{
                     'HR.Excuses' | translate}}</a>
                 <ul class="collapse list-unstyled" id="Excuses">
                     <li>
@@ -31,8 +34,17 @@
                 </ul>
             </li>
             <li class="active">
-                <a href="#Leaves" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle pi pi-home"> {{
-                    'HR.Leaves' | translate}}</a>
+               
+                    
+                <a  href="#Leaves" data-toggle="collapse" aria-expanded="false"
+                class="dropdown-toggle pi pi-home">
+                 {{'HR.Leaves' | translate}}</a>
+
+
+                 <!-- <a *ngIf="selectedlang === 'العربية'"  id="arabic" href="#Leaves" data-toggle="collapse" aria-expanded="false"
+                 class="dropdown-toggle pi pi-home arabic">
+                  {{'HR.Leaves' | translate}}</a> -->
+
                 <ul class="collapse list-unstyled" id="Leaves">
                     <li>
                         <a [routerLink]="['/AddLeave']">
@@ -211,12 +223,12 @@
     </nav>
     <div id="content">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light" >
             <div class="container-fluid">
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" >
                         <img src="../../../assets/images/logo.jpeg" style="width: 70px;position: initial;"
                             alt="RIS Image">
                     </a>
@@ -285,15 +297,30 @@
                 </div>
                 <div>
                     <label>
-                        <select #langSelect (change)="translate.use(langSelect.value)"
-                            class="btn btn-success dropdown-toggle">
-                            <option *ngFor="let lang of translate.getLangs()" [value]="lang"
-                                [selected]="lang === translate.currentLang">{{ lang }}</option>
-                        </select>
-                    </label>
+                        <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+                              <option *ngFor="let language of translate.getLangs()" [value]="language"
+                                 [selected]="language === translate.currentLang">
+                                 {{ language }}
+                              </option>
+                           </select>
+                    </label> 
+
+
+                    <!-- <li>
+                        <span class="form-inline">
+                           <select class="form-control" #selectedLang (change)="switchLang(selectedLang.value)">
+                              <option *ngFor="let language of translate.getLangs()" [value]="language"
+                                 [selected]="language === translate.currentLang">
+                                 {{ language }}
+                              </option>
+                           </select>
+                        </span>
+                     </li> -->
                 </div>
             </div>
         </nav>
-        <router-outlet></router-outlet>
+        <div [ngStyle]="{'text-align': selectedlang === 'English' ? 'left': 'right'}">
+            <router-outlet></router-outlet>
+         </div>
     </div>
 </div>

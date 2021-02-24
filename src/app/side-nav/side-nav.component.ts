@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { AuthService } from '../Services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Directionality } from '@angular/cdk/bidi';
@@ -9,7 +9,8 @@ import { EmployeeService } from '../Services/employee.service';
 @Component({
   selector: 'app-side-nav',
   templateUrl: './side-nav.component.html',
-  styleUrls: ['./side-nav.component.css']
+  styleUrls: ['./side-nav.component.css'],
+  encapsulation:ViewEncapsulation.None
 })
 export class SideNavComponent implements OnInit {
 
@@ -22,6 +23,13 @@ export class SideNavComponent implements OnInit {
   getimage: string;
   empId: number;
   imgName: string;
+
+  selectedLang: string;
+  textDir: string = "ltr";
+  txtDir: string = "left";
+  selectedlang: string = '';
+
+
   constructor(private empService:EmployeeService,private AuthService: AuthService, public translate: TranslateService, public dir: Directionality,private route: Router,
     ) {
     this.show = true;
@@ -29,9 +37,18 @@ export class SideNavComponent implements OnInit {
     // this.direction = 'rtl';
 
     translate.addLangs(['English', 'العربية']);
+    //translate.setDefaultLang('English');
+ //   const browserLang = translate.getBrowserLang();
+  //  translate.use(browserLang.match(/English|العربية/) ? browserLang : 'English');
+
+
+    //translate.addLangs(['en', 'ar']);
+    this.selectedlang = 'English';
+    this.txtDir = "left";
+    localStorage.setItem("lang", "English");
     translate.setDefaultLang('English');
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/English|العربية/) ? browserLang : 'English');
+    // const browserLang = translate.getBrowserLang();
+    // translate.use(browserLang.match(/English|العربية/) ? browserLang : 'العربية');
   }
   userName = localStorage.getItem("userName")
   ngOnInit(): void {
@@ -47,6 +64,33 @@ export class SideNavComponent implements OnInit {
        console.log(w)
        this.imgName = w.photo
      })
+  }
+
+
+  switchLang(lang: string) {
+    this.textDir = "";
+   // localStorage.clear();
+    //localStorage.removeItem("lang");
+
+    console.log("dir",this.txtDir)
+    console.log("lang",lang)
+
+    if (lang == "English") {
+      this.textDir = "ltr";
+      this.txtDir = "left";
+      localStorage.setItem("dir", this.txtDir);
+      localStorage.setItem("lang", lang);
+    }
+    else if (lang == "العربية") {
+
+      this.textDir = "rtl";
+      this.txtDir = "right";
+      localStorage.setItem("dir", this.txtDir);
+      localStorage.setItem("lang", lang);
+    }
+
+    this.selectedlang = lang;
+    this.translate.setDefaultLang(lang);
   }
   goToProfile() {
     this.route.navigate(['/Profile']);

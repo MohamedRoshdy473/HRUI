@@ -77,7 +77,7 @@ export class SideNavComponent implements OnInit {
 
     if (lang == "English") {
       this.textDir = "ltr";
-      this.txtDir = "left";
+     // this.txtDir = "left";
       localStorage.setItem("dir", this.txtDir);
       localStorage.setItem("lang", lang);
     }

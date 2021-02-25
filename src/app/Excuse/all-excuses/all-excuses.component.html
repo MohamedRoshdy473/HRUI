@@ -47,7 +47,7 @@
             </ng-template>
             <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
                 [globalFilterFields]="['employeeName','professionName','date','time','hours','approved']"
                 [value]="AllexcusesByManager">
                 <ng-template pTemplate="caption">
@@ -306,7 +306,7 @@
             </ng-template>
             <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
                 [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
                 [globalFilterFields]="['employeeName','professionName','date','time','hours','approved']"
                 [value]="Allexcuses">
                 <ng-template pTemplate="caption">
@@ -737,7 +737,7 @@
 <div class="container" *ngIf="role=='User'">
     <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" #dt
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
         [globalFilterFields]="['employeeName','professionName','date','time','hours','approved']"
         [value]="ExcusesForEmployee">
         <ng-template pTemplate="caption">

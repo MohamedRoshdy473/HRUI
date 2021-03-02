@@ -47,47 +47,47 @@
             </div>
         </ng-template>
         <ng-template pTemplate="header">
-            <tr>
-                <th [translate]="'HR.Image'"></th>
-                <th pSortableColumn="name"><span [translate]="'HR.Employee Name'"></span>
+            <tr >
+                <th [translate]="'HR.Image'" style="text-align: inherit;"></th>
+                <th pSortableColumn="name" style="text-align: inherit;"><span [translate]="'HR.Employee Name'"></span>
                     <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="positionName"><span [translate]="'HR.Position Name'"></span>
+                <th pSortableColumn="positionName" style="text-align: inherit;"><span [translate]="'HR.Position Name'"></span>
                     <p-sortIcon field="positionName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                <th pSortableColumn="professionName" style="text-align: inherit;"><span [translate]="'HR.Profession Name'"></span>
                     <p-sortIcon field="professionName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="hiringDateHiringDate"><span [translate]="'HR.HiringDate'"></span>
+                <th pSortableColumn="hiringDateHiringDate" style="text-align: inherit;"><span [translate]="'HR.HiringDate'"></span>
                     <p-sortIcon field="hiringDateHiringDate"></p-sortIcon>
                 </th>
-                <th pSortableColumn="email"><span [translate]="'HR.Email'"></span>
+                <th pSortableColumn="email" style="text-align: inherit;"><span [translate]="'HR.Email'"></span>
                     <p-sortIcon field="email"></p-sortIcon>
                 </th>
                 <th ><span [translate]="'HR.Controls'" style="margin-left: 30px;"></span></th>
                 <th ><span [translate]="'HR.View'" style="margin-left: 30px;"></span></th>
             </tr>
-            <tr>
+            <tr style="text-align: inherit;">
                 <th>
                     <label></label>
                 </th>
                 <th>
-                    <input pInputText style="width: 100%;" type="text"
+                    <input pInputText style="width: 100%;text-align: inherit;" type="text"
                         (input)="dt.filter($event.target.value, 'name', 'startsWith')"
                         [placeholder]="'HR.name' | translate" class="p-column-filter">
                 </th>
                 <th>
-                    <input pInputText type="text" style="width: 100%"
+                    <input pInputText type="text" style="width: 100%;text-align: inherit;"
                         (input)="dt.filter($event.target.value, 'positionLevel', 'contains')"
                         [placeholder]="'HR.Position Name' | translate" class="p-column-filter">
                 </th>
                 <th>
-                    <input pInputText type="text" style="width: 100%"
+                    <input pInputText type="text" style="width: 100%;text-align: inherit;"
                         (input)="dt.filter($event.target.value, 'professionName', 'contains')"
                         [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
                 </th>
                 <th>
-                    <input pInputText type="text" style="width: 100%"
+                    <input pInputText type="text" style="width: 100%;text-align: inherit;"
                         (input)="dt.filter($event.target.value, 'hiringDateHiringDate', 'contains')"
                         [placeholder]="'HR.HiringDate' | translate" class="p-column-filter">
                     <!-- <p-calendar (onSelect)="onDateSelect($event)"
@@ -97,7 +97,7 @@
                 </p-calendar> -->
                 </th>
                 <th>
-                    <input pInputText style="width: 100%;" type="email"
+                    <input pInputText style="width: 100%;text-align: inherit;" type="email"
                         (input)="dt.filter($event.target.value, 'email', 'startsWith')"
                         [placeholder]="'HR.Email' | translate" class="p-column-filter">
                 </th>
@@ -106,24 +106,24 @@
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-employee>
-            <tr>
+            <tr >
                 <td>
                     <img class="img-thumbnail" src="{{getimage}}api/employees/getImage/{{employee.photo }}" alt=""
                         width="40%" height="40%">
                 </td>
-                <td>
+                <td style="text-align: inherit;">
                     {{employee.name}}
                 </td>
-                <td>
+                <td style="text-align: inherit;">
                     {{employee.positionLevel}}&nbsp;{{employee.positionName}}
                 </td>
-                <td>
+                <td style="text-align: inherit;">
                     {{employee.professionName}}
                 </td>
-                <td>
+                <td style="text-align: inherit;">
                     {{employee.hiringDateHiringDate}}
                 </td>
-                <td>
+                <td style="text-align: inherit;">
                     {{employee.email}}
                 </td>
 

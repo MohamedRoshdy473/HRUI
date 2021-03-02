@@ -144,7 +144,7 @@
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText style="text-align: inherit;" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Global Search" />
+                            [placeholder]="'HR.Global Search' | translate" />
                         </span>
                     </div>
                 </ng-template>
@@ -155,7 +155,7 @@
                         <th style="text-align: inherit;" [translate]="'HR.Date'"></th>
                         <th style="text-align: inherit;" [translate]="'HR.Time'"></th>
                         <th style="text-align: inherit;" [translate]="'HR.Hours'"></th>
-                        <th  style="text-align: inherit;" [translate]="'HR.Status'"></th>
+                        <th style="text-align: inherit;" [translate]="'HR.Status'"></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-Excuse>
@@ -196,19 +196,19 @@
                     <div class="table-header">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Global Search" />
+                            <input pInputText type="text" style="text-align: inherit;" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
                         </span>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th [translate]="'HR.Employee Name'"></th>
-                        <th [translate]="'HR.Profession Name'"></th>
-                        <th [translate]="'HR.Date'"></th>
-                        <th [translate]="'HR.Time'"></th>
-                        <th [translate]="'HR.Hours'"></th>
-                        <th [translate]="'HR.Status'"></th>
+                        <th [translate]="'HR.Employee Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Profession Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Date'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Time'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Hours'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Status'" style="text-align: inherit;"></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-Excuse>
@@ -250,7 +250,7 @@
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Global Search" />
+                            [placeholder]="'HR.Global Search' | translate" />
                         </span>
                     </div>
                 </ng-template>
@@ -402,40 +402,40 @@
                     <div class="table-header">
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
-                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Global Search" />
+                            <input pInputText type="text" style="text-align: inherit;" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
                         </span>
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <th [translate]="'HR.Employee Name'"></th>
-                        <th [translate]="'HR.Profession Name'"></th>
-                        <th [translate]="'HR.Date'"></th>
-                        <th [translate]="'HR.Time'"></th>
-                        <th [translate]="'HR.Hours'"></th>
-                        <th [translate]="'HR.Status'"></th>
+                        <th [translate]="'HR.Employee Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Profession Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Date'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Time'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Hours'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Status'" style="text-align: inherit;"></th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-Excuse>
                     <tr>
-                        <td>{{Excuse.employeeName}}</td>
-                        <td>{{Excuse.professionName}}</td>
-                        <td>{{Excuse.date | date :'dd-MM-yyyy'}}</td>
-                        <td>{{Excuse.time}}</td>
-                        <td>{{Excuse.hours}}</td>
-                        <td id="status" *ngIf="Excuse.approved=='approved'">
+                        <td style="text-align: inherit;">{{Excuse.employeeName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.professionName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+                        <td style="text-align: inherit;">{{Excuse.time}}</td>
+                        <td style="text-align: inherit;">{{Excuse.hours}}</td>
+                        <td style="text-align: inherit;" id="status" *ngIf="Excuse.approved=='approved'">
                             <div style="cursor:unset;" class="btn btn-success">
                                 {{'HR.Approved' | translate}}
                             </div>
                         </td>
-                        <td id="status" *ngIf="Excuse.approved=='disapproved'">
+                        <td style="text-align: inherit;" id="status" *ngIf="Excuse.approved=='disapproved'">
                             <div style="cursor:unset; width: 65%;" class="btn btn-danger">
                                 {{'HR.Rejected' | translate}}
 
                             </div>
                         </td>
-                        <td id="status" *ngIf="Excuse.approved=='pending'">
+                        <td style="text-align: inherit;" id="status" *ngIf="Excuse.approved=='pending'">
                             <div style="cursor:unset;width: 65%;" class="btn btn-warning">
                                 {{'HR.Pending' | translate}}
                             </div>
@@ -456,7 +456,7 @@
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Global Search" />
+                            [placeholder]="'HR.Global Search' | translate" />
                         </span>
                     </div>
                 </ng-template>
@@ -509,7 +509,7 @@
                         <span class="p-input-icon-left">
                             <i class="pi pi-search"></i>
                             <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
-                                placeholder="Global Search" />
+                            [placeholder]="'HR.Global Search' | translate" />
                         </span>
                     </div>
                 </ng-template>

@@ -135,6 +135,7 @@ export class PieChartsComponent implements OnInit {
 
   public ChartOptionsExcusesTypes: Partial<ChartOptions>
   public chartOptionsExcusesesNumber: Partial<ChartOptions>;
+  public chartOptionsEmployeesNumber: Partial<ChartOptions>;
   public ChartOptionsManagerExcusesTypes: Partial<ChartOptions>
   public chartOptionsManagerExcusesesNumber: Partial<ChartOptions>;
 
@@ -1324,5 +1325,5 @@ export class PieChartsComponent implements OnInit {
         })
       })
     })
-  }
+  }  
 }

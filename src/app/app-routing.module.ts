@@ -75,6 +75,8 @@ import { DisplayFacultiesComponent } from './Faculties/display-faculties/display
 import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
 import { EditLeaveRequestComponent } from './Leaves/edit-leave-request/edit-leave-request.component';
 import { PieChartsComponent } from './pie-charts/pie-charts.component';
+import { ReportExcuseComponent } from './Reports-Components/report-excuse/report-excuse.component';
+import { ReportLeavesComponent } from './Reports-Components/report-leaves/report-leaves.component';
 
 
 const routes: Routes = [
@@ -150,6 +152,10 @@ const routes: Routes = [
     {path:'DisplayFaculties',component:DisplayFacultiesComponent},
     {path:'DisplayFacultydepartments',component:DisplayFacultydepartmentsComponent},
     {path:'PieCharts',component:PieChartsComponent},
+    {path:'ReportExcuse',component:ReportExcuseComponent},
+    {path:'ReportLeave',component:ReportLeavesComponent},
+
+
 
 
 

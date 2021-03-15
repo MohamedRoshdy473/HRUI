@@ -316,8 +316,8 @@
                             <input pInputText style="text-align: inherit;" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
                                 [placeholder]="'HR.Global Search' | translate" />
                         </span>
+                        <button type="button" (click)="exportExcel()" pButton >Report</button>
                     </div>
-
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr style="height: 5px !important; ">
@@ -379,7 +379,9 @@
                                         class="fa fa-trash-o" aria-hidden="true"></i></button>
                             </div>
                         </td> -->
+                        
                         <td style="text-align: center;">
+
                             <span class="pi pi-compass btn" aria-hidden="true"[title]="'HR.Show' | translate"
                                 (click)="showBasicDialog(Excuse.id)"></span>
                             <button class="btn pi pi-pencil" [title]="'HR.Update' | translate" aria-hidden="true" [disabled]="Excuse.approved!='pending'"
@@ -816,3 +818,4 @@
         </ng-template>
     </p-table>
 </div>
+

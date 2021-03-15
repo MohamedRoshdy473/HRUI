@@ -32,6 +32,7 @@
     "@rxweb/reactive-form-validators": "^2.1.2",
     "angular-material": "^1.2.1",
     "apexcharts": "^3.25.0",
+    "file-saver": "^2.0.5",
     "font-awesome": "^4.7.0",
     "glyphicons": "^0.2.0",
     "jspdf": "^2.1.1",
@@ -39,11 +40,13 @@
     "ng-apexcharts": "^1.5.8",
     "ng-starrating": "^1.0.20",
     "ngx-print": "^1.2.0-beta.5",
+    "ngx-ssrs-reportviewer": "^3.1.1",
     "pdfmake": "^0.1.68",
     "primeicons": "^4.1.0",
     "primeng": "^10.0.0-rc.4",
     "rxjs": "~6.5.5",
     "tslib": "^2.0.0",
+    "xlsx": "^0.16.9",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {

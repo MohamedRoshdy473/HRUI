@@ -162,6 +162,9 @@ import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display
 import { EditLeaveRequestComponent } from './Leaves/edit-leave-request/edit-leave-request.component';
 import { PieChartsComponent } from './pie-charts/pie-charts.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ReportViewerModule } from 'ngx-ssrs-reportviewer';
+import { ReportExcuseComponent } from './Reports-Components/report-excuse/report-excuse.component';
+import { ReportLeavesComponent } from './Reports-Components/report-leaves/report-leaves.component';
 
 
 
@@ -254,10 +257,13 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DisplayFacultydepartmentsComponent,
     EditLeaveRequestComponent,
     PieChartsComponent,
+    ReportExcuseComponent,
+    ReportLeavesComponent,
 
   ],
   imports: [
     NgxPrintModule,
+    ReportViewerModule ,
     NgApexchartsModule,
     BrowserModule,RatingModule ,
     FormsModule,

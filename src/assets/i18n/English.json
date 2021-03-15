@@ -203,8 +203,12 @@
     "uests":"uests",
     "Emp":"Emp",
     "loy":"loy",
-    "ees":"ees"
-
+    "ees":"ees",
+    "Filter":"Filter",
+    "Download":"Download",
+    "Excuse Report":"Excuses Report",
+    "Leave Report":"Leaves Report",
+    "Id":"Id"
 
   }
 }

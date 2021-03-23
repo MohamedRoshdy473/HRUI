@@ -25,6 +25,19 @@ export class LeaveService {
     return this.httpclient.get<any>(`${environment.ApiURL}/LeaveRequests`,this.httpHeader);
 
   } 
+
+  GetLeaveRequestsByProfessionId(ProfessionId):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByProfessionId/`+ProfessionId,this.httpHeader)
+  }
+  GetLeaveRequestsByProfessionIdEmployeeId(ProfessionId,EmployeeId):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByProfessionIdEmployeeId/`+ProfessionId+'/'+EmployeeId,this.httpHeader)
+  }
+  GetLeaveRequestsByProfessionIdEmployeeIdAndDate(professionId,employeeId,startDate,endDate):Observable<any>
+  {
+    return this.httpclient.post(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByProfessionIdEmployeeIdAndDate/`+professionId+'/'+employeeId+'/'+startDate+'/'+endDate,this.httpHeader)
+  }
   GetLeaveRequestsByManager():Observable<any>
   {
     return this.httpclient.get<any>(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByManager`,this.httpHeader);

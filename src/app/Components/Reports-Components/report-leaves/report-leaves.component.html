@@ -1,0 +1,113 @@
+<div class="container card">
+    <br>
+    <p style="font-size: xx-large;" [translate]="'HR.Leave Report'"></p>
+    <form (ngSubmit)="Filter()">
+        <div class="row">
+        <div class="col-md-3">
+            <span  for="Profession" [translate]="'HR.Profession Name'"></span>
+            <select (change)="onChange($event.target.value)" [(ngModel)]="LeaveObj.professionID" name="Profession"
+                class="form-control">Profession
+                <option value="" selected disabled hidden>Profession</option>
+                <option *ngFor="let item of AllProfessions" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="col-md-3">
+            <span  for="Employee" [translate]="'HR.Employee Name'"></span>
+            <select (change)="onChangeEmp($event.target.value)" [(ngModel)]="LeaveObj.employeeId" name="Employee" class="form-control">
+                <option value="" selected disabled >{{'HR.Employee Name'|translate}}</option>
+                <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="col-md-3">
+            <span  for="time" [translate]="'HR.Start Date'"></span>
+            <input name="date" value={{LeaveObj.startdate}} type="date" class="form-control"
+                [(ngModel)]="LeaveObj.startdate" inputId="date">
+        </div>
+        <br>
+        <div class="col-md-3">
+            <span  for="time" [translate]="'HR.End Date'"></span>
+            <input name="date" value={{LeaveObj.endDate}} type="date" class="form-control"
+                [(ngModel)]="LeaveObj.endDate" inputId="date">
+        </div>
+    </div>
+        <br>
+        <button id="Add" type="submit" class="btn btn-primary" [translate]="'HR.Filter'"></button>
+    </form>
+    <br>
+</div>
+<p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+[rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
+[globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+[value]="FilteredLeaves">
+<ng-template pTemplate="caption">
+    <div class="row">
+        <div class="table-header col-md-10">
+            <!-- List of Employees -->
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    [placeholder]="'HR.Global Search' | translate" />
+            </span>
+        </div>
+        <div class="col-md-2">
+            <button id="addEmpBtn" (click)="DownloadReport()" class="btn btn-outline-primary btn-md btn-block">
+                <span class="pi pi-plus" [translate]="'HR.Download'"></span> </button>
+        </div>
+    </div>
+
+</ng-template>
+<ng-template pTemplate="header">
+    <tr style="height: 5px !important; ">
+        <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+            <p-sortIcon field="employeeName"></p-sortIcon>
+        </th>
+        <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
+            <p-sortIcon field="profession"></p-sortIcon>
+        </th>
+        <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
+            <p-sortIcon field="date"></p-sortIcon>
+        </th>
+        <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
+            <p-sortIcon field="start"></p-sortIcon>
+        </th>
+        <th pSortableColumn="days" style="width: 9%"><span [translate]="'HR.Days'"></span>
+            <p-sortIcon field="days"></p-sortIcon>
+        </th>
+        <th pSortableColumn="alternativeEmp"><span [translate]="'HR.Alternative Employee'"></span>
+            <p-sortIcon field="alternativeEmp"></p-sortIcon>
+        </th>
+        <th [translate]="'HR.Status'"></th>
+    </tr>
+</ng-template>
+<ng-template pTemplate="body" let-AllLeaves>
+    <tr style="height: 5px !important;font-size: 17px;">
+        <td>{{AllLeaves.employeeName}}</td>
+        <td>{{AllLeaves.profession}}</td>
+        <td>{{AllLeaves.date | date :'dd-MM-yyyy'}}</td>
+        <td>{{AllLeaves.start | date :'dd-MM-yyyy'}}</td>
+        <td>{{AllLeaves.days}}</td>
+        <td>{{AllLeaves.alternativeEmp}}</td>
+        <td id="status" *ngIf="AllLeaves.status=='approved'">
+            <div style="cursor:unset;" class="btn btn-success">
+                {{'HR.Approved' | translate}}
+            </div>
+        </td>
+        <td id="status" *ngIf="AllLeaves.status=='disapproved'">
+            <div style="cursor:unset;" class="btn btn-danger">
+                {{'HR.Rejected' | translate}}
+
+            </div>
+        </td>
+        <td id="status" *ngIf="AllLeaves.status=='pending'">
+            <div style="cursor:unset;" class="btn btn-warning">
+                {{'HR.Pending' | translate}}
+
+            </div>
+        </td>
+    </tr>
+</ng-template>
+</p-table>

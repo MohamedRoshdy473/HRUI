@@ -1,0 +1,821 @@
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-toast position="top-left" key="tl"></p-toast>
+<p-toast position="top-center" key="tc"></p-toast>
+<p-toast position="bottom-center" key="bc"></p-toast>
+
+<p-toast position="bottom-center" key="c" (onClose)="onReject()" [baseZIndex]="5000">
+    <ng-template let-message pTemplate="message">
+        <div class="p-flex p-flex-column" style="flex: 1">
+            <div class="p-text-center">
+                <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                <h4>{{message.summary}}</h4>
+                <p>{{message.detail}}</p>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onConfirm()" label="Yes" class="p-button-success"></button>
+                </div>
+                <div class="p-col-6">
+                    <button type="button" pButton (click)="onReject()" label="No" class="p-button-secondary"></button>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-toast>
+<div class="container card" *ngIf="role=='Admin'">
+    <div style="margin-top: 20px;">
+        <div class="row">
+            <!-- <mat-icon style="color: #007bff; margin: 1px; display: inline; ">note_add</mat-icon> -->
+            <div class="col-md-8">
+                <h5 style="display: inline;margin-left: 2%;  font-size: 30px;
+             color: #2674a8;" [translate]="'HR.Excuses'"></h5>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <button id="addEmpBtn" (click)="NewExcuseDialog()" class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <p-tabView styleClass="tabview-custom" *ngIf="role=='Admin'">
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-th-large" style="margin:-5px 10px 0px 10px;text-align: inherit;"></i>
+                <label>{{ 'HR.All' | translate }}</label>
+            </ng-template>
+            <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
+                [globalFilterFields]="['employeeName','professionName','date','time','hours','approved']"
+                [value]="AllexcusesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText  style="text-align: inherit;" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr style="height: 5px !important; ">
+                        <th style="text-align: inherit;" pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                            <p-sortIcon field="professionName"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="date">
+                            <span [translate]="'HR.Date'"></span>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="time">
+                            <span [translate]="'HR.Time'"></span>
+                            <p-sortIcon field="time"></p-sortIcon>
+
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="hours">
+                            <span [translate]="'HR.Hours'"></span>
+                            <p-sortIcon field="hours"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" [translate]="'HR.Status'">
+                        </th>
+                        <th style="text-align: inherit;" [translate]="'HR.Controls'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr style="height: 5px !important;font-size: 17px;">
+                        <td style="text-align: inherit;">{{Excuse.employeeName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.professionName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+                        <td style="text-align: inherit;">{{Excuse.time}}</td>
+                        <td style="text-align: inherit;">{{Excuse.hours}}</td> {{myDate}}
+                        <td id="status" *ngIf="Excuse.approved=='approved'" style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='disapproved' " style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='pending' " style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                        <!-- <td>
+                            <div class="row">
+                                <button (click)="showBasicDialog(Excuse.id)" class="btn btn-success c-btn"><i
+                                        class="fa fa-eye" aria-hidden="true"></i></button>
+                                <button (click)="EditExcuseDialog(Excuse.id)" class="btn btn-primary c-btn"><i
+                                        class="fa fa-pencil-square-o " aria-hidden="true"></i></button>
+                                <button (click)="confirm(Excuse.id)" class="btn btn-danger c-btn"><i
+                                        class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </div>
+                        </td> -->
+                        <td style="text-align: inherit;">
+                            <span class="pi pi-compass btn" aria-hidden="true" [title]="'HR.Show' | translate"
+                                (click)="showBasicDialog(Excuse.id)"></span>
+                            <button class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate" [disabled]="Excuse.approved!='pending'"
+                                (click)="EditExcuseDialog(Excuse.id)"></button>
+                            <button class="btn pi pi-times" (click)="confirm(Excuse.id)" [title]="'HR.Delete' | translate"
+                                [disabled]="Excuse.approved!='pending'" aria-hidden="true"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-up" style="margin:-5px 10px 0px 10px;text-align: inherit;"></i>
+                <label>{{ 'HR.Approved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="ApprovedexcusesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText style="text-align: inherit;" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="text-align: inherit;" [translate]="'HR.Employee Name'"></th>
+                        <th style="text-align: inherit;" [translate]="'HR.Profession Name'"></th>
+                        <th style="text-align: inherit;" [translate]="'HR.Date'"></th>
+                        <th style="text-align: inherit;" [translate]="'HR.Time'"></th>
+                        <th style="text-align: inherit;" [translate]="'HR.Hours'"></th>
+                        <th style="text-align: inherit;" [translate]="'HR.Status'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr>
+                        <td style="text-align: inherit;">{{Excuse.employeeName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.professionName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+                        <td style="text-align: inherit;">{{Excuse.time}}</td>
+                        <td style="text-align: inherit;">{{Excuse.hours}}</td>
+                        <td id="status" *ngIf="Excuse.approved=='approved'" style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='disapproved'" style="text-align: inherit;">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='pending'" style="text-align: inherit;">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-down" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Unapproved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="DisApprovedexcusesByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" style="text-align: inherit;" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Profession Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Date'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Time'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Hours'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Status'" style="text-align: inherit;"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr>
+                        <td>{{Excuse.employeeName}}</td>
+                        <td>{{Excuse.professionName}}</td>
+                        <td>{{Excuse.date | date :'yyyy-MM-dd'}}</td>
+                        <td>{{Excuse.time}}</td>
+                        <td>{{Excuse.hours}}</td>
+                        <td id="status" *ngIf="Excuse.approved=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.PendingExcuse' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="PendingExcuseByManager">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Profession Name'"></th>
+                        <th [translate]="'HR.Date'"></th>
+                        <th [translate]="'HR.Time'"></th>
+                        <th [translate]="'HR.Hours'"></th>
+                        <th [translate]="'HR.Status'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr>
+                        <td>{{Excuse.employeeName}}</td>
+                        <td>{{Excuse.professionName}}</td>
+                        <td>{{Excuse.date | date :'yyyy-MM-dd'}}</td>
+                        <td>{{Excuse.time}}</td>
+                        <td>{{Excuse.hours}}</td>
+                        <td>
+                            <button (click)="approve(Excuse.id)" [title]="'HR.Approve' | translate" class="btn btn-success">O</button>
+                            <button (click)="disapprove(Excuse.id)" style="margin-left: 5%;"[title]="'HR.Reject' | translate"class="btn btn-danger">X</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>
+<div class="container card" *ngIf="role=='HR'">
+    <div style="margin-top: 20px;">
+        <div class="row">
+            <!-- <mat-icon style="color: #007bff; margin: 1px; display: inline; ">note_add</mat-icon> -->
+            <div class="col-md-8">
+                <h5 style="display: inline;margin-left: 2%;  font-size: 30px;
+             color: #2674a8;" [translate]="'HR.Excuses'"></h5>
+            </div>
+            <div class="col-md-2"></div>
+            <div class="col-md-2">
+                <button id="addEmpBtn" (click)="NewExcuseDialog()" class="btn btn-outline-primary btn-md btn-block">
+                    <span class="pi pi-plus" [translate]="'HR.Add'"></span></button>
+            </div>
+        </div>
+    </div>
+
+    <p-tabView styleClass="tabview-custom">
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-th-large" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.All' | translate }}</label>
+            </ng-template>
+            <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
+                [globalFilterFields]="['employeeName','professionName','date','time','hours','approved']"
+                [value]="Allexcuses">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText style="text-align: inherit;" type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                        <!-- <button type="button" (click)="exportExcel()" pButton >Report</button> -->
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr style="height: 5px !important; ">
+                        <th style="text-align: inherit;"  pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                            <p-sortIcon field="employeeName"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                            <p-sortIcon field="professionName"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="date">
+                            <span [translate]="'HR.Date'"></span>
+                            <p-sortIcon field="date"></p-sortIcon>
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="time">
+                            <span [translate]="'HR.Time'"></span>
+                            <p-sortIcon field="time"></p-sortIcon>
+
+                        </th>
+                        <th style="text-align: inherit;" pSortableColumn="hours">
+                            <span [translate]="'HR.Hours'"></span>
+                            <p-sortIcon field="hours"></p-sortIcon>
+                        </th>
+                        <th  style="text-align: inherit;" [translate]="'HR.Status'">
+                        </th>
+                        <th style="text-align: inherit;" [translate]="'HR.Controls'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr style="height: 5px !important;font-size: 17px;text-align: inherit;">
+                        <td style="text-align: inherit;">{{Excuse.employeeName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.professionName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+                        <td style="text-align: inherit;">{{Excuse.time}}</td>
+                        <td style="text-align: inherit;">{{Excuse.hours}}</td> {{myDate}}
+                        <td id="status" *ngIf="Excuse.approved=='approved'" style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='disapproved' " style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='pending' " style="text-align: inherit;">
+                            <div style="cursor:unset;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+
+                            </div>
+                        </td>
+                        <!-- <td>
+                            <div class="row">
+                                <button (click)="showBasicDialog(Excuse.id)" class="btn btn-success c-btn"><i
+                                        class="fa fa-eye" aria-hidden="true"></i></button>
+                                <button (click)="EditExcuseDialog(Excuse.id)" class="btn btn-primary c-btn"><i
+                                        class="fa fa-pencil-square-o " aria-hidden="true"></i></button>
+                                <button (click)="confirm(Excuse.id)" class="btn btn-danger c-btn"><i
+                                        class="fa fa-trash-o" aria-hidden="true"></i></button>
+                            </div>
+                        </td> -->
+                        
+                        <td style="text-align: center;">
+
+                            <span class="pi pi-compass btn" aria-hidden="true"[title]="'HR.Show' | translate"
+                                (click)="showBasicDialog(Excuse.id)"></span>
+                            <button class="btn pi pi-pencil" [title]="'HR.Update' | translate" aria-hidden="true" [disabled]="Excuse.approved!='pending'"
+                                (click)="EditExcuseDialog(Excuse.id)"></button>
+                            <button class="btn pi pi-times" (click)="confirm(Excuse.id)" [title]="'HR.Delete' | translate"
+                                [disabled]="Excuse.approved!='pending'" aria-hidden="true"></button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-up" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Approved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="Approvedexcuses">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" style="text-align: inherit;" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Profession Name'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Date'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Time'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Hours'" style="text-align: inherit;"></th>
+                        <th [translate]="'HR.Status'" style="text-align: inherit;"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr>
+                        <td style="text-align: inherit;">{{Excuse.employeeName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.professionName}}</td>
+                        <td style="text-align: inherit;">{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+                        <td style="text-align: inherit;">{{Excuse.time}}</td>
+                        <td style="text-align: inherit;">{{Excuse.hours}}</td>
+                        <td style="text-align: inherit;" id="status" *ngIf="Excuse.approved=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td style="text-align: inherit;" id="status" *ngIf="Excuse.approved=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td style="text-align: inherit;" id="status" *ngIf="Excuse.approved=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-thumbs-down" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.Unapproved' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="DisApprovedexcuses">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Profession Name'"></th>
+                        <th [translate]="'HR.Date'"></th>
+                        <th [translate]="'HR.Time'"></th>
+                        <th [translate]="'HR.Hours'"></th>
+                        <th [translate]="'HR.Status'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr>
+                        <td>{{Excuse.employeeName}}</td>
+                        <td>{{Excuse.professionName}}</td>
+                        <td>{{Excuse.date | date :'yyyy-MM-dd'}}</td>
+                        <td>{{Excuse.time}}</td>
+                        <td>{{Excuse.hours}}</td>
+                        <td id="status" *ngIf="Excuse.approved=='approved'">
+                            <div style="cursor:unset;" class="btn btn-success">
+                                {{'HR.Approved' | translate}}
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='disapproved'">
+                            <div style="cursor:unset; width: 65%;" class="btn btn-danger">
+                                {{'HR.Rejected' | translate}}
+
+                            </div>
+                        </td>
+                        <td id="status" *ngIf="Excuse.approved=='pending'">
+                            <div style="cursor:unset;width: 65%;" class="btn btn-warning">
+                                {{'HR.Pending' | translate}}
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+        <p-tabPanel>
+            <ng-template pTemplate="header">
+                <i class="pi pi-inbox" style="margin:-5px 10px 0px 10px;"></i>
+                <label>{{ 'HR.PendingExcuse' | translate }}</label>
+            </ng-template>
+            <p-table scrollHeight="350px" #dt [globalFilterFields]="['employeeName','professionName']"
+                [scrollable]="true" [value]="PendingExcuseByHR">
+                <ng-template pTemplate="caption">
+                    <div class="table-header">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th [translate]="'HR.Employee Name'"></th>
+                        <th [translate]="'HR.Profession Name'"></th>
+                        <th [translate]="'HR.Date'"></th>
+                        <th [translate]="'HR.Time'"></th>
+                        <th [translate]="'HR.Hours'"></th>
+                        <th [translate]="'HR.Status'"></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-Excuse>
+                    <tr>
+                        <td>{{Excuse.employeeName}}</td>
+                        <td>{{Excuse.professionName}}</td>
+                        <td>{{Excuse.date | date :'yyyy-MM-dd'}}</td>
+                        <td>{{Excuse.time}}</td>
+                        <td>{{Excuse.hours}}</td>
+                        <td>
+                            <button (click)="approve(Excuse.id)" [title]="'HR.Approve' | translate" class="btn btn-success">O</button>
+                            <button (click)="disapprove(Excuse.id)" [title]="'HR.Reject' | translate" style="margin-left: 5%;"
+                                class="btn btn-danger">X</button>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </p-tabPanel>
+    </p-tabView>
+
+</div>
+<p-dialog [header]="'HR.Details' | translate" [(visible)]="displayBasic" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+    <tr class=" form-control">
+        <th [translate]="'HR.Employee Name'"></th>
+        <td>{{Excuse.employeeName}}</td>
+    </tr>
+    <tr class=" form-control">
+        <th [translate]="'HR.Profession Name'"></th>
+        <td>{{Excuse.professionName}}</td>
+    </tr>
+    <tr class=" form-control">
+        <th [translate]="'HR.Date'"></th>
+        <td>{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+    </tr>
+    <tr class=" form-control">
+        <th [translate]="'HR.Time'"></th>
+        <td>{{Excuse.time}}</td>
+    </tr>
+    <tr class=" form-control">
+        <th [translate]="'HR.Hours'"></th>
+        <td>{{Excuse.hours }}</td>
+    </tr>
+    <tr class=" form-control">
+        <th [translate]="'HR.Note'"></th>
+        <td>{{Excuse.comment}}</td>
+    </tr>
+
+    <ng-template *ngIf="Excuse.status=='pending'" pTemplate="footer">
+        <button (click)="approve(Excuse.id)" class="btn btn-success" [translate]="'HR.Approved'">O</button>
+        <button (click)="disapprove(Excuse.id)" class="btn btn-danger" [translate]="'HR.Reject'">X</button>
+    </ng-template>
+</p-dialog>
+
+<form>
+    <p-dialog [header]="'HR.Update' | translate" [(visible)]="EditExcuseboolean" [style]="{width: '50vw'}"
+        [baseZIndex]="10000">
+
+        <div class="row">
+            <span class="col-md-2" for="time" [translate]="'HR.Employee Name'"></span>
+            <input disabled name="employeeName" type="text" class="col-md-6 form-control"
+                value="{{NewExcuse.employeeName}}" inputId="date">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="time" [translate]="'HR.Profession Name'"></span>
+            <input disabled name="profession" type="text" class="col-md-6 form-control"
+                value="{{NewExcuse.professionName}}" inputId="date">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="time" [translate]="'HR.Date'" style="margin-top: 33px;"></span>
+            <mat-form-field appearance="fill">
+                <input matInput [matDatepicker]="picker" class="form-control"
+                    value="{{NewExcuse.date | date:'yyyy-MM-dd'}}" placeholder="Input & change Date"
+                    (dateChange)="addEvent('change', $event)">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="time" [translate]="'HR.Time'"></span>
+            <input name="time" type="time" class="col-md-6 form-control" [(ngModel)]="NewExcuse.time" inputId="time">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="Hours" [translate]="'HR.Hours'"></span>
+            <input name="Hours" type="number" value=3 class="col-md-6 form-control" [(ngModel)]="NewExcuse.hours"
+                inputId="Hours">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-2" for="Note" [translate]="'HR.Employee Name'">Note</span>
+            <textarea name="Note" type="text" class="col-md-6 form-control" [(ngModel)]="NewExcuse.comment"
+                inputId="Note"></textarea>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (onClick)="update(NewExcuse.id)" type="submit" icon="pi pi-check" [label]="'HR.Save' | translate"
+                styleClass="p-button-text"></p-button>
+            <p-button icon="pi pi-times" (click)="displayBasic=false" [label]="'HR.Cancel' | translate"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</form>
+
+
+<form #frm="ngForm" *ngIf="role=='HR'">
+    <p-dialog [header]="'HR.New Excuse' | translate" [(visible)]="NewExcuseDialogbool" [style]="{width: '50vw'}"
+        [baseZIndex]="10000">
+
+        <div class="row">
+            <span class="col-md-3" for="Profession" [translate]="'HR.Profession Name'"></span>
+            <select (change)="onChange($event.target.value)" [(ngModel)]="ProfessionID" name="Profession"
+                class="form-control col-md-6">Profession
+                <option value="" selected disabled hidden>Profession</option>
+                <option *ngFor="let item of AllProfessions" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Employee" [translate]="'HR.Employee Name'"></span>
+            <select [(ngModel)]="NewExcuse.EmployeeID" name="Employee" class="form-control col-md-6">Employee
+                <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="time" [translate]="'HR.Date'"></span>
+            <input name="date" value={{NewExcuse.date}} type="date" class="col-md-6 form-control"
+                [(ngModel)]="NewExcuse.date" inputId="date">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="time" [translate]="'HR.Time'"></span>
+            <input name="time" type="time" class="col-md-6 form-control" [(ngModel)]="NewExcuse.time" inputId="time">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Hours" [translate]="'HR.Hours'"></span>
+            <input name="Hours" type="number" value=3 class="col-md-6 form-control" [(ngModel)]="NewExcuse.hours"
+                inputId="Hours">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Note" [translate]="'HR.Note'"></span>
+            <textarea name="Note" type="text" class="col-md-6 form-control" [(ngModel)]="NewExcuse.comment"
+                inputId="Note"></textarea>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (onClick)="add()" [disabled]="frm.invalid" type="submit" icon="pi pi-check"
+                [label]="'HR.Save' | translate" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="NewExcuseDialogbool=false" [label]="'HR.Cancel' | translate"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</form>
+
+<form #frm="ngForm" *ngIf="role=='Admin'">
+    <p-dialog [header]="'HR.New Excuse' | translate" [(visible)]="NewExcuseDialogbool" [style]="{width: '50vw'}"
+        [baseZIndex]="10000">
+
+        <div class="row">
+            <span class="col-md-3" for="Profession" [translate]="'HR.Profession Name'"></span>
+            <select (change)="onChange($event.target.value)" [(ngModel)]="ProfessionID" name="Profession"
+                class="form-control col-md-6">Profession
+                <option value="" selected disabled hidden>Profession</option>
+                <option *ngFor="let item of ProfessionByEmployeeId" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Employee" [translate]="'HR.Employee Name'"></span>
+            <select [(ngModel)]="NewExcuse.EmployeeID" name="Employee" class="form-control col-md-6">Employee
+                <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="time" [translate]="'HR.Date'"></span>
+            <input name="date" value={{NewExcuse.date}} type="date" class="col-md-6 form-control"
+                [(ngModel)]="NewExcuse.date" inputId="date">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="time" [translate]="'HR.Time'"></span>
+            <input name="time" type="time" class="col-md-6 form-control" [(ngModel)]="NewExcuse.time" inputId="time">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Hours" [translate]="'HR.Hours'"></span>
+            <input name="Hours" type="number" value=3 class="col-md-6 form-control" [(ngModel)]="NewExcuse.hours"
+                inputId="Hours">
+        </div>
+        <br>
+        <div class="row">
+            <span class="col-md-3" for="Note" [translate]="'HR.Note'"></span>
+            <textarea name="Note" type="text" class="col-md-6 form-control" [(ngModel)]="NewExcuse.comment"
+                inputId="Note"></textarea>
+        </div>
+        <ng-template pTemplate="footer">
+            <p-button (onClick)="add()" [disabled]="frm.invalid" type="submit" icon="pi pi-check"
+                [label]="'HR.Save' | translate" styleClass="p-button-text">
+            </p-button>
+            <p-button icon="pi pi-times" (click)="NewExcuseDialogbool=false" [label]="'HR.Cancel' | translate"></p-button>
+        </ng-template>
+
+    </p-dialog>
+</form>
+
+
+<br>
+<div class="container" *ngIf="role=='User'">
+    <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+        [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
+        [globalFilterFields]="['employeeName','professionName','date','time','hours','approved']"
+        [value]="ExcusesForEmployee">
+        <ng-template pTemplate="caption">
+            <div class="row">
+                <div class="table-header col-md-10">
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                            [placeholder]="'HR.Global Search' | translate" />
+                    </span>
+                </div>
+                <div class="col-md-2">
+                    <button id="addEmpBtn" routerLink="/AddExcuse" class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr style="height: 5px !important; ">
+                <th pSortableColumn="employeeName"><span [translate]="'HR.Employee Name'"></span>
+                    <p-sortIcon field="employeeName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="professionName"><span [translate]="'HR.Profession Name'"></span>
+                    <p-sortIcon field="professionName"></p-sortIcon>
+                </th>
+                <th pSortableColumn="date">
+                    <span [translate]="'HR.Date'"></span>
+                    <p-sortIcon field="date"></p-sortIcon>
+                </th>
+                <th pSortableColumn="time">
+                    <span [translate]="'HR.Time'"></span>
+                    <p-sortIcon field="time"></p-sortIcon>
+
+                </th>
+                <th pSortableColumn="hours">
+                    <span [translate]="'HR.Hours'"></span>
+                    <p-sortIcon field="hours"></p-sortIcon>
+                </th>
+                <th [translate]="'HR.Status'">
+                </th>
+                <th [translate]="'HR.Controls'"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-Excuse>
+            <tr style="height: 5px !important;font-size: 17px;">
+                <td>{{Excuse.employeeName}}</td>
+                <td>{{Excuse.professionName}}</td>
+                <td>{{Excuse.date | date :'dd-MM-yyyy'}}</td>
+                <td>{{Excuse.time}}</td>
+                <td>{{Excuse.hours}}</td> {{myDate}}
+                <td id="status" *ngIf="Excuse.approved=='approved'">
+                    <div style="cursor:unset;" class="btn btn-success">
+                        {{'HR.Approved' | translate}}
+                    </div>
+                </td>
+                <td id="status" *ngIf="Excuse.approved=='disapproved' ">
+                    <div style="cursor:unset;" class="btn btn-danger">
+                        {{'HR.Rejected' | translate}}
+
+                    </div>
+                </td>
+                <td id="status" *ngIf="Excuse.approved=='pending' ">
+                    <div style="cursor:unset;" class="btn btn-warning">
+                        {{'HR.Pending' | translate}}
+
+                    </div>
+                </td>
+                <td>
+                    <span class="pi pi-compass btn" aria-hidden="true" [title]="'HR.Show' | translate" (click)="showBasicDialog(Excuse.id)"></span>
+                    <button class="btn pi pi-pencil" aria-hidden="true" [disabled]="Excuse.approved!='pending'" [title]="'HR.Update' | translate"
+                        (click)="EditExcuseDialog(Excuse.id)"></button>
+                    <button class="btn pi pi-times" [title]="'HR.Delete' | translate" (click)="confirm(Excuse.id)" [disabled]="Excuse.approved!='pending'"
+                        aria-hidden="true"></button>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+

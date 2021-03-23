@@ -207,7 +207,11 @@
     "Download":"تحميل",
     "Excuse Report":"تقرير الأذونات",
     "Leave Report":"تقرير الأجازات",
-    "Id":"الرقم"
+    "Id":"الرقم",
+    "Full report to employee":"تقرير كامل للموظف",
+    "Arrival":"وصول",
+    "Departure":"مغادرة",
+    "Attendance Report":"تقرير الحضور"
 
 
 

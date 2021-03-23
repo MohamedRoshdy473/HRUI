@@ -1,82 +1,83 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './Auth/login/login.component';
-import { RegisterComponent } from './Auth/register/register.component';
-import { SideNavComponent } from './side-nav/side-nav.component';
-import { Child1Component } from './main/child1/child1.component';
-import { AddEmployeeComponent } from './Employee/add-employee/add-employee.component';
-import { DisplayAllEmployeesComponent } from './Employee/display-all-employees/display-all-employees.component';
-import { EditEmployeeComponent } from './Employee/edit-employee/edit-employee.component';
-import { AddExcuseComponent } from './Excuse/add-excuse/add-excuse.component';
+import { LoginComponent } from 'src/app/Components/AuthComponents/login/login.component';
+import { RegisterComponent } from 'src/app/Components/AuthComponents/register/register.component';
+import { SideNavComponent } from 'src/app/Components/SideNavComponents/side-nav/side-nav.component'
+import { AddEmployeeComponent } from './Components/EmployeeComponent/add-employee/add-employee.component';
+import { DisplayAllEmployeesComponent } from './Components/EmployeeComponent/display-all-employees/display-all-employees.component';
+import { EditEmployeeComponent } from './Components/EmployeeComponent/edit-employee/edit-employee.component';
+import { AddExcuseComponent } from './Components/ExcusesComponent/add-excuse/add-excuse.component';
 import {AuthGuard} from 'src/app/Guards/auth.guard'
 import {AdminGuard} from 'src/app/Guards/admin.guard'
 import { from } from 'rxjs';
-import { PreviosExcuseComponent } from './Excuse/previos-excuse/previos-excuse.component';
-import { AllExcusesComponent } from './Excuse/all-excuses/all-excuses.component';
-import { AddLeaveComponent } from './Leaves/add-leave/add-leave.component';
-import { PreviousLeavesComponent } from './Leaves/previous-leaves/previous-leaves.component';
-import { AllLeavesComponent } from './Leaves/all-leaves/all-leaves.component';
-import { AllUsersComponent } from './Users/all-users/all-users.component';
-import { ChangePasswordComponent } from './Auth/change-password/change-password.component';
-import { AttendanceOUTComponent } from './attendance/attendance-out/attendance-out.component';
-import { AttendanceINComponent } from './attendance/attendance-in/attendance-in.component';
-import { NeedRequestsComponent } from './NeedRequest/need-requests/need-requests.component';
-import { AddNeedRequestComponent } from './NeedRequest/add-need-request/add-need-request.component';
-import { EditneedRequestComponent } from './NeedRequest/editneed-request/editneed-request.component';
-import{ CategoryComponent } from './Categories/category/category.component';
-import { EditCategoryComponent } from './Categories/edit-category/edit-category.component';
-import { AddCategoryComponent } from './Categories/add-category/add-category.component';
-import { SubCategoryComponent } from './SubCategories/sub-category/sub-category.component';
-import { AddSubCategoryComponent } from './SubCategories/add-sub-category/add-sub-category.component';
-import { EditSubCategoryComponent } from './SubCategories/edit-sub-category/edit-sub-category.component';
-import { DisplayNeedRequestEmpComponent } from './NeedRequestEmployee/display-need-request-emp/display-need-request-emp.component';
-import { AddNeedRequestEmpComponent } from './NeedRequestEmployee/add-need-request-emp/add-need-request-emp.component';
-import { EvaluationTypeComponent } from './Evaluations/evaluation-type/evaluation-type.component';
-import { AddEvaluationTypeComponent } from './Evaluations/add-evaluation-type/add-evaluation-type.component';
-import { EditEvaluationTypeComponent } from './Evaluations/edit-evaluation-type/edit-evaluation-type.component';
-import { EvaluationProfessionComponent } from './Evaluations/evaluation-profession/evaluation-profession.component';
-import { EditEvaluationProfessionComponent } from './Evaluations/edit-evaluation-profession/edit-evaluation-profession.component';
-import { AddEvaluationProfessionComponent } from './Evaluations/add-evaluation-profession/add-evaluation-profession.component';
-import { EditNeedRequestEmpComponent } from './NeedRequestEmployee/edit-need-request-emp/edit-need-request-emp.component';
-import { DisplayEvaluationsComponent } from './Evaluations/display-evaluations/display-evaluations.component';
-import { AddEvaluationComponent } from './Evaluations/add-evaluation/add-evaluation.component';
-import { EditEvaluationComponent } from './Evaluations/edit-evaluation/edit-evaluation.component';
-import { CertificateComponent } from './Certificates/certificate/certificate.component';
-import { AddCertificatesComponent } from './Certificates/add-certificates/add-certificates.component';
-import { EditCertificatesComponent } from './Certificates/edit-certificates/edit-certificates.component';
-import { TrainingTypeComponent } from './TrainingTypes/training-type/training-type.component';
-import { AddTrainingTypeComponent } from './TrainingTypes/add-training-type/add-training-type.component';
-import { EditTrainingTypeComponent } from './TrainingTypes/edit-training-type/edit-training-type.component';
-import { CoursesComponent } from './Course/courses/courses.component';
-import { AddCourseComponent } from './Course/add-course/add-course.component';
-import { EditCourseComponent } from './Course/edit-course/edit-course.component';
-import { TrainingProfessionComponent } from './TrainingProfessions/training-profession/training-profession.component';
-import { AddTrainingProfessionComponent } from './TrainingProfessions/add-training-profession/add-training-profession.component';
-import { EditTrainingProfessionComponent } from './TrainingProfessions/edit-training-profession/edit-training-profession.component';
-import { TrainingsComponent } from './Training/trainings/trainings.component';
-import { AddTrainingComponent } from './Training/add-training/add-training.component';
-import { EditTrainingComponent } from './Training/edit-training/edit-training.component';
-import { RequestTrainingComponent } from './Training/request-training/request-training.component';
-import { AddRequestTrainingComponent } from './Training/add-request-training/add-request-training.component';
-import { EditRequestTrainingComponent } from './Training/edit-request-training/edit-request-training.component';
-import { LeavesTypeComponent } from './Leaves/leaves-type/leaves-type.component';
-import { AddLeavesTypeComponent } from './Leaves/add-leaves-type/add-leaves-type.component';
-import { EditLeavesTypeComponent } from './Leaves/edit-leaves-type/edit-leaves-type.component';
-import { InstructorComponent } from './Instructors/instructor/instructor.component';
-import { AddInstructorComponent } from './Instructors/add-instructor/add-instructor.component';
-import { EditInstructorComponent } from './Instructors/edit-instructor/edit-instructor.component';
-import { MainPageComponent } from './main-page/main-page.component';
-import { ProfileComponent } from './Auth/profile/profile.component';
-import { DisplayPositionLevelsComponent } from './PositionLevel/display-position-levels/display-position-levels.component';
-import { DisplayAllPositionsComponent } from './Positions/display-all-positions/display-all-positions.component';
-import { DisplayProfessionsComponent } from './Profession/display-professions/display-professions.component';
-import { DisplayUniversitiesComponent } from './Universities/display-universities/display-universities.component';
-import { DisplayFacultiesComponent } from './Faculties/display-faculties/display-faculties.component';
-import { DisplayFacultydepartmentsComponent } from './FacultyDepartments/display-facultydepartments/display-facultydepartments.component';
-import { EditLeaveRequestComponent } from './Leaves/edit-leave-request/edit-leave-request.component';
-import { PieChartsComponent } from './pie-charts/pie-charts.component';
-import { ReportExcuseComponent } from './Reports-Components/report-excuse/report-excuse.component';
-import { ReportLeavesComponent } from './Reports-Components/report-leaves/report-leaves.component';
+import { PreviosExcuseComponent } from './Components/ExcusesComponent/previos-excuse/previos-excuse.component';
+import { AllExcusesComponent } from './Components/ExcusesComponent/all-excuses/all-excuses.component';
+import { AddLeaveComponent } from './Components/LeavesComponents/add-leave/add-leave.component';
+import { PreviousLeavesComponent } from 'src/app/Components/LeavesComponents/previous-leaves/previous-leaves.component';
+import { AllLeavesComponent } from 'src/app/Components/LeavesComponents/all-leaves/all-leaves.component';
+import { AllUsersComponent } from './Components/UsersComponents/all-users/all-users.component';
+import { ChangePasswordComponent } from './Components/AuthComponents/change-password/change-password.component';
+import { AttendanceOUTComponent } from './Components/AttendanceComponents/attendance-out/attendance-out.component';
+import { AttendanceINComponent } from './Components/AttendanceComponents/attendance-in/attendance-in.component';
+import { NeedRequestsComponent } from 'src/app/Components/NeedsRequestsComponensts/need-requests/need-requests.component';
+import { AddNeedRequestComponent } from './Components/NeedsRequestsComponensts/add-need-request/add-need-request.component';
+import { EditneedRequestComponent } from 'src/app/Components/NeedsRequestsComponensts/editneed-request/editneed-request.component';
+import{ CategoryComponent } from 'src/app/Components/CategoriesComponents/category/category.component';
+import { EditCategoryComponent } from 'src/app/Components/CategoriesComponents/edit-category/edit-category.component';
+import { AddCategoryComponent } from './Components/CategoriesComponents/add-category/add-category.component';
+import { SubCategoryComponent } from 'src/app/Components/SubCategoriesComponents/sub-category/sub-category.component'
+import { AddSubCategoryComponent } from './Components/SubCategoriesComponents/add-sub-category/add-sub-category.component';
+import { EditSubCategoryComponent } from 'src/app/Components/SubCategoriesComponents/edit-sub-category/edit-sub-category.component';
+import { DisplayNeedRequestEmpComponent } from 'src/app/Components/NeedsRequestsComponensts/display-need-request-emp/display-need-request-emp.component';
+import { AddNeedRequestEmpComponent } from 'src/app/Components/NeedsRequestsComponensts/add-need-request-emp/add-need-request-emp.component';
+import { EvaluationTypeComponent } from 'src/app/Components/EvaluationsComponents/evaluation-type/evaluation-type.component'
+import { AddEvaluationTypeComponent } from 'src/app/Components/EvaluationsComponents/add-evaluation-type/add-evaluation-type.component';
+import { EditEvaluationTypeComponent } from 'src/app/Components/EvaluationsComponents/edit-evaluation-type/edit-evaluation-type.component';
+import { EvaluationProfessionComponent } from 'src/app/Components/EvaluationsComponents/evaluation-profession/evaluation-profession.component';
+import { EditEvaluationProfessionComponent } from 'src/app/Components/EvaluationsComponents/edit-evaluation-profession/edit-evaluation-profession.component';
+import { AddEvaluationProfessionComponent } from 'src/app/Components/EvaluationsComponents/add-evaluation-profession/add-evaluation-profession.component';
+import { EditNeedRequestEmpComponent } from 'src/app/Components/NeedsRequestsComponensts/edit-need-request-emp/edit-need-request-emp.component';
+import { DisplayEvaluationsComponent } from 'src/app/Components/EvaluationsComponents/display-evaluations/display-evaluations.component';
+import { AddEvaluationComponent } from './Components/EvaluationsComponents/add-evaluation/add-evaluation.component';
+import { EditEvaluationComponent } from 'src/app/Components/EvaluationsComponents/edit-evaluation/edit-evaluation.component';
+import { CertificateComponent } from 'src/app/Components/CertificatesComponents/certificate/certificate.component';
+import { AddCertificatesComponent } from './Components/CertificatesComponents/add-certificates/add-certificates.component';
+import { EditCertificatesComponent } from 'src/app/Components/CertificatesComponents/edit-certificates/edit-certificates.component';
+import { TrainingTypeComponent } from 'src/app/Components/TrainingComponents/training-type/training-type.component'
+import { AddTrainingTypeComponent } from 'src/app/Components/TrainingComponents/add-training-type/add-training-type.component';
+import { EditTrainingTypeComponent } from 'src/app/Components/TrainingComponents/edit-training-type/edit-training-type.component';
+import { CoursesComponent } from 'src/app/Components/CourseComponents/Courses/courses.component';
+import { AddCourseComponent } from './Components/CourseComponents/add-course/add-course.component';
+import { EditCourseComponent } from 'src/app/Components/CourseComponents/edit-course/edit-course.component';
+import { TrainingProfessionComponent } from 'src/app/Components/TrainingComponents/training-profession/training-profession.component';
+import { AddTrainingProfessionComponent } from 'src/app/Components/TrainingComponents/add-training-profession/add-training-profession.component';
+import { EditTrainingProfessionComponent } from 'src/app/Components/TrainingComponents/edit-training-profession/edit-training-profession.component';
+import { TrainingsComponent } from 'src/app/Components/TrainingComponents/trainings/trainings.component';
+import { AddTrainingComponent } from 'src/app/Components/TrainingComponents/add-training/add-training.component';
+import { EditTrainingComponent } from 'src/app/Components/TrainingComponents/edit-training/edit-training.component';
+import { RequestTrainingComponent } from 'src/app/Components/TrainingComponents/request-training/request-training.component';
+import { AddRequestTrainingComponent } from './Components/TrainingComponents/add-request-training/add-request-training.component';
+import { EditRequestTrainingComponent } from 'src/app/Components/TrainingComponents/edit-request-training/edit-request-training.component';
+import { LeavesTypeComponent } from 'src/app/Components/LeavesComponents/leaves-type/leaves-type.component'
+import { AddLeavesTypeComponent } from 'src/app/Components/LeavesComponents/add-leaves-type/add-leaves-type.component';
+import { EditLeavesTypeComponent } from 'src/app/Components/LeavesComponents/edit-leaves-type/edit-leaves-type.component';
+import { InstructorComponent } from 'src/app/Components/InstructorsComponents/instructor/instructor.component'
+import { AddInstructorComponent } from './Components/InstructorsComponents/add-instructor/add-instructor.component';
+import { EditInstructorComponent } from 'src/app/Components/InstructorsComponents/edit-instructor/edit-instructor.component';
+import { MainPageComponent } from './Components/main-page/main-page.component';
+import { ProfileComponent } from 'src/app/Components/AuthComponents/profile/profile.component';
+import { DisplayPositionLevelsComponent } from './Components/PositionLevelComponent/display-position-levels/display-position-levels.component';
+import { DisplayAllPositionsComponent } from './Components/PositionsComponent/display-all-positions/display-all-positions.component';
+import { DisplayProfessionsComponent } from './Components/ProfessionsComponents/display-professions/display-professions.component';
+import { DisplayUniversitiesComponent } from './Components/UniversityComponent/display-universities/display-universities.component';
+import { DisplayFacultiesComponent } from './Components/FacultyComponent/display-faculties/display-faculties.component';
+import { DisplayFacultydepartmentsComponent } from './Components/FacultyComponent/display-facultydepartments/display-facultydepartments.component';
+import { EditLeaveRequestComponent } from 'src/app/Components/LeavesComponents/edit-leave-request/edit-leave-request.component';
+import { PieChartsComponent } from './Components/pie-charts/pie-charts.component';
+import { ReportExcuseComponent } from './Components/Reports-Components/report-excuse/report-excuse.component';
+import { ReportLeavesComponent } from './Components/Reports-Components/report-leaves/report-leaves.component';
+import { EmployeeFullReportComponent } from './Components/Reports-Components/employee-full-report/employee-full-report.component';
+import { ReportAttendanceComponent } from './Components/Reports-Components/report-attendance/report-attendance.component';
 
 
 const routes: Routes = [
@@ -154,6 +155,9 @@ const routes: Routes = [
     {path:'PieCharts',component:PieChartsComponent},
     {path:'ReportExcuse',component:ReportExcuseComponent},
     {path:'ReportLeave',component:ReportLeavesComponent},
+    {path:'EmployeeFullReport',component:EmployeeFullReportComponent},
+    {path:'ReportAttendance',component:ReportAttendanceComponent},
+
 
 
 

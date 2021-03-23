@@ -1,0 +1,104 @@
+<div class="container card">
+    <br>
+    <p style="font-size: xx-large;" [translate]="'HR.Attendance Report'"></p>
+    <form (ngSubmit)="Filter()">
+        <div class="row">
+        <div class="col-md-3">
+            <span  for="Profession" [translate]="'HR.Profession Name'"></span>
+            <select (change)="onChange($event.target.value)" [(ngModel)]="AttendanceObj.professionId" name="Profession"
+                class="form-control">Profession
+                <option value="" selected disabled hidden>Profession</option>
+                <option *ngFor="let item of AllProfessions" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="col-md-3">
+            <span  for="Employee" [translate]="'HR.Employee Name'"></span>
+            <select (change)="onChangeEmp($event.target.value)" [(ngModel)]="AttendanceObj.employeeId" name="Employee" class="form-control">
+                <option value="" selected disabled >{{'HR.Employee Name'|translate}}</option>
+                <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
+            </select>
+        </div>
+        <br>
+        <div class="col-md-3">
+            <span  for="time" [translate]="'HR.Start Date'"></span>
+            <input name="date" value={{AttendanceObj.startdate}} type="date" class="form-control"
+                [(ngModel)]="AttendanceObj.startdate" inputId="date">
+        </div>
+        <br>
+        <div class="col-md-3">
+            <span  for="time" [translate]="'HR.End Date'"></span>
+            <input name="date" value={{AttendanceObj.endDate}} type="date" class="form-control"
+                [(ngModel)]="AttendanceObj.endDate" inputId="date">
+        </div>
+    </div>
+        <br>
+        <button id="Add" type="submit" class="btn btn-primary" [translate]="'HR.Filter'"></button>
+    </form>
+    <br>
+</div>
+
+<p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+[rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
+[globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+[value]="FilteredAttendance">
+<ng-template pTemplate="caption">
+    <div class="row">
+        <div class="table-header col-md-10">
+            <!-- List of Employees -->
+
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                    [placeholder]="'HR.Global Search' | translate" />
+            </span>
+        </div>
+        <div class="col-md-2">
+            <button id="addEmpBtn" (click)="DownloadReport()" class="btn btn-outline-primary btn-md btn-block">
+                <span class="pi pi-plus" [translate]="'HR.Download'"></span> </button>
+        </div>
+    </div>
+
+</ng-template>
+<ng-template pTemplate="header">
+    <tr style="height: 5px !important; ">
+        <th pSortableColumn="employeeName" style="text-align: inherit;"><span [translate]="'HR.Employee Name'"></span>
+            <p-sortIcon field="employeeName"></p-sortIcon>
+        </th>
+        <th>Arrival</th>
+        <th>Departure</th>
+    </tr>
+</ng-template>
+<ng-template pTemplate="body" let-attendance>
+    <tr style="height: 5px !important;font-size: 17px;">
+        <td style="text-align: inherit;">
+            <div style="font-weight: bold;">{{attendance.employeeName}}</div>
+          </td>
+        <td>
+            <table>
+                <tbody>
+                <tr *ngFor="let i of attendance.lstAttendance" >
+                  <td><div style="padding-bottom: 10px;">{{i.arrival | customDate}}</div></td>
+                </tr>
+              </tbody>
+              </table>
+        </td>
+        <td>
+            <table>
+                <tbody>
+                <tr *ngFor="let i of attendance.lstAttendance"  >
+                  <td><div style="padding-bottom: 10px;">{{i.departure |customDate}}</div></td>
+                </tr>
+              </tbody>
+              </table>
+        </td>
+        <!-- <td *ngFor="let i of arrival">
+            {{i.arrival |date :'short'}}
+        </td>
+        <td *ngFor="let i of departure">
+            {{i.departure |date :'short'}}
+        </td> -->
+    </tr>
+</ng-template>
+</p-table>

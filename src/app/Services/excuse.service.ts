@@ -49,6 +49,20 @@ export class ExcuseService {
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/GetAllExcuseForEmployeeId/`+EmployeeId,this.httpOptions)
   }
+
+  GetExcusesByProfessionId(ProfessionId):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcusesByProfessionId/`+ProfessionId,this.httpOptions)
+  }
+  GetExcusesByProfessionIdAndEmployeeId(ProfessionId,EmployeeId):Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcusesByProfessionIdAndEmployeeId/`+ProfessionId+'/'+EmployeeId,this.httpOptions)
+  }
+  GetExcusesByProfessionIdAndEmployeeIdAndDate(professionId,employeeId,startDate,endDate):Observable<any>
+  {
+    return this.httpclient.post(`${environment.ApiURL}/Excuses/GetExcusesByProfessionIdAndEmployeeIdAndDate/`+professionId+'/'+employeeId+'/'+startDate+'/'+endDate,this.httpOptions)
+  }
+
   getexcuseByID(id):Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/`+id,this.httpOptions)

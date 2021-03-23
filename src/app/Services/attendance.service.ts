@@ -36,4 +36,26 @@ export class AttendanceService {
   {
     return this.httpclient.put(`${environment.ApiURL}/Attendances/`+id,attend,this.httpOptions)
   }
+
+
+  GetAttendances()
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Attendances/GetAttendances`,this.httpOptions)
+  }
+  GetAttendancesByProfessionId(ProfessionId)
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Attendances/GetAttendancesByProfessionId/`+ProfessionId,this.httpOptions)
+  }
+  GetAttendancesByProfessionIdAndEmployeeId(ProfessionId,EmployeeId)
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Attendances/GetAttendancesByProfessionIdAndEmployeeId/`+ProfessionId+'/'+EmployeeId,this.httpOptions)
+  }
+  GetAttendancesByProfessionIdAndEmployeeIdAndDate(ProfessionId,EmployeeId,startDate,endDate)
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Attendances/GetAttendancesByProfessionIdAndEmployeeIdAndDate/`+ProfessionId+'/'+EmployeeId+'/'+startDate+'/'+endDate,this.httpOptions)
+  }
+  GetAttendancesByDate(startDate,endDate)
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Attendances/GetAttendancesByDate/`+startDate+'/'+endDate,this.httpOptions)
+  }
 }

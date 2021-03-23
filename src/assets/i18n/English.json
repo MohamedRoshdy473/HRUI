@@ -208,7 +208,11 @@
     "Download":"Download",
     "Excuse Report":"Excuses Report",
     "Leave Report":"Leaves Report",
-    "Id":"Id"
+    "Id":"Id",
+    "Full report to employee":"Full report to employee",
+    "Arrival":"Arrival",
+    "Departure":"Departure",
+    "Attendance Report":"Attendance Report"
 
   }
 }

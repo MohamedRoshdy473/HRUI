@@ -94,19 +94,26 @@ export class ReportAttendanceComponent implements OnInit {
     var col = [this.emptranslate, this.Arrivaltranslate, this.Departuretranslate];
     var rows = [];
     var row = [];
-    if (this.ProfID != 0) {
+    if (this.ProfID != undefined) {
       this.AttService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
         this.FilteredAttendance = res
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
-      this.AttService.GetAttendancesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(res => {
+    if (this.ProfID != undefined && this.EmpID != undefined) {
+      this.AttService.GetAttendancesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(res =>
         this.FilteredAttendance = res
-      }
       )
     }
-    console.log("FilteredAttendance", this.FilteredAttendance)
-
+    if (this.ProfID != undefined && this.EmpID != undefined && (this.AttendanceObj.startdate != this.exDate && this.AttendanceObj.endDate != this.exDate)) {
+      this.AttService.GetAttendancesByProfessionIdAndEmployeeIdAndDate(this.ProfID, this.EmpID, this.AttendanceObj.startdate, this.AttendanceObj.endDate).subscribe(res =>
+        this.FilteredAttendance = res
+      )
+    }
+    if (this.AttendanceObj.startdate != this.exDate && this.AttendanceObj.endDate != this.exDate) {
+      this.AttService.GetAttendancesByDate(this.AttendanceObj.startdate, this.AttendanceObj.endDate).subscribe(res =>
+        this.FilteredAttendance = res
+      )
+    }
     this.FilteredAttendance.forEach(element => {
       this.arrivalList = []
       this.departureList = []
@@ -151,16 +158,6 @@ export class ReportAttendanceComponent implements OnInit {
       )
     }
     if (this.AttendanceObj.startdate != this.exDate && this.AttendanceObj.endDate != this.exDate) {
-      //     this.AllAttendances.forEach(element => {
-      //       element.lstAttendance.forEach(ele => {
-      //        this.arrive=  this.datePipe.transform(ele.arrival, "yyyy-MM-dd");
-      //        this.depart=  this.datePipe.transform(ele.departure, "yyyy-MM-dd");
-      //       });
-      //     });
-      //     console.log("this.arrive",this.arrive)
-      //     this.FilteredAttendance = this.AllAttendances.filter(ex=>ex.arrive >= this.AttendanceObj.startdate && ex.departure <= this.AttendanceObj.endDate);
-      //  console.log("this.FilteredAttendance by date",this.FilteredAttendance)
-      //   }
       this.AttService.GetAttendancesByDate(this.AttendanceObj.startdate, this.AttendanceObj.endDate).subscribe(res =>
         this.FilteredAttendance = res
       )

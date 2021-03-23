@@ -43,31 +43,32 @@ export class EmployeeFullReportComponent implements OnInit {
   Daystranslate: any;
   AlternativeEmployeetranslate: any;
   LeaveTypetranslate: any;
+  AllAttendances: any;
+  FilteredAttendance: any;
+  AttendanceObj: any;
+  Arrivaltranslate: any;
+  Departuretranslate: any;
+  arrivalList: any;
+  departureList: any;
+  Attendancetranslate: any;
+  AttendDate: string;
   constructor(private attensanceService:AttendanceService,private translate: TranslateService,private Leaveservice:LeaveService, private ExcuseService: ExcuseService, private professionService: ProfessionService, private datePipe: DatePipe, private EmpService: EmployeeService) { }
 
   ngOnInit(): void {
     this.exDate = this.datePipe.transform(new Date(), "dd/MM/yyyy")
-    this.EmpReportObj = {      Comment: '', AlternativeAddress: '', Status: 'pending',
-    AlternativeEmpID: 0, Days: 0, employeeId: 0, LeaveTypeID: 0, approved: "pending", employeeName: '', id: 0, profession: '', startdate: new Date(), endDate: new Date(), comment: '', hours: 0, time: { hours: 0, minutes: 0 } };
+    this.AttendDate = this.datePipe.transform(new Date(), "yyyy-MM-dd")
 
+    this.EmpReportObj = {Comment: '', AlternativeAddress: '', Status: 'pending',
+    AlternativeEmpID: 0, Days: 0, employeeId: 0, LeaveTypeID: 0, approved: "pending", employeeName: '',
+     id: 0, profession: '', startdate: new Date(), endDate: new Date(), comment: '', hours: 0, time: { hours: 0, minutes: 0 }
+    , arrival: new Date(), daparture: new Date(),};
+    this.arrivalList = [];
+    this.departureList = [];
     this.Allexcuses = []
     this.professionService.getAllProfession().subscribe(
       data => { this.AllProfessions = data, console.log("AllProfessions", data) },
       error => console.log(error)
     );
-    // this.ExcuseService.AllExcuses().subscribe(
-    //   data => {
-    //     this.Allexcuses = data;
-    //     this.FilteredExcuses = data
-    //     console.log("data", data)
-    //   });
-    // this.Leaveservice.AllLeaves().subscribe(
-    //   data => {
-    //     this.AllLeaves = data, this.FilteredLeaves = data,
-    //     console.log("AllLeaves", this.AllLeaves)
-    //   },
-    //   error => console.log(error)
-    // );
   }
   onChange(ProfessionId) {
     this.ProfID = ProfessionId;
@@ -86,7 +87,7 @@ export class EmployeeFullReportComponent implements OnInit {
     this.getReport();
   }
   getReport() {
-    this.translate.get(['HR.AL-Mostakbal', 'HR.Excuses', 'HR.Id', 'HR.Employee Name', 'HR.Profession Name', 'HR.Date', 'HR.Time', 'HR.Hours', 'HR.Status','HR.Leaves','HR.Start Date','HR.Days','HR.Alternative Employee','HR.Leave Type']).subscribe((data: any) => {
+    this.translate.get(['HR.AL-Mostakbal', 'HR.Excuses', 'HR.Id', 'HR.Employee Name', 'HR.Profession Name', 'HR.Date', 'HR.Time', 'HR.Hours', 'HR.Status','HR.Leaves','HR.Start Date','HR.Days','HR.Alternative Employee','HR.Leave Type','HR.Arrival','HR.Departure','HR.Attendance']).subscribe((data: any) => {
       console.log("Translated data", data);
       this.ALMostakbaltranslate = data['HR.AL-Mostakbal']
       this.Excusestranslate = data['HR.Excuses']
@@ -103,28 +104,50 @@ export class EmployeeFullReportComponent implements OnInit {
       this.Daystranslate = data['HR.Days']
       this.AlternativeEmployeetranslate = data['HR.Alternative Employee']
       this.LeaveTypetranslate = data['HR.Leave Type']
+      this.Arrivaltranslate = data['HR.Arrival'] 
+      this.Departuretranslate = data['HR.Departure']
+      this.Attendancetranslate = data['HR.Attendance']
 
 
     });
     const totalPagesExp = "{total_pages_count_string}";
-    var doc = new jsPDF('l');
-    var docExcuse = new jsPDF('l');
-    var docLeave = new jsPDF('l');
+    var doc = new jsPDF('p');
+  
+    // doc.addFont("../assets/ARIALUNI.TTF", "ARIALUNI", "normal");
+    // doc.setFont('ARIALUNI');
+    // var img = new Image()
+    // img.src = 'assets/images/logo.jpeg'
+    // doc.addImage(img, 'png', 10, 10, 23, 23);
+   
+
     doc.addFont("../assets/ARIALUNI.TTF", "ARIALUNI", "normal");
     doc.setFont('ARIALUNI');
     var img = new Image()
     img.src = 'assets/images/logo.jpeg'
     doc.addImage(img, 'png', 10, 10, 23, 23);
     doc.text(this.ALMostakbaltranslate, 50, 25, { "align": "left" });
-   doc.text(this.Leavestranslate, 15, 45, { "align": "left" });
-    doc.text(this.Excusestranslate, 15, 110, { "align": "left" });
-    var colExcuses = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.Datetranslate, this.Timetetranslate, this.Hourstranslate, this.Statustranslate];
-    var colLeave = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.StartDatetranslate, this.Daystranslate, this.AlternativeEmployeetranslate,this.LeaveTypetranslate, this.Statustranslate];
 
+
+   var colExcuses = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.Datetranslate, this.Timetetranslate, this.Hourstranslate, this.Statustranslate];
+    let headExecuses = [[{content: "Execuses", colSpan: 7, styles: { fillColor:  [255, 255, 255],textColor :[0,0,0] ,fontSize:14 }}],colExcuses];
+
+
+    var colLeave = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.StartDatetranslate, this.Daystranslate, this.AlternativeEmployeetranslate,this.LeaveTypetranslate, this.Statustranslate];
+    let headLeaves = [[{content: "Leaves", colSpan: 8, styles: { fillColor:  [255, 255, 255],textColor :[0,0,0] ,fontSize:14 }}],colLeave  ];
+
+   
+   
+   
+   
+   
+    var colAttendance = [this.emptranslate, this.Arrivaltranslate, this.Departuretranslate];
+    let headAttendance = [[{content: "Attendance", colSpan: 3, styles: { fillColor:  [255, 255, 255],textColor :[0,0,0] ,fontSize:14 }}      ],      colAttendance  ];
     var rowsExcuse = [];
     var rowsLeave = [];
     var rowExcuse = [];
     var rowLeave = [];
+    var rowAttendance = [];
+    var rowsAttendance = [];
     //Filteration
     if (this.ProfID != 0) {
       this.ExcuseService.GetExcusesByProfessionId(this.ProfID).subscribe(
@@ -134,6 +157,9 @@ export class EmployeeFullReportComponent implements OnInit {
       this.Leaveservice.GetLeaveRequestsByProfessionId(this.ProfID).subscribe(
         data => { this.FilteredLeaves = data },
         error => console.log(error)
+      )
+      this.attensanceService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
+        this.FilteredAttendance = res
       )
     }
     if (this.ProfID != 0 && this.EmpID != 0) {
@@ -148,6 +174,9 @@ export class EmployeeFullReportComponent implements OnInit {
           this.FilteredLeaves=data
         },
         error => console.log(error)
+      )
+      this.attensanceService.GetAttendancesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(res =>
+        this.FilteredAttendance = res
       )
     }
     if (this.ProfID != 0 || this.EmpID != 0 && (this.EmpReportObj.startdate == this.exDate && this.EmpReportObj.endDate == this.exDate)) {
@@ -164,25 +193,88 @@ export class EmployeeFullReportComponent implements OnInit {
         },
         error => console.log(error)
       ) 
+      this.attensanceService.GetAttendancesByProfessionIdAndEmployeeIdAndDate(this.ProfID, this.EmpID, this.EmpReportObj.startdate, this.EmpReportObj).subscribe(res =>
+        this.FilteredAttendance = res
+      )
     }
     if (this.EmpReportObj.startdate == this.exDate && this.EmpReportObj.endDate == this.exDate) {
       this.FilteredExcuses = this.Allexcuses.filter(ex => ex.date > this.EmpReportObj.startdate && ex.date < this.EmpReportObj.endDate);
       this.FilteredLeaves = this.AllLeaves.filter(ex => ex.start > this.EmpReportObj.startdate && ex.start < this.EmpReportObj.endDate);
+      this.attensanceService.GetAttendancesByDate(this.EmpReportObj.startdate, this.EmpReportObj.endDate).subscribe(res =>
+        this.FilteredAttendance = res
+      )
     }
+
+
+  
+
+
+
+
     this.FilteredExcuses.forEach(element => {
       var ExcuseDate = this.datePipe.transform(element.date, "dd/MM/yyyy");
+    
      rowExcuse = [element.id, element.employeeName, element.professionName, ExcuseDate, element.time, element.hours, element.approved];
       rowsExcuse.push(rowExcuse);
     });
+ 
+
+
     this.FilteredLeaves.forEach(element => {
       var LeaveDate = this.datePipe.transform(element.start, "dd/MM/yyyy");
       console.log("LeaveDate", LeaveDate)
       rowLeave = [element.id, element.employeeName, element.profession, LeaveDate,element.days, element.alternativeEmp, element.leaveTypeName, element.status];
       rowsLeave.push(rowLeave);
     });
+    this.FilteredAttendance.forEach(element => {
+      this.arrivalList = []
+      this.departureList = []
 
-    (doc as any).autoTable(colLeave,rowsLeave,{ startY: 50, styles: { font: 'ARIALUNI' } });
-    (doc as any).autoTable(colExcuses,rowsExcuse,{ startY: 120, styles: { font: 'ARIALUNI' } });
+      element.lstAttendance.forEach(ele => {
+        if (ele.arrival) {
+          // console.log("ele", ele)
+          var ArrivalDate = this.datePipe.transform(ele.arrival, "dd/MM/yyyy h:mm:ss a");
+          this.arrivalList.push(ArrivalDate.replace(",", "") + '\n\n')
+        }
+        if (ele.departure) {
+          console.log("ele", ele)
+          var DepartureDate = this.datePipe.transform(ele.departure, "dd/MM/yyyy h:mm:ss a");
+          this.departureList.push(DepartureDate.replace(",", "") + '\n\n');
+
+        }
+       // this.departureList.join("\n")
+      })
+      rowAttendance = [element.employeeName, this.arrivalList, this.departureList];
+      rowsAttendance.push(rowAttendance);
+      console.log("arrivalList", this.arrivalList)
+    });
+//    (doc as any).autoTable(colLeave,rowsLeave,{startY: typeof  (doc as any).autoTable.previous.finalY === 'undefined' ? 50 :  (doc as any).autoTable.previous.finalY + 20, styles: { font: 'ARIALUNI' } });
+    (doc as any).autoTable({
+      head: headLeaves,
+      body: rowsLeave,
+      margin: { top: 40 },
+      styles: { font: 'ARIALUNI'}
+    });
+     
+    
+    //(doc as any).autoTable([{colExcuses2},{colExcuses}],rowsExcuse,{startY: typeof  (doc as any).autoTable.previous.finalY === 'undefined' ? 85 :  (doc as any).autoTable.previous.finalY + 20, styles: { font: 'ARIALUNI' } });
+   
+    (doc as any).autoTable({
+    styles: { font: 'ARIALUNI' },
+    head: headExecuses,
+    body: rowsExcuse
+  });
+   
+   
+   
+  //  (doc as any).autoTable(colAttendance, rowsAttendance,{startY: typeof  (doc as any).autoTable.previous.finalY === 'undefined' ? 140 :  (doc as any).autoTable.previous.finalY + 20, styles: { font: 'ARIALUNI'} });
+  (doc as any).autoTable({
+    styles: { font: 'ARIALUNI' },
+    head: headAttendance,
+    body: rowsAttendance
+  });
+
+
      doc.save('Emp.pdf');
   }
   Filter()
@@ -196,6 +288,9 @@ export class EmployeeFullReportComponent implements OnInit {
         data => { this.FilteredLeaves = data },
         error => console.log(error)
       )
+      this.attensanceService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
+        this.FilteredAttendance = res
+      )
     }
     if (this.ProfID != 0 && this.EmpID != 0) {
       this.ExcuseService.GetExcusesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(
@@ -210,8 +305,11 @@ export class EmployeeFullReportComponent implements OnInit {
         },
         error => console.log(error)
       )
+      this.attensanceService.GetAttendancesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(res =>
+        this.FilteredAttendance = res
+      )
     }
-    if (this.ProfID != 0 || this.EmpID != 0 && (this.EmpReportObj.startdate == this.exDate && this.EmpReportObj.endDate == this.exDate)) {
+    if (this.ProfID != 0 || this.EmpID != 0 && ((this.EmpReportObj.startdate == this.exDate && this.EmpReportObj.endDate == this.exDate)||(this.EmpReportObj.startdate == this.AttendDate && this.EmpReportObj.endDate == this.AttendDate))) {
       this.ExcuseService.GetExcusesByProfessionIdAndEmployeeIdAndDate(this.ProfID, this.EmpID, this.EmpReportObj.startdate, this.EmpReportObj.endDate).subscribe(
         data => {
           this.Allexcuses = data
@@ -225,10 +323,45 @@ export class EmployeeFullReportComponent implements OnInit {
         },
         error => console.log(error)
       ) 
+      this.attensanceService.GetAttendancesByProfessionIdAndEmployeeIdAndDate(this.ProfID, this.EmpID, this.EmpReportObj.startdate, this.EmpReportObj.endDate).subscribe(res =>
+        this.FilteredAttendance = res
+      )
     }
-    if (this.EmpReportObj.startdate == this.exDate && this.EmpReportObj.endDate == this.exDate) {
+    if (this.EmpReportObj.startdate != this.exDate && this.EmpReportObj.endDate != this.exDate) {
       this.FilteredExcuses = this.Allexcuses.filter(ex => ex.date > this.EmpReportObj.startdate && ex.date < this.EmpReportObj.endDate);
       this.FilteredLeaves = this.AllLeaves.filter(ex => ex.start > this.EmpReportObj.startdate && ex.start < this.EmpReportObj.endDate);
+      this.attensanceService.GetAttendancesByDate(this.EmpReportObj.startdate, this.EmpReportObj.endDate).subscribe(res =>
+        this.FilteredAttendance = res
+      )
     }
+
+
+
+    var doc = new jsPDF();
+
+  var data = [
+    {name: "Bar", amount: 1200}, 
+    {name: "Zap", amount: 200}, 
+    {name: "Foo", amount: 320}];
+    
+  var total = data.reduce((sum, el) => sum + el.amount, 0);
+
+
+
+
+//   let head = [
+//     [
+//       {content: `Total = ${total}`, colSpan: 2, styles: { fillColor: [239, 154, 154] }},
+//        // {content: 'Data', colSpan: 2, styles: {halign: 'center', fillColor: [22, 160, 133]}}
+//     ],
+//     ['ID', 'Name', 'Email', 'City', 'Sum'],
+// ];
+
+//     (doc as any).autoTable({
+//     head: head,//[['Concept', 'Amount']],
+//     body: [...data.map(el => [el.name, el.amount])]
+//   });
+
+//   doc.save("table.pdf");
   }
 }

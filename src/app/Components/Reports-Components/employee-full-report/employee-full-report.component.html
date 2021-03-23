@@ -50,7 +50,7 @@
         [value]="FilteredLeaves">
         <ng-template pTemplate="caption">
             <div class="row">
-                <div class="table-header col-md-10">
+                <div class="table-header col-md-9">
                     <!-- List of Employees -->
 
                     <span class="p-input-icon-left">
@@ -59,8 +59,8 @@
                             [placeholder]="'HR.Global Search' | translate" />
                     </span>
                 </div>
-                <div class="col-md-2">
-                    <p style="font-size: xx-large;" [translate]="'HR.Leaves'"></p>
+                <div class="col-md-3">
+                    <p style="font-size: xx-large;text-align: center;" [translate]="'HR.Leaves'"></p>
 
                 </div>
             </div>
@@ -125,7 +125,7 @@
         [value]="FilteredExcuses">
         <ng-template pTemplate="caption">
             <div class="row">
-                <div class="table-header col-md-10">
+                <div class="table-header col-md-9">
 
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
@@ -133,8 +133,8 @@
                             [placeholder]="'HR.Global Search' | translate" />
                     </span>
                 </div>
-                <div class="col-md-2">
-                    <p style="font-size: xx-large;" [translate]="'HR.Excuses'"></p>
+                <div class="col-md-3">
+                    <p style="font-size: xx-large;text-align: center;" [translate]="'HR.Excuses'"></p>
 
                 </div>
             </div>
@@ -193,6 +193,63 @@
             </tr>
         </ng-template>
     </p-table>
+    <p-table id="my-table" class="container card" #dt dataKey="id" [rows]="5" [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5,10,50]" styleClass="p-datatable-customers" [paginator]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0" 
+    [globalFilterFields]="['employeeName','profession','date','start','days','alternativeEmp','status']"
+    [value]="FilteredAttendance">
+    <ng-template pTemplate="caption">
+        <div class="row">
+            <div class="table-header col-md-9">
+                <!-- List of Employees -->
+    
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                        [placeholder]="'HR.Global Search' | translate" />
+                </span>
+            </div>
+            <div class="col-md-3">
+                <p style="font-size: xx-large;text-align: center;" [translate]="'HR.Attendance'"></p>
 
+            </div>
+        </div>
+    
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr style="height: 5px !important; ">
+            <th pSortableColumn="employeeName" style="text-align: inherit;"><span [translate]="'HR.Employee Name'"></span>
+                <p-sortIcon field="employeeName"></p-sortIcon>
+            </th>
+            <th>Arrival</th>
+            <th>Departure</th>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-attendance>
+        <tr style="height: 5px !important;font-size: 17px;">
+            <td style="text-align: inherit;">
+                <div style="font-weight: bold;">{{attendance.employeeName}}</div>
+              </td>
+            <td>
+                <table>
+                    <tbody>
+                    <tr *ngFor="let i of attendance.lstAttendance" >
+                      <td><div style="padding-bottom: 10px;">{{i.arrival | customDate}}</div></td>
+                    </tr>
+                  </tbody>
+                  </table>
+            </td>
+            <td>
+                <table>
+                    <tbody>
+                    <tr *ngFor="let i of attendance.lstAttendance"  >
+                      <td><div style="padding-bottom: 10px;">{{i.departure |customDate}}</div></td>
+                    </tr>
+                  </tbody>
+                  </table>
+            </td>
+        </tr>
+    </ng-template>
+    </p-table>
 
 </div>

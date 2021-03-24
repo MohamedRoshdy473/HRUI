@@ -52,6 +52,16 @@ export class EmployeeFullReportComponent implements OnInit {
   departureList: any;
   Attendancetranslate: any;
   AttendDate: string;
+  ExcusesDatelList: any
+  ExcusesTimelList: any
+  ExcusesHourlList: any
+  ExcusesStatuslList: any
+  LeaveDatelList: any[];
+  LeaveStartDatelList: any[];
+  LeaveDayslList: any[];
+  LeaveStatuslList: any[];
+  LeaveAlternativeEmployeelList: any[];
+  LeaveleaveTypeList: any[];
   constructor(private attensanceService:AttendanceService,private translate: TranslateService,private Leaveservice:LeaveService, private ExcuseService: ExcuseService, private professionService: ProfessionService, private datePipe: DatePipe, private EmpService: EmployeeService) { }
 
   ngOnInit(): void {
@@ -64,7 +74,19 @@ export class EmployeeFullReportComponent implements OnInit {
     , arrival: new Date(), daparture: new Date(),};
     this.arrivalList = [];
     this.departureList = [];
-    this.Allexcuses = []
+    this.Allexcuses = [];
+    this.ExcusesDatelList = []
+    this.ExcusesTimelList = []
+    this.ExcusesHourlList = []
+    this.ExcusesStatuslList = []
+    
+    this.LeaveDatelList = []
+    this.LeaveStartDatelList = []
+    this.LeaveDayslList = []
+    this.LeaveAlternativeEmployeelList = []
+    this.LeaveleaveTypeList=[]
+    this.LeaveStatuslList = []
+
     this.professionService.getAllProfession().subscribe(
       data => { this.AllProfessions = data, console.log("AllProfessions", data) },
       error => console.log(error)
@@ -204,26 +226,64 @@ export class EmployeeFullReportComponent implements OnInit {
         this.FilteredAttendance = res
       )
     }
-
-
-  
-
-
-
-
     this.FilteredExcuses.forEach(element => {
-      var ExcuseDate = this.datePipe.transform(element.date, "dd/MM/yyyy");
-    
-     rowExcuse = [element.id, element.employeeName, element.professionName, ExcuseDate, element.time, element.hours, element.approved];
+      this.ExcusesDatelList = []
+      this.ExcusesTimelList = []
+      this.ExcusesHourlList = []
+      this.ExcusesStatuslList = []
+      element.lstExcuse.forEach(ele => {
+        if (ele.date) {
+          var ExcuseDate = this.datePipe.transform(ele.date, "dd/MM/yyyy");
+          this.ExcusesDatelList.push(ExcuseDate.replace(",", "") + '\n\n');
+        }
+        if(ele.time)
+        {
+          console.log("Time",ele.time)
+          this.ExcusesTimelList.push(ele.time.replace(",","") + `\n\n`);
+        }
+        if(ele.hours) 
+        {
+          this.ExcusesHourlList.push((ele.hours).toString().replace(",","") + `\n\n`);
+        }
+        if(ele.approved)
+        {
+          this.ExcusesStatuslList.push(ele.approved.replace(",", "") + '\n\n');
+        }
+      });
+
+      rowExcuse = [element.id, element.employeeName, element.professionName, this.ExcusesDatelList, this.ExcusesTimelList,this.ExcusesHourlList ,this.ExcusesStatuslList ];
       rowsExcuse.push(rowExcuse);
     });
- 
-
 
     this.FilteredLeaves.forEach(element => {
-      var LeaveDate = this.datePipe.transform(element.start, "dd/MM/yyyy");
-      console.log("LeaveDate", LeaveDate)
-      rowLeave = [element.id, element.employeeName, element.profession, LeaveDate,element.days, element.alternativeEmp, element.leaveTypeName, element.status];
+      this.LeaveStartDatelList = []
+      this.LeaveDayslList = []
+      this.LeaveAlternativeEmployeelList = []
+      this.LeaveStatuslList = []
+      this.LeaveleaveTypeList=[]
+      element.lstLeaveRequest.forEach(ele => {
+        if (ele.start) {
+          var LeaveDate = this.datePipe.transform(ele.start, "dd/MM/yyyy");
+          this.LeaveStartDatelList.push(LeaveDate.replace(",", "") + '\n\n');
+        }
+        if(ele.days)
+        {
+          this.LeaveDayslList.push((ele.days.toString().replace(",","") + `\n\n`));
+        }
+        if(ele.alternativeEmp.name)
+        {
+          this.LeaveAlternativeEmployeelList.push(ele.alternativeEmp.name.replace(",", "") + '\n\n');
+        }
+        if(ele.leaveType.name)
+        {
+          this.LeaveleaveTypeList.push(ele.leaveType.name.replace(",", "") + '\n\n');
+        }
+        if(ele.status)
+        {
+          this.LeaveStatuslList.push(ele.status.replace(",", "") + '\n\n');
+        }
+      });
+      rowLeave = [element.employeeName, element.professionName,  this.LeaveStartDatelList, this.LeaveDayslList, this.LeaveAlternativeEmployeelList, this.LeaveleaveTypeList, this.LeaveStatuslList];
       rowsLeave.push(rowLeave);
     });
     this.FilteredAttendance.forEach(element => {

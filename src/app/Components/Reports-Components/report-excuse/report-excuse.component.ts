@@ -33,18 +33,26 @@ export class ReportExcuseComponent implements OnInit {
   ProfID: number
   //type: any
   exDate: any;
+  ExcusesDatelList: any
+  ExcusesTimelList: any
+  ExcusesHourlList: any
+  ExcusesStatuslList: any
   constructor(private translate: TranslateService, private ExcuseService: ExcuseService, private professionService: ProfessionService, private datePipe: DatePipe, private EmpService: EmployeeService) { }
 
   ngOnInit(): void {
+    this.ExcusesDatelList = []
+    this.ExcusesTimelList = []
+    this.ExcusesHourlList = []
+    this.ExcusesStatuslList = []
     this.exDate = this.datePipe.transform(new Date(), "dd/MM/yyyy")
 
     this.NewExcuse = { employeeId: 0, approved: "pending", employeeName: '', id: 0, profession: '', startdate: new Date(), endDate: new Date(), comment: '', hours: 0, time: { hours: 0, minutes: 0 } };
     this.Allexcuses = []
-    this.ExcuseService.AllExcuses().subscribe(
+    this.ExcuseService.AllExcusesGrouped().subscribe(
       data => {
         //this.Allexcuses = data;
         this.FilteredExcuses = data
-        console.log("data", data)
+        console.log("AllExcusesGrouped", data)
       });
     this.professionService.getAllProfession().subscribe(
       data => { this.AllProfessions = data, console.log("AllProfessions", data) },
@@ -122,8 +130,31 @@ export class ReportExcuseComponent implements OnInit {
     }
     // row = [ { startY: 50, styles: { font: 'ARIALUNI', colSpan: 8 } }]
     this.FilteredExcuses.forEach(element => {
-      var ExcuseDate = this.datePipe.transform(element.date, "dd/MM/yyyy");
-      row = [element.id, element.employeeName, element.professionName, ExcuseDate, element.time, element.hours, element.approved];
+      this.ExcusesDatelList = []
+      this.ExcusesTimelList = []
+      this.ExcusesHourlList = []
+      this.ExcusesStatuslList = []
+      element.lstExcuse.forEach(ele => {
+        if (ele.date) {
+          var ExcuseDate = this.datePipe.transform(ele.date, "dd/MM/yyyy");
+          this.ExcusesDatelList.push(ExcuseDate.replace(",", "") + '\n\n');
+        }
+        if(ele.time)
+        {
+          console.log("Time",ele.time)
+          this.ExcusesTimelList.push(ele.time.replace(",","") + `\n\n`);
+        }
+        if(ele.hours) 
+        {
+          this.ExcusesHourlList.push((ele.hours).toString().replace(",","") + `\n\n`);
+        }
+        if(ele.approved)
+        {
+          this.ExcusesStatuslList.push(ele.approved.replace(",", "") + '\n\n');
+        }
+      });
+
+      row = [element.id, element.employeeName, element.professionName, this.ExcusesDatelList, this.ExcusesTimelList,this.ExcusesHourlList ,this.ExcusesStatuslList ];
       rows.push(row);
     });
     (doc as any).autoTable(col, rows, { startY: 50, styles: { font: 'ARIALUNI' } });

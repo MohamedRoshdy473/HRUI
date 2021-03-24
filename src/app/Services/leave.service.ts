@@ -25,7 +25,10 @@ export class LeaveService {
     return this.httpclient.get<any>(`${environment.ApiURL}/LeaveRequests`,this.httpHeader);
 
   } 
-
+  GetLeavesForReport():Observable<any>
+  {
+    return this.httpclient.get<any>(`${environment.ApiURL}/LeaveRequests/GetLeavesForReport`,this.httpHeader);
+  } 
   GetLeaveRequestsByProfessionId(ProfessionId):Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/LeaveRequests/GetLeaveRequestsByProfessionId/`+ProfessionId,this.httpHeader)

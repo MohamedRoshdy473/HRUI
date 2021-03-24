@@ -165,16 +165,16 @@
                             <span [translate]="'HR.Leave Report'"></span>
                         </a>
                     </li>
-                     <li>
-                        <a routerLink='EmployeeFullReport'>
-                            <span >EmployeeFullReport</span>
-                        </a>
-                    </li>
                     <li>
                         <a routerLink='ReportAttendance'>
-                            <span >ReportAttendance</span>
+                            <span [translate]="'HR.Attendance Report'"></span>
                         </a>
                     </li> 
+                     <li>
+                        <a routerLink='EmployeeFullReport'>
+                            <span [translate]="'HR.Full report to employee'"></span>
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="active" *ngIf="role=='Admin' || role=='HR'">

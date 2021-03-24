@@ -31,21 +31,33 @@ export class ReportLeavesComponent implements OnInit {
   Idtranslate: any;
   Statustranslate: any;
   LeaveTypetranslate: any;
-  constructor(private translate: TranslateService,private Leaveservice: LeaveService, private professionService: ProfessionService, private datePipe: DatePipe, private EmpService: EmployeeService) { }
+  LeaveDatelList: any[];
+  LeaveStartDatelList: any[];
+  LeaveDayslList: any[];
+  LeaveStatuslList: any[];
+  LeaveAlternativeEmployeelList: any[];
+  LeaveleaveTypeList: any[];
+  constructor(private translate: TranslateService, private Leaveservice: LeaveService, private professionService: ProfessionService, private datePipe: DatePipe, private EmpService: EmployeeService) { }
   ngOnInit(): void {
+    this.LeaveDatelList = []
+    this.LeaveStartDatelList = []
+    this.LeaveDayslList = []
+    this.LeaveAlternativeEmployeelList = []
+    this.LeaveleaveTypeList=[]
+    this.LeaveStatuslList = []
     this.LeaveObj = {
       Comment: '', AlternativeAddress: '', Status: 'pending',
-      AlternativeEmpID: 0, Days: 0, employeeId: 0, LeaveTypeID: 0, startdate: new Date(), endDate: new Date(),start:new Date()
+      AlternativeEmpID: 0, Days: 0, employeeId: 0, LeaveTypeID: 0, startdate: new Date(), endDate: new Date(), start: new Date()
     };
-    this.Leaveservice.AllLeaves().subscribe(
+    this.Leaveservice.GetLeavesForReport().subscribe(
       data => {
         this.AllLeaves = data, this.FilteredLeaves = data,
-        console.log("AllLeaves", this.AllLeaves)
+          console.log("AllLeaves", this.AllLeaves)
       },
       error => console.log(error)
     );
     this.professionService.getAllProfession().subscribe(
-      data => { this.AllProfessions = data, console.log("AllProfessions", data) },
+      data => { this.AllProfessions = data },
       error => console.log(error)
     );
     this.exDate = this.datePipe.transform(new Date(), "dd/MM/yyyy")
@@ -65,7 +77,7 @@ export class ReportLeavesComponent implements OnInit {
     this.getReport();
   }
   getReport() {
-    this.translate.get(['HR.AL-Mostakbal', 'HR.Leaves', 'HR.Id', 'HR.Employee Name', 'HR.Profession Name', 'HR.Start Date', 'HR.Days', 'HR.Alternative Employee','HR.Leave Type', 'HR.Status']).subscribe((data: any) => {
+    this.translate.get(['HR.AL-Mostakbal', 'HR.Leaves', 'HR.Id', 'HR.Employee Name', 'HR.Profession Name', 'HR.Start Date', 'HR.Days', 'HR.Alternative Employee', 'HR.Leave Type', 'HR.Status']).subscribe((data: any) => {
       console.log("Translated data", data);
       this.ALMostakbaltranslate = data['HR.AL-Mostakbal']
       this.Leavestranslate = data['HR.Leaves']
@@ -88,7 +100,7 @@ export class ReportLeavesComponent implements OnInit {
     doc.addImage(img, 'png', 10, 10, 23, 23);
     doc.text(this.ALMostakbaltranslate, 50, 25, { "align": "left" });
     doc.text(this.Leavestranslate, 10, 45, { "align": "left" });
-    var col = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.StartDatetranslate, this.Daystranslate, this.AlternativeEmployeetranslate,this.LeaveTypetranslate, this.Statustranslate];
+    var col = [this.emptranslate, this.Professiontranslate, this.StartDatetranslate, this.Daystranslate, this.AlternativeEmployeetranslate, this.LeaveTypetranslate, this.Statustranslate];
     var rows = [];
     var row = [];
     //var type = this.Allexcuses.reduce((typeName, el) =>  el.employeeName,'Ekram');
@@ -101,27 +113,53 @@ export class ReportLeavesComponent implements OnInit {
     if (this.ProfID != 0 && this.EmpID != 0) {
       this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
-          this.FilteredLeaves=data
+          this.FilteredLeaves = data
         },
         error => console.log(error)
       )
     }
     if (this.ProfID != 0 && this.EmpID != 0 && (this.LeaveObj.startdate != this.exDate && this.LeaveObj.endDate != this.exDate)) {
-      this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeIdAndDate(this.ProfID, this.EmpID,this.LeaveObj.startdate, this.LeaveObj.endDate).subscribe(
+      this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeIdAndDate(this.ProfID, this.EmpID, this.LeaveObj.startdate, this.LeaveObj.endDate).subscribe(
         data => {
-          this.FilteredLeaves=data
+          this.FilteredLeaves = data
         },
         error => console.log(error)
-      )    }
-    if (this.LeaveObj.startdate == this.exDate && this.LeaveObj.endDate == this.exDate) {
-        this.FilteredLeaves = this.AllLeaves.filter(ex => ex.start > this.LeaveObj.startdate && ex.start < this.LeaveObj.endDate);
+      )
     }
-      this.FilteredLeaves.forEach(element => {
-        var LeaveDate = this.datePipe.transform(element.start, "dd/MM/yyyy");
-        console.log("LeaveDate", LeaveDate)
-        row = [element.id, element.employeeName, element.profession, LeaveDate,element.days, element.alternativeEmp, element.leaveTypeName, element.status];
-        rows.push(row);
+    if (this.LeaveObj.startdate == this.exDate && this.LeaveObj.endDate == this.exDate) {
+      this.FilteredLeaves = this.AllLeaves.filter(ex => ex.start > this.LeaveObj.startdate && ex.start < this.LeaveObj.endDate);
+    }
+    this.FilteredLeaves.forEach(element => {
+      this.LeaveStartDatelList = []
+      this.LeaveDayslList = []
+      this.LeaveAlternativeEmployeelList = []
+      this.LeaveStatuslList = []
+      this.LeaveleaveTypeList=[]
+      element.lstLeaveRequest.forEach(ele => {
+        if (ele.start) {
+          var LeaveDate = this.datePipe.transform(ele.start, "dd/MM/yyyy");
+          this.LeaveStartDatelList.push(LeaveDate.replace(",", "") + '\n\n');
+        }
+        if(ele.days)
+        {
+          this.LeaveDayslList.push((ele.days.toString().replace(",","") + `\n\n`));
+        }
+        if(ele.alternativeEmp.name)
+        {
+          this.LeaveAlternativeEmployeelList.push(ele.alternativeEmp.name.replace(",", "") + '\n\n');
+        }
+        if(ele.leaveType.name)
+        {
+          this.LeaveleaveTypeList.push(ele.leaveType.name.replace(",", "") + '\n\n');
+        }
+        if(ele.status)
+        {
+          this.LeaveStatuslList.push(ele.status.replace(",", "") + '\n\n');
+        }
       });
+      row = [element.employeeName, element.professionName,  this.LeaveStartDatelList, this.LeaveDayslList, this.LeaveAlternativeEmployeelList, this.LeaveleaveTypeList, this.LeaveStatuslList];
+      rows.push(row);
+    });
     //row = [this.FilteredLeaves, { startY: 50, styles: { font: 'ARIALUNI', colSpan: 8 } }];
     (doc as any).autoTable(col, rows, { startY: 50, styles: { font: 'ARIALUNI' } });
     doc.save('leave.pdf');
@@ -136,20 +174,21 @@ export class ReportLeavesComponent implements OnInit {
     if (this.ProfID != 0 && this.EmpID != 0) {
       this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
-          this.FilteredLeaves=data
+          this.FilteredLeaves = data
         },
         error => console.log(error)
       )
     }
     if (this.ProfID != 0 && this.EmpID != 0 && (this.LeaveObj.startdate != this.exDate && this.LeaveObj.endDate != this.exDate)) {
-      this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeIdAndDate(this.ProfID, this.EmpID,this.LeaveObj.startdate, this.LeaveObj.endDate).subscribe(
+      this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeIdAndDate(this.ProfID, this.EmpID, this.LeaveObj.startdate, this.LeaveObj.endDate).subscribe(
         data => {
-          this.FilteredLeaves=data
+          this.FilteredLeaves = data
         },
         error => console.log(error)
-      )    }
+      )
+    }
     if (this.LeaveObj.startdate == this.exDate && this.LeaveObj.endDate == this.exDate) {
-        this.FilteredLeaves = this.AllLeaves.filter(ex => ex.start > this.LeaveObj.startdate && ex.start < this.LeaveObj.endDate);
+      this.FilteredLeaves = this.AllLeaves.filter(ex => ex.start > this.LeaveObj.startdate && ex.start < this.LeaveObj.endDate);
     }
   }
 }

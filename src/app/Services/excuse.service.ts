@@ -41,6 +41,10 @@ export class ExcuseService {
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses`,this.httpOptions)
   }
+  AllExcusesGrouped():Observable<any>
+  {
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcusesForReport`,this.httpOptions)
+  }
   GetExcuseByEmployeeId(EmployeeId):Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcuseByEmployeeId/`+EmployeeId,this.httpOptions)

@@ -74,11 +74,11 @@
                 <th pSortableColumn="profession"><span [translate]="'HR.Profession Name'"></span>
                     <p-sortIcon field="profession"></p-sortIcon>
                 </th>
-                <th pSortableColumn="date"><span [translate]="'HR.Applied On'"></span>
-                    <p-sortIcon field="date"></p-sortIcon>
-                </th>
                 <th pSortableColumn="start"><span [translate]="'HR.Start'"></span>
                     <p-sortIcon field="start"></p-sortIcon>
+                </th>
+                <th pSortableColumn="leaveType"><span [translate]="'HR.Leave Type'"></span>
+                    <p-sortIcon field="leaveType"></p-sortIcon>
                 </th>
                 <th pSortableColumn="days" style="width: 9%"><span [translate]="'HR.Days'"></span>
                     <p-sortIcon field="days"></p-sortIcon>
@@ -92,27 +92,51 @@
         <ng-template pTemplate="body" let-AllLeaves>
             <tr style="height: 5px !important;font-size: 17px;">
                 <td>{{AllLeaves.employeeName}}</td>
-                <td>{{AllLeaves.profession}}</td>
-                <td>{{AllLeaves.date | date :'dd-MM-yyyy'}}</td>
-                <td>{{AllLeaves.start | date :'dd-MM-yyyy'}}</td>
-                <td>{{AllLeaves.days}}</td>
-                <td>{{AllLeaves.alternativeEmp}}</td>
-                <td id="status" *ngIf="AllLeaves.status=='approved'">
-                    <div style="cursor:unset;" class="btn btn-success">
-                        {{'HR.Approved' | translate}}
-                    </div>
+                <td>{{AllLeaves.professionName}}</td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                          <td><div style="padding-bottom: 10px;">{{i.start | date :'dd-MM-yyyy'}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 </td>
-                <td id="status" *ngIf="AllLeaves.status=='disapproved'">
-                    <div style="cursor:unset;" class="btn btn-danger">
-                        {{'HR.Rejected' | translate}}
-
-                    </div>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                          <td><div style="padding-bottom: 10px;">{{i.leaveType.name}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 </td>
-                <td id="status" *ngIf="AllLeaves.status=='pending'">
-                    <div style="cursor:unset;" class="btn btn-warning">
-                        {{'HR.Pending' | translate}}
-
-                    </div>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                          <td><div style="padding-bottom: 10px;">{{i.days}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                          <td><div style="padding-bottom: 10px;">{{i.alternativeEmp.name}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                          <td><div style="padding-bottom: 10px;">{{i.status}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 </td>
             </tr>
         </ng-template>
@@ -170,25 +194,41 @@
             <tr style="height: 5px !important;font-size: 17px;text-align: inherit;">
                 <td style="text-align: inherit;">{{Excuse.professionName}}</td>
                 <td style="text-align: inherit;">{{Excuse.employeeName}}</td>
-                <td style="text-align: inherit;">{{Excuse.date | date :'dd-MM-yyyy'}}</td>
-                <td style="text-align: inherit;">{{Excuse.time}}</td>
-                <td style="text-align: inherit;">{{Excuse.hours}}</td>
-                <td id="status" *ngIf="Excuse.approved=='approved'" style="text-align: inherit;">
-                    <div style="cursor:unset;" class="btn btn-success">
-                        {{'HR.Approved' | translate}}
-                    </div>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of Excuse.lstExcuse" >
+                          <td><div style="padding-bottom: 10px;">{{i.date | date :'dd-MM-yyyy'}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 </td>
-                <td id="status" *ngIf="Excuse.approved=='disapproved' " style="text-align: inherit;">
-                    <div style="cursor:unset;" class="btn btn-danger">
-                        {{'HR.Rejected' | translate}}
-
-                    </div>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of Excuse.lstExcuse" >
+                          <td><div style="padding-bottom: 10px;">{{i.time}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 </td>
-                <td id="status" *ngIf="Excuse.approved=='pending' " style="text-align: inherit;">
-                    <div style="cursor:unset;" class="btn btn-warning">
-                        {{'HR.Pending' | translate}}
-
-                    </div>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of Excuse.lstExcuse" >
+                          <td><div style="padding-bottom: 10px;">{{i.hours}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
+                </td>
+                <td>
+                    <table>
+                        <tbody>
+                        <tr *ngFor="let i of Excuse.lstExcuse" >
+                          <td><div style="padding-bottom: 10px;">{{i.approved}}</div></td>
+                        </tr>
+                      </tbody>
+                      </table>
                 </td>
             </tr>
         </ng-template>

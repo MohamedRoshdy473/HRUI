@@ -17,7 +17,7 @@ export class ReportAttendanceComponent implements OnInit {
   AllEmployeesByProfession: any;
   AllProfessions: any;
   AttendanceObj: any;
-  EmpID: any;
+  EmpID: any=0;
   ProfID: any;
   AttendanceDate: string;
   ALMostakbaltranslate: any;
@@ -56,9 +56,14 @@ export class ReportAttendanceComponent implements OnInit {
     console.log("this.exDate", this.exDate)
   }
   onChange(ProfessionId) {
+    console.log("ProfessionId", ProfessionId)
+    this.AllEmployeesByProfession = []
+    this.EmpID = 0
     this.ProfID = ProfessionId;
     this.EmpService.GetAllEmployeesByProfession(ProfessionId).subscribe(
-      data => { this.AllEmployeesByProfession = data },
+      data => {
+        this.AllEmployeesByProfession = data
+      },
       error => console.log(error)
     )
   }
@@ -94,12 +99,16 @@ export class ReportAttendanceComponent implements OnInit {
     var col = [this.emptranslate, this.Arrivaltranslate, this.Departuretranslate];
     var rows = [];
     var row = [];
-    if (this.ProfID != undefined) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
+
       this.AttService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
-        this.FilteredAttendance = res
+       {
+         this.FilteredAttendance = res
+        this.EmpID-=0
+       } 
       )
     }
-    if (this.ProfID != undefined && this.EmpID != undefined) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
       this.AttService.GetAttendancesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(res =>
         this.FilteredAttendance = res
       )
@@ -142,12 +151,13 @@ export class ReportAttendanceComponent implements OnInit {
   Filter() {
     console.log("this.ProfID ", this.ProfID);
     console.log("this.EmpID ", this.EmpID);
-    if (this.ProfID != undefined) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
+
       this.AttService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
         this.FilteredAttendance = res
       )
     }
-    if (this.ProfID != undefined && this.EmpID != undefined) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
       this.AttService.GetAttendancesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(res =>
         this.FilteredAttendance = res
       )

@@ -14,8 +14,8 @@
         <br>
         <div class="col-md-3">
             <span  for="Employee" [translate]="'HR.Employee Name'"></span>
-            <select (change)="onChangeEmp($event.target.value)" [(ngModel)]="LeaveObj.employeeId" name="Employee" class="form-control">
-                <option value="" selected disabled >{{'HR.Employee Name'|translate}}</option>
+            <select (change)="onChangeEmp($event.target.value)" [value]="0" [(ngModel)]="LeaveObj.employeeId" name="Employee" class="form-control">
+                <option value="0" selected disabled >{{'HR.Employee Name'|translate}}</option>
                 <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
             </select>
         </div>
@@ -83,14 +83,14 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         <th [translate]="'HR.Status'"></th>
     </tr>
 </ng-template>
-<ng-template pTemplate="body" let-AllLeaves>
+<ng-template pTemplate="body" let-LeaveObj>
     <tr style="height: 5px !important;font-size: 17px;">
-        <td>{{AllLeaves.employeeName}}</td>
-        <td>{{AllLeaves.professionName}}</td>
+        <td>{{LeaveObj.employeeName}}</td>
+        <td>{{LeaveObj.professionName}}</td>
         <td>
             <table>
                 <tbody>
-                <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                <tr *ngFor="let i of LeaveObj.lstLeaveRequest" >
                   <td><div style="padding-bottom: 10px;">{{i.start | date :'dd-MM-yyyy'}}</div></td>
                 </tr>
               </tbody>
@@ -99,7 +99,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         <td>
             <table>
                 <tbody>
-                <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                <tr *ngFor="let i of LeaveObj.lstLeaveRequest" >
                   <td><div style="padding-bottom: 10px;">{{i.leaveType.name}}</div></td>
                 </tr>
               </tbody>
@@ -108,7 +108,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         <td>
             <table>
                 <tbody>
-                <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                <tr *ngFor="let i of LeaveObj.lstLeaveRequest" >
                   <td><div style="padding-bottom: 10px;">{{i.days}}</div></td>
                 </tr>
               </tbody>
@@ -117,7 +117,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         <td>
             <table>
                 <tbody>
-                <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                <tr *ngFor="let i of LeaveObj.lstLeaveRequest" >
                   <td><div style="padding-bottom: 10px;">{{i.alternativeEmp.name}}</div></td>
                 </tr>
               </tbody>
@@ -126,7 +126,7 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         <td>
             <table>
                 <tbody>
-                <tr *ngFor="let i of AllLeaves.lstLeaveRequest" >
+                <tr *ngFor="let i of LeaveObj.lstLeaveRequest" >
                   <td><div style="padding-bottom: 10px;">{{i.status}}</div></td>
                 </tr>
               </tbody>

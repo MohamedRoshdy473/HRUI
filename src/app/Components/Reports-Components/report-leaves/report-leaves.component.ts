@@ -18,7 +18,7 @@ export class ReportLeavesComponent implements OnInit {
   AllEmployeesByProfession: any;
   AllProfessions: any;
   LeaveObj: any;
-  EmpID: any;
+  EmpID: any=0;
   ProfID: any;
   exDate: string;
   ALMostakbaltranslate: any;
@@ -43,7 +43,7 @@ export class ReportLeavesComponent implements OnInit {
     this.LeaveStartDatelList = []
     this.LeaveDayslList = []
     this.LeaveAlternativeEmployeelList = []
-    this.LeaveleaveTypeList=[]
+    this.LeaveleaveTypeList = []
     this.LeaveStatuslList = []
     this.LeaveObj = {
       Comment: '', AlternativeAddress: '', Status: 'pending',
@@ -63,9 +63,14 @@ export class ReportLeavesComponent implements OnInit {
     this.exDate = this.datePipe.transform(new Date(), "dd/MM/yyyy")
   }
   onChange(ProfessionId) {
+    console.log("ProfessionId", ProfessionId)
+    this.AllEmployeesByProfession = []
+    this.EmpID = 0
     this.ProfID = ProfessionId;
     this.EmpService.GetAllEmployeesByProfession(ProfessionId).subscribe(
-      data => { this.AllEmployeesByProfession = data },
+      data => {
+        this.AllEmployeesByProfession = data
+      },
       error => console.log(error)
     )
   }
@@ -104,16 +109,22 @@ export class ReportLeavesComponent implements OnInit {
     var rows = [];
     var row = [];
     //var type = this.Allexcuses.reduce((typeName, el) =>  el.employeeName,'Ekram');
-    if (this.ProfID != 0) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
+      console.log("ProfID", this.ProfID)
       this.Leaveservice.GetLeaveRequestsByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredLeaves = data },
+        data => { this.FilteredLeaves = data 
+          this.EmpID=0
+        
+        },
         error => console.log(error)
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
+      console.log("ProfID ,EmpID", this.ProfID, this.EmpID)
       this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
           this.FilteredLeaves = data
+          this.EmpID=0
         },
         error => console.log(error)
       )
@@ -134,47 +145,51 @@ export class ReportLeavesComponent implements OnInit {
       this.LeaveDayslList = []
       this.LeaveAlternativeEmployeelList = []
       this.LeaveStatuslList = []
-      this.LeaveleaveTypeList=[]
+      this.LeaveleaveTypeList = []
       element.lstLeaveRequest.forEach(ele => {
         if (ele.start) {
           var LeaveDate = this.datePipe.transform(ele.start, "dd/MM/yyyy");
           this.LeaveStartDatelList.push(LeaveDate.replace(",", "") + '\n\n');
         }
-        if(ele.days)
-        {
-          this.LeaveDayslList.push((ele.days.toString().replace(",","") + `\n\n`));
+        if (ele.days) {
+          this.LeaveDayslList.push((ele.days.toString().replace(",", "") + `\n\n`));
         }
-        if(ele.alternativeEmp.name)
-        {
+        if (ele.alternativeEmp.name) {
           this.LeaveAlternativeEmployeelList.push(ele.alternativeEmp.name.replace(",", "") + '\n\n');
         }
-        if(ele.leaveType.name)
-        {
+        if (ele.leaveType.name) {
           this.LeaveleaveTypeList.push(ele.leaveType.name.replace(",", "") + '\n\n');
         }
-        if(ele.status)
-        {
+        if (ele.status) {
           this.LeaveStatuslList.push(ele.status.replace(",", "") + '\n\n');
         }
       });
-      row = [element.employeeName, element.professionName,  this.LeaveStartDatelList, this.LeaveDayslList, this.LeaveAlternativeEmployeelList, this.LeaveleaveTypeList, this.LeaveStatuslList];
+      row = [element.employeeName, element.professionName, this.LeaveStartDatelList, this.LeaveDayslList, this.LeaveAlternativeEmployeelList, this.LeaveleaveTypeList, this.LeaveStatuslList];
       rows.push(row);
     });
     //row = [this.FilteredLeaves, { startY: 50, styles: { font: 'ARIALUNI', colSpan: 8 } }];
     (doc as any).autoTable(col, rows, { startY: 50, styles: { font: 'ARIALUNI' } });
     doc.save('leave.pdf');
   }
+
   Filter() {
-    if (this.ProfID != 0) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
+      console.log("ProfID", this.ProfID)
       this.Leaveservice.GetLeaveRequestsByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredLeaves = data },
+        data => {
+          this.FilteredLeaves = data
+          this.EmpID=0
+        },
         error => console.log(error)
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
+      console.log("ProfID ", this.ProfID, "EmpID", this.EmpID)
+
       this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
           this.FilteredLeaves = data
+          console.log("data of two", data)
         },
         error => console.log(error)
       )

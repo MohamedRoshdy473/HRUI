@@ -14,9 +14,9 @@
             <br>
             <div class="col-md-3">
                 <span for="Employee" [translate]="'HR.Employee Name'"></span>
-                <select (change)="onChangeEmp($event)" [(ngModel)]="EmpReportObj.employeeId"
+                <select (change)="onChangeEmp($event)" [value]="0" [(ngModel)]="EmpReportObj.employeeId"
                     name="Employee" class="form-control">Employee
-                    <option value="" selected disabled>{{'HR.Employee Name'|translate}}</option>
+                    <option value="0" selected disabled>{{'HR.Employee Name'|translate}}</option>
                     <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
                 </select>
             </div>

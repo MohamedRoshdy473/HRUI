@@ -33,7 +33,7 @@ export class EmployeeFullReportComponent implements OnInit {
   Statustranslate: any;
   Excusestranslate: any;
   ALMostakbaltranslate: any;
-  EmpID: number
+  EmpID: number=0
   ProfID: number
   AllLeaves: any[];
   FilteredLeaves: any;
@@ -80,12 +80,11 @@ export class EmployeeFullReportComponent implements OnInit {
     this.ExcusesHourlList = []
     this.ExcusesStatuslList = []
     
-    this.LeaveDatelList = []
     this.LeaveStartDatelList = []
     this.LeaveDayslList = []
     this.LeaveAlternativeEmployeelList = []
-    this.LeaveleaveTypeList=[]
     this.LeaveStatuslList = []
+    this.LeaveleaveTypeList=[]
 
     this.professionService.getAllProfession().subscribe(
       data => { this.AllProfessions = data, console.log("AllProfessions", data) },
@@ -93,9 +92,14 @@ export class EmployeeFullReportComponent implements OnInit {
     );
   }
   onChange(ProfessionId) {
+    console.log("ProfessionId", ProfessionId)
+    this.AllEmployeesByProfession = []
+    this.EmpID = undefined
     this.ProfID = ProfessionId;
     this.EmpService.GetAllEmployeesByProfession(ProfessionId).subscribe(
-      data => { this.AllEmployeesByProfession = data },
+      data => {
+        this.AllEmployeesByProfession = data
+      },
       error => console.log(error)
     )
   }
@@ -150,11 +154,11 @@ export class EmployeeFullReportComponent implements OnInit {
     doc.text(this.ALMostakbaltranslate, 50, 25, { "align": "left" });
 
 
-   var colExcuses = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.Datetranslate, this.Timetetranslate, this.Hourstranslate, this.Statustranslate];
+   var colExcuses = [this.emptranslate, this.Professiontranslate, this.Datetranslate, this.Timetetranslate, this.Hourstranslate, this.Statustranslate];
     let headExecuses = [[{content: "Execuses", colSpan: 7, styles: { fillColor:  [255, 255, 255],textColor :[0,0,0] ,fontSize:14 }}],colExcuses];
 
 
-    var colLeave = [this.Idtranslate, this.emptranslate, this.Professiontranslate, this.StartDatetranslate, this.Daystranslate, this.AlternativeEmployeetranslate,this.LeaveTypetranslate, this.Statustranslate];
+    var colLeave = [this.emptranslate, this.Professiontranslate, this.StartDatetranslate, this.Daystranslate, this.AlternativeEmployeetranslate,this.LeaveTypetranslate, this.Statustranslate];
     let headLeaves = [[{content: "Leaves", colSpan: 8, styles: { fillColor:  [255, 255, 255],textColor :[0,0,0] ,fontSize:14 }}],colLeave  ];
 
    
@@ -171,9 +175,11 @@ export class EmployeeFullReportComponent implements OnInit {
     var rowAttendance = [];
     var rowsAttendance = [];
     //Filteration
-    if (this.ProfID != 0) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
       this.ExcuseService.GetExcusesByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredExcuses = data },
+        data => { this.FilteredExcuses = data 
+          this.EmpID=0
+        },
         error => console.log(error)
       )
       this.Leaveservice.GetLeaveRequestsByProfessionId(this.ProfID).subscribe(
@@ -251,7 +257,7 @@ export class EmployeeFullReportComponent implements OnInit {
         }
       });
 
-      rowExcuse = [element.id, element.employeeName, element.professionName, this.ExcusesDatelList, this.ExcusesTimelList,this.ExcusesHourlList ,this.ExcusesStatuslList ];
+      rowExcuse = [element.employeeName, element.professionName, this.ExcusesDatelList, this.ExcusesTimelList,this.ExcusesHourlList ,this.ExcusesStatuslList ];
       rowsExcuse.push(rowExcuse);
     });
 
@@ -270,8 +276,9 @@ export class EmployeeFullReportComponent implements OnInit {
         {
           this.LeaveDayslList.push((ele.days.toString().replace(",","") + `\n\n`));
         }
-        if(ele.alternativeEmp.name)
+        if(ele.alternativeEmp)
         {
+          console.log("ele.alternativeEmp.name",ele.alternativeEmp.name)
           this.LeaveAlternativeEmployeelList.push(ele.alternativeEmp.name.replace(",", "") + '\n\n');
         }
         if(ele.leaveType.name)
@@ -339,7 +346,7 @@ export class EmployeeFullReportComponent implements OnInit {
   }
   Filter()
   {
-    if (this.ProfID != 0) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
       this.ExcuseService.GetExcusesByProfessionId(this.ProfID).subscribe(
         data => { this.FilteredExcuses = data },
         error => console.log(error)
@@ -352,7 +359,7 @@ export class EmployeeFullReportComponent implements OnInit {
         this.FilteredAttendance = res
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
       this.ExcuseService.GetExcusesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
           this.FilteredExcuses = data

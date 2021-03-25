@@ -29,7 +29,7 @@ export class ReportExcuseComponent implements OnInit {
   Excusestranslate: any;
   ALMostakbaltranslate: any;
   lang: string;
-  EmpID: number
+  EmpID: number=0
   ProfID: number
   //type: any
   exDate: any;
@@ -60,9 +60,14 @@ export class ReportExcuseComponent implements OnInit {
     );
   }
   onChange(ProfessionId) {
+    console.log("ProfessionId", ProfessionId)
+    this.AllEmployeesByProfession = []
+    this.EmpID = 0
     this.ProfID = ProfessionId;
     this.EmpService.GetAllEmployeesByProfession(ProfessionId).subscribe(
-      data => { this.AllEmployeesByProfession = data },
+      data => {
+        this.AllEmployeesByProfession = data
+      },
       error => console.log(error)
     )
   }
@@ -102,13 +107,14 @@ export class ReportExcuseComponent implements OnInit {
     var row = [];
     console.log("this.NewExcuse.employeeId", this.NewExcuse.employeeId);
     //Filteration
-    if (this.ProfID != 0) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
       this.ExcuseService.GetExcusesByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredExcuses = data },
+        data => { this.FilteredExcuses = data 
+          this.EmpID=0},
         error => console.log(error)
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
       this.ExcuseService.GetExcusesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
           this.FilteredExcuses = data
@@ -163,13 +169,15 @@ export class ReportExcuseComponent implements OnInit {
   Filter() {
     //console.log("exDate", exDate)
 
-    if (this.ProfID != 0) {
+    if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
       this.ExcuseService.GetExcusesByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredExcuses = data },
+        data => { this.FilteredExcuses = data
+          this.EmpID=0
+         },
         error => console.log(error)
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
       this.ExcuseService.GetExcusesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
           this.FilteredExcuses = data

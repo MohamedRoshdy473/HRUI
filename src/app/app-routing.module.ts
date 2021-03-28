@@ -78,11 +78,15 @@ import { ReportExcuseComponent } from './Components/Reports-Components/report-ex
 import { ReportLeavesComponent } from './Components/Reports-Components/report-leaves/report-leaves.component';
 import { EmployeeFullReportComponent } from './Components/Reports-Components/employee-full-report/employee-full-report.component';
 import { ReportAttendanceComponent } from './Components/Reports-Components/report-attendance/report-attendance.component';
+import { ForgetPasswordComponent } from './Components/AuthComponents/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './Components/AuthComponents/reset-password/reset-password.component';
 
 
 const routes: Routes = [
   {path:'Register' , component:RegisterComponent  },
   {path:'login',component:LoginComponent},
+  { path: 'Forgotpassword', component: ForgetPasswordComponent },
+  { path: 'Resetpassword', component: ResetPasswordComponent },
   { path: 'changPaswword', component:ChangePasswordComponent },
   {path:'',component:SideNavComponent,canActivate:[AuthGuard] ,children: [
     { path: 'employee', component:DisplayAllEmployeesComponent },

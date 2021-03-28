@@ -14,9 +14,9 @@
             <br>
             <div class="col-md-3">
                 <span for="Employee" [translate]="'HR.Employee Name'"></span>
-                <select (change)="onChangeEmp($event)" [value]="0" [(ngModel)]="EmpReportObj.employeeId"
+                <select (change)="onChangeEmp($event)" [(ngModel)]="EmpReportObj.employeeId"
                     name="Employee" class="form-control">Employee
-                    <option value="0" selected disabled>{{'HR.Employee Name'|translate}}</option>
+                    <option  selected disabled>{{'HR.Employee Name'|translate}}</option>
                     <option *ngFor="let item of AllEmployeesByProfession" value="{{item.id}}">{{item.name}}</option>
                 </select>
             </div>
@@ -261,8 +261,8 @@
             <th pSortableColumn="employeeName" style="text-align: inherit;"><span [translate]="'HR.Employee Name'"></span>
                 <p-sortIcon field="employeeName"></p-sortIcon>
             </th>
-            <th>Arrival</th>
-            <th>Departure</th>
+            <th [translate]="'HR.Arrival'"></th>
+            <th [translate]="'HR.Departure'"></th>
         </tr>
     </ng-template>
     <ng-template pTemplate="body" let-attendance>

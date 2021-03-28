@@ -1,15 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { IUser } from 'src/app/Data_Types/iuser'
 import { Router } from '@angular/router';
-
+import {ForgotPassword} from 'src/app/Data_Types/ForgotPassword';
+import {ResetPassword} from 'src/app/Data_Types/ResetPassword'
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private createCompleteRoute = (route: string, envAddress: string) => {
+    return `${envAddress}/${route}`;
+  }
 
    httpOptions = {headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -21,7 +25,12 @@ export class AuthService {
   constructor(private httpclient: HttpClient,private router : Router) {
     
   }
-
+  public forgotPassword = (route: string, body: ForgotPassword) => {
+    return this.httpclient.post(this.createCompleteRoute(route,environment.urlAddress), body);
+  }
+  public resetPassword = (route: string, body: ResetPassword) => {
+    return this.httpclient.post(this.createCompleteRoute(route, environment.urlAddress), body);
+  }
   login(user:IUser){
     //  this.email=user.email;
     //  this.password=user.password;

@@ -66,8 +66,8 @@ currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         <th pSortableColumn="employeeName" style="text-align: inherit;"><span [translate]="'HR.Employee Name'"></span>
             <p-sortIcon field="employeeName"></p-sortIcon>
         </th>
-        <th>Arrival</th>
-        <th>Departure</th>
+        <th [translate]="'HR.Arrival'"></th>
+        <th [translate]="'HR.Departure'"></th>
     </tr>
 </ng-template>
 <ng-template pTemplate="body" let-attendance>

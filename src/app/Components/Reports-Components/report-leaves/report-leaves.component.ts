@@ -112,19 +112,20 @@ export class ReportLeavesComponent implements OnInit {
     if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
       console.log("ProfID", this.ProfID)
       this.Leaveservice.GetLeaveRequestsByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredLeaves = data 
+        data => {
+          this.FilteredLeaves = data
           this.EmpID=0
-        
         },
         error => console.log(error)
       )
     }
     if ((this.EmpID != undefined || this.EmpID != 0)) {
-      console.log("ProfID ,EmpID", this.ProfID, this.EmpID)
+      console.log("ProfID ", this.ProfID, "EmpID", this.EmpID)
+
       this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
-          this.FilteredLeaves = data
-          this.EmpID=0
+          this.FilteredLeaves = data,
+          console.log("data of two", data)
         },
         error => console.log(error)
       )
@@ -188,7 +189,7 @@ export class ReportLeavesComponent implements OnInit {
 
       this.Leaveservice.GetLeaveRequestsByProfessionIdEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
-          this.FilteredLeaves = data
+          this.FilteredLeaves = data,
           console.log("data of two", data)
         },
         error => console.log(error)

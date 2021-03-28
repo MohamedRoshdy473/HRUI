@@ -166,6 +166,8 @@ import { EmployeeFullReportComponent } from './Components/Reports-Components/emp
 import { ReportAttendanceComponent } from './Components/Reports-Components/report-attendance/report-attendance.component';
 import { CustomDatePipe } from './Pipes/custom-date.pipe';
 import { CoursesComponent } from './Components/CourseComponents/Courses/courses.component';
+import { ForgetPasswordComponent } from './Components/AuthComponents/forget-password/forget-password.component';
+import { ResetPasswordComponent } from './Components/AuthComponents/reset-password/reset-password.component';
 
 
 
@@ -261,6 +263,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     EmployeeFullReportComponent,
     ReportAttendanceComponent,
     CustomDatePipe,
+    ForgetPasswordComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [

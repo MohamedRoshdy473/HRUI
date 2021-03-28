@@ -102,10 +102,9 @@ export class ReportAttendanceComponent implements OnInit {
     if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
 
       this.AttService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
-       {
-         this.FilteredAttendance = res
-        this.EmpID-=0
-       } 
+        {this.FilteredAttendance = res,
+          this.EmpID=0
+        }
       )
     }
     if ((this.EmpID != undefined || this.EmpID != 0)) {
@@ -154,7 +153,9 @@ export class ReportAttendanceComponent implements OnInit {
     if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
 
       this.AttService.GetAttendancesByProfessionId(this.ProfID).subscribe(res =>
-        this.FilteredAttendance = res
+        {this.FilteredAttendance = res,
+          this.EmpID=0
+        }
       )
     }
     if ((this.EmpID != undefined || this.EmpID != 0)) {

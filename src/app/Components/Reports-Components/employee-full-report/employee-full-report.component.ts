@@ -177,9 +177,7 @@ export class EmployeeFullReportComponent implements OnInit {
     //Filteration
     if ((this.ProfID != undefined || this.ProfID != 0) && (this.EmpID == undefined || this.EmpID == 0)) {
       this.ExcuseService.GetExcusesByProfessionId(this.ProfID).subscribe(
-        data => { this.FilteredExcuses = data 
-          this.EmpID=0
-        },
+        data => { this.FilteredExcuses = data },
         error => console.log(error)
       )
       this.Leaveservice.GetLeaveRequestsByProfessionId(this.ProfID).subscribe(
@@ -190,7 +188,7 @@ export class EmployeeFullReportComponent implements OnInit {
         this.FilteredAttendance = res
       )
     }
-    if (this.ProfID != 0 && this.EmpID != 0) {
+    if ((this.EmpID != undefined || this.EmpID != 0)) {
       this.ExcuseService.GetExcusesByProfessionIdAndEmployeeId(this.ProfID, this.EmpID).subscribe(
         data => {
           this.FilteredExcuses = data

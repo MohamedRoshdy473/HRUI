@@ -9,10 +9,10 @@ export const environment = {
     employees: 'http://localhost:50652/api/Employees/',
     uploadImage: 'http://localhost:50652/api/EmployeeDocuments/uploadfile/',
     GetEmployeeDocumentsByEmployeeId:"http://localhost:50652/api/EmployeeDocuments/GetEmployeeDocumentsByEmployeeId/",
-    getDocname:'http://localhost:50652/api/EmployeeDocuments/getImage'
+    getDocname:'http://localhost:50652/api/EmployeeDocuments/getImage',
+    urlAddress:'http://localhost:50652'
 
-
-
+//   mhmdrshdy29@gmail.com
  // ApiURL:'http://10.10.0.129/HRWeb/api'
 
 };

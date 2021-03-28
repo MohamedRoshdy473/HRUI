@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/Services/auth.service';
 import {PasswordConfirmationValidatorService} from 'src/app/Customvalidators/password-confirmation-validator.service'
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ResetPassword } from 'src/app/Data_Types/ResetPassword';
 @Component({
   selector: 'app-reset-password',
@@ -17,32 +17,8 @@ export class ResetPasswordComponent implements OnInit {
   public errorMessage: string;
   public _token: string;
   public _email: string;
-
-  private previousUrl: string = undefined;
-  private currentUrl: string = undefined;
-
-
-
   constructor(private _authService: AuthService, private _passConfValidator: PasswordConfirmationValidatorService, 
-    private _route: ActivatedRoute,private router : Router) { 
-
-     
-this.currentUrl = this.router.url;
-    router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {        
-        this.previousUrl = this.currentUrl;
-        this.currentUrl = event.url;
-
-        console.log(   this.previousUrl );
-      };
-    });
-
-
-
-
-
-
-    }
+    private _route: ActivatedRoute) { }
  
     ngOnInit(): void {
       this.resetPasswordForm = new FormGroup({
@@ -52,13 +28,10 @@ this.currentUrl = this.router.url;
       this.resetPasswordForm.get('confirm').setValidators([Validators.required,
         this._passConfValidator.validateConfirmPassword(this.resetPasswordForm.get('password'))]);
       
-        // this._token = this._route.snapshot.queryParamMap['token'];
-        // this._email = this._route.snapshot.queryParams['email'];
-        // console.log("this._token",this._token) 
-     
-
-       
-       
+        this._token = this._route.snapshot.queryParams['token'];
+        this._email = this._route.snapshot.queryParams['email'];
+        console.log("this._token",this._token) 
+         console.log("this._token",this._token)
     }
   
     public validateControl = (controlName: string) => {

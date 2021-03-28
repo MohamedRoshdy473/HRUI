@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/Services/auth.service';
 import {PasswordConfirmationValidatorService} from 'src/app/Customvalidators/password-confirmation-validator.service'
 import { ActivatedRoute } from '@angular/router';
-import { ResetPassword } from 'src/app/Data_Types/ResetPassword';
+import { ResetPasswordDTO } from 'src/app/Data_Types/ResetPasswordDTO';
 @Component({
   selector: 'app-reset-password',
   templateUrl: './reset-password.component.html',
@@ -31,7 +31,7 @@ export class ResetPasswordComponent implements OnInit {
         this._token = this._route.snapshot.queryParams['token'];
         this._email = this._route.snapshot.queryParams['email'];
         console.log("this._token",this._token) 
-         console.log("this._token",this._token)
+         console.log("this._email",this._email)
     }
   
     public validateControl = (controlName: string) => {
@@ -46,7 +46,7 @@ export class ResetPasswordComponent implements OnInit {
       this.showError = this.showSuccess = false;
   
       const resetPass = { ... resetPasswordFormValue };
-      const resetPassDto: ResetPassword = {
+      const resetPassDto: ResetPasswordDTO = {
         password: resetPass.password,
         confirmPassword: resetPass.confirm,
         token: this._token,

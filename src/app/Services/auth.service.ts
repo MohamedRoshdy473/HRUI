@@ -6,7 +6,7 @@ import { InnerSubscriber } from 'rxjs/internal/InnerSubscriber';
 import { IUser } from 'src/app/Data_Types/iuser'
 import { Router } from '@angular/router';
 import {ForgotPassword} from 'src/app/Data_Types/ForgotPassword';
-import {ResetPassword} from 'src/app/Data_Types/ResetPassword'
+import {ResetPasswordDTO} from 'src/app/Data_Types/ResetPasswordDTO'
 @Injectable({
   providedIn: 'root'
 })
@@ -28,7 +28,7 @@ export class AuthService {
   public forgotPassword = (route: string, body: ForgotPassword) => {
     return this.httpclient.post(this.createCompleteRoute(route,environment.urlAddress), body);
   }
-  public resetPassword = (route: string, body: ResetPassword) => {
+  public resetPassword = (route: string, body: ResetPasswordDTO) => {
     return this.httpclient.post(this.createCompleteRoute(route, environment.urlAddress), body);
   }
   login(user:IUser){

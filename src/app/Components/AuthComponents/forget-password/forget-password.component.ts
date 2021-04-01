@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ForgotPassword } from 'src/app/Data_Types/ForgotPassword';
 import { AuthService } from 'src/app/Services/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-forget-password',
@@ -14,7 +16,9 @@ export class ForgetPasswordComponent implements OnInit {
   public errorMessage: string;
   public showSuccess: boolean;
   public showError: boolean;
-  constructor(private _authService: AuthService) { }
+  public _token: string;
+  public _email: string;
+  constructor(private _authService: AuthService,private _route: Router) { }
   ngOnInit(): void {
     this.forgotPasswordForm = new FormGroup({
       email: new FormControl("", [Validators.required])
@@ -29,10 +33,15 @@ export class ForgetPasswordComponent implements OnInit {
   public forgotPassword = (forgotPasswordFormValue) => {
     this.showError = this.showSuccess = false;
     const forgotPass = { ...forgotPasswordFormValue };
+    var strUrl = `${environment.urlAddress4200}` + "Resetpassword?"
     const forgotPassDto: ForgotPassword = {
       email: forgotPass.email,
-      clientURI: 'http://localhost:4200/#/Resetpassword'
+     // clientURI: 'http://localhost:4200/#/Resetpassword'
+      clientURI:strUrl
+      
     }
+    console.log("clientURI",forgotPassDto.clientURI)
+   // console.log("forgotPassDto",forgotPassDto)
     this._authService.forgotPassword('api/Authenticate/ForgotPassword', forgotPassDto)
     .subscribe(_ => {
       this.showSuccess = true;

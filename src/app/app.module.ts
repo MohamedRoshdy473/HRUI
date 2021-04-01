@@ -168,6 +168,8 @@ import { CustomDatePipe } from './Pipes/custom-date.pipe';
 import { CoursesComponent } from './Components/CourseComponents/Courses/courses.component';
 import { ForgetPasswordComponent } from './Components/AuthComponents/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './Components/AuthComponents/reset-password/reset-password.component';
+import { ParentComponent } from './Components/InputAndOutput/parent/parent.component';
+import { ChildComponent } from './Components/InputAndOutput/child/child.component';
 
 
 
@@ -265,6 +267,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CustomDatePipe,
     ForgetPasswordComponent,
     ResetPasswordComponent,
+    ParentComponent,
+    ChildComponent,
 
   ],
   imports: [

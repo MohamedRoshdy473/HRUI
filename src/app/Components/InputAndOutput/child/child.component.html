@@ -1,0 +1,12 @@
+<div style="margin: 150px;">
+    <div style=" color: red; margin-bottom: 50px;">
+        <div>
+            Input Say
+        </div>
+ {{ childMessage }}
+</div>
+    <!-- <button (click)="sendMessage()">Send Message</button> -->
+
+    <label>Add an item: <input #newItem></label>
+    <button (click)="addNewItem(newItem.value)">Add to parent's list</button>
+</div>

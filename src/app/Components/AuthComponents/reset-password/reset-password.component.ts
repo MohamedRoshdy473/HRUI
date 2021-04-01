@@ -17,6 +17,8 @@ export class ResetPasswordComponent implements OnInit {
   public errorMessage: string;
   public _token: string;
   public _email: string;
+  fieldTextType: boolean;
+  repeatFieldTextType: boolean;
   constructor(private _authService: AuthService, private _passConfValidator: PasswordConfirmationValidatorService, 
     private _route: ActivatedRoute) { }
  
@@ -27,13 +29,18 @@ export class ResetPasswordComponent implements OnInit {
       });
       this.resetPasswordForm.get('confirm').setValidators([Validators.required,
         this._passConfValidator.validateConfirmPassword(this.resetPasswordForm.get('password'))]);
-      
+        //localStorage.getItem("clientURI");
         this._token = this._route.snapshot.queryParams['token'];
         this._email = this._route.snapshot.queryParams['email'];
         console.log("this._token",this._token) 
          console.log("this._email",this._email)
     }
-  
+    toggleFieldTextType() {
+      this.fieldTextType = !this.fieldTextType;
+    }
+    toggleRepeatFieldTextType() {
+      this.repeatFieldTextType = !this.repeatFieldTextType;
+    }
     public validateControl = (controlName: string) => {
       return this.resetPasswordForm.controls[controlName].invalid && this.resetPasswordForm.controls[controlName].touched
     }

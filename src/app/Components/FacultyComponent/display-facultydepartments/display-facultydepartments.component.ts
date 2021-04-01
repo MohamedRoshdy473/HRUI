@@ -35,6 +35,19 @@ export class DisplayFacultydepartmentsComponent implements OnInit {
       err => console.log(err)
     )
   }
+  onchangeUniversity($event) {
+    console.log("uni", $event.target.value)
+    this.facultyService.GetFacultiesByUniversityId($event.target.value).subscribe(
+      res => { this.lstFaculties = res; console.log("Faculties", this.lstFaculties) },
+      err => console.log(err)
+    )
+  }
+  onchangeFaculty($event) {
+    this.facultyDepartmentService.GetFacultyDepartmentsByFacultyId($event.target.value).subscribe(
+      res => { this.lstFacultyDepartments = res; console.log("FacultyDepartments", this.lstFacultyDepartments) },
+      err => console.log(err)
+    )
+  }
   showBasicDialog(id) {
     this.displayBasic = true;
     this.facultyDepartmentService.getFacultyDepartmentByID(id).subscribe(

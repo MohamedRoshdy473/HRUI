@@ -7,7 +7,7 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <p-toast position="bottom-center" key="bc"></p-toast>
 
-<p-toast position="bottom-center" key="c"  [baseZIndex]="5000">
+<p-toast position="bottom-center" key="c" [baseZIndex]="5000">
     <ng-template let-message pTemplate="message">
         <div class="p-flex p-flex-column" style="flex: 1">
             <div class="p-text-center">
@@ -26,34 +26,49 @@
         </div>
     </ng-template>
 </p-toast>
+
 <body>
-<div id="login">
-  <h3 class="text-center text-white pt-5">Login form</h3>
-  <div class="container">
-      <div id="login-row" class="row justify-content-center align-items-center">
-          <div id="login-column" class="col-md-6">
-              <div id="login-box" class="col-md-12">
-                  <form (submit)="onSubmit($event)" id="login-form" class="form" action="" method="post">
-                      <h3 class="text-center text-info">Login</h3>
-                      <div class="form-group">
-                          <label for="username" class="text-info">Username:</label><br>
-                          <input id="k" type="text" [(ngModel)]="user.email" name="username" id="username" class="form-control">
-                      </div>
-                      <div class="form-group">
-                          <label for="password" class="text-info">Password:</label><br>
-                          <input type="password" [(ngModel)]="user.password" name="password" id="password" class="form-control">
-                      </div>
-                      <div class="form-group">
-                          <label for="remember-me" class="text-info"><span>Forgot Psssword</span> <span><input id="remember-me" name="remember-me" type="checkbox"></span></label><br>
-                          <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
-                      </div>
-                      <div id="register-link" class="text-right">
-                        <a [routerLink]="['/Forgotpassword']"> Forgot Password </a>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+    <div id="login">
+        <h3 class="text-center text-white pt-5">Login form</h3>
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form (submit)="onSubmit($event)" id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">Login</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Username:</label><br>
+                                <input id="k" type="text" [(ngModel)]="user.email" name="username" id="username"
+                                    class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Password:</label><br>
+                                <div class="input-group">
+
+                                    <input [type]="fieldTextType ? 'text' : 'password'" [(ngModel)]="user.password"
+                                        name="password" id="password" class="form-control">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fa" [ngClass]="{
+                                  'fa-eye-slash': !fieldTextType,
+                                  'fa-eye': fieldTextType
+                                }" (click)="toggleFieldTextType()"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="remember-me" class="text-info"> <a [routerLink]="['/Forgotpassword']"> Forgot Password </a></label><br>
+                                <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
+
+
+

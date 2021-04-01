@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   roles: any;
   email: string;
   password: string;
+  fieldTextType: boolean;
+
   constructor(private authService: AuthService, private router: Router,private messageService: MessageService) {
     this.user = { email: '', username: '', password: '' }
   }
@@ -22,7 +24,9 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  toggleFieldTextType() {
+    this.fieldTextType = !this.fieldTextType;
+  }
   onSubmit(event) {
    // console.log(this.user)
     this.authService.login(this.user).subscribe(

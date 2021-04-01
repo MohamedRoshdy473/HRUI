@@ -23,6 +23,8 @@ export class ChangePasswordComponent implements OnInit {
   submitted = false;
   clientId: number;
   role: string;
+  fieldTextType: boolean;
+  repeatFieldTextType: boolean;
   constructor(private AuthService:AuthService,private router: Router,
     public formBuilder: FormBuilder,
     private empService: EmployeeService,) { }
@@ -52,6 +54,12 @@ export class ChangePasswordComponent implements OnInit {
           validator: MustMatch("password", "confirmPassword")
         }
       );
+    }
+    toggleFieldTextType() {
+      this.fieldTextType = !this.fieldTextType;
+    }
+    toggleRepeatFieldTextType() {
+      this.repeatFieldTextType = !this.repeatFieldTextType;
     }
     get f() { return this.registerForm.controls; }
   // onSubmit(event)

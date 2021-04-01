@@ -80,6 +80,8 @@ import { EmployeeFullReportComponent } from './Components/Reports-Components/emp
 import { ReportAttendanceComponent } from './Components/Reports-Components/report-attendance/report-attendance.component';
 import { ForgetPasswordComponent } from './Components/AuthComponents/forget-password/forget-password.component';
 import { ResetPasswordComponent } from './Components/AuthComponents/reset-password/reset-password.component';
+import { ChildComponent } from './Components/InputAndOutput/child/child.component';
+import { ParentComponent } from './Components/InputAndOutput/parent/parent.component';
 
 
 const routes: Routes = [
@@ -91,6 +93,7 @@ const routes: Routes = [
   {path:'',component:SideNavComponent,canActivate:[AuthGuard] ,children: [
     { path: 'employee', component:DisplayAllEmployeesComponent },
     // ,canActivate:[AdminGuard]
+    { path: 'child', component:ParentComponent },
     { path: 'addemployee', component:AddEmployeeComponent },
     { path: 'mainPage', component:PieChartsComponent },
     {path:'Profile',component:ProfileComponent}, 

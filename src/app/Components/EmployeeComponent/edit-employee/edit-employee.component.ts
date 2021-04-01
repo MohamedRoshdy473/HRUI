@@ -366,6 +366,7 @@ export class EditEmployeeComponent implements OnInit {
   SaveDocuentToDB() {
 
     this.employeeDocumentservice.AddEmployeeDocument(this.lstoddocproj).subscribe(e => {
+      this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Saved Successfully To Employee' });
       this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(this.EmployeeID).subscribe(d => {
         // this.documents = d;
         // this.lstoddocproj=d
@@ -405,10 +406,7 @@ export class EditEmployeeComponent implements OnInit {
     this.httpClient.post(environment.uploadImage, formData)
       .subscribe(res => {
         console.log(res)
-        alert('Uploaded Successfully.');
-
-
-
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded Successfully' });
       });
   }
 }

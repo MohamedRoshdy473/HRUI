@@ -119,21 +119,21 @@
     <p-dialog [header]="'HR.New Faculty' | translate" [(visible)]="NewDialogbool" [style]="{width: '50vw'}"
         [baseZIndex]="10000">
         <div class="row">
-            <!-- <div class="col-4">
+            <div class="col-4">
                 <label [translate]="'HR.UniversityName'"></label>
-                <select disabled [(ngModel)]="facultyDepartmentObj.universityID" name="sel2" class="form-control">
+                <select (change)="onchangeUniversity($event)" [(ngModel)]="facultyDepartmentObj.universityID" name="sel2" class="form-control">
                     <option value="" selected disabled hidden></option>
                     <option *ngFor="let item of lstUniversities" value="{{item.id}}">{{item.universityName}}</option>
                 </select>
-            </div> -->
-            <div class="col-6">
+            </div>
+            <div class="col-4">
                 <label [translate]="'HR.Faculty Name'"></label>
-                <select [(ngModel)]="facultyDepartmentObj.facultyId" name="sel2" class="form-control">
-                    <option value="" selected disabled hidden></option>
-                    <option *ngFor="let item of lstFacultyDepartments" value="{{item.id}}">{{item.facultyName}}</option>
+                <select [value]="0" [(ngModel)]="facultyDepartmentObj.facultyId" name="sel2" class="form-control">
+                    <option value="0" selected>{{'HR.FacultyName'| translate}}</option>
+                    <option *ngFor="let item of lstFaculties" value="{{item.id}}">{{item.facultyName}}</option>
                 </select>
             </div>
-            <div class="col-6">
+            <div class="col-4">
                 <label for="time" [translate]="'HR.Faculty Department Name'"></label>
                 <input name="facultyDepartmentName" type="text" class="form-control" [(ngModel)]="facultyDepartmentObj.facultyDepartmentName"
                     inputId="date">

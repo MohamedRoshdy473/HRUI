@@ -79,6 +79,7 @@ export class AllLeavesComponent implements OnInit {
   ngOnInit(): void {
     this.Allimages="";
     this.getimage = environment.getImageByName
+    this.empId = Number(localStorage.getItem('id'))
 
     this.NewLeaveRequest = {id:0,profession:"",alternativeEmp:"",date:new Date(),end:new Date(),
     comment: '', alternativeAddress: '', status: 'pending', leavesFiles: '',employeeName:"",
@@ -135,11 +136,10 @@ export class AllLeavesComponent implements OnInit {
       data => { this.LeaveTypes = data },
       error => console.log(error)
     );
-    this.EmpService.EmployeeByProfession().subscribe(
+    this.EmpService.EmployeeByProfession(this.empId).subscribe(
       data => {  this.EmployeeByProfession = data,console.log("EmployeeByProfession",this.EmployeeByProfession) },
       error => console.log(error)
     );
-    this.empId = Number(localStorage.getItem('id'))
     this.role=localStorage.getItem("roles");
     this.Leaveservice.GetAllLeavesForEmployeeId(this.empId).subscribe(
       data => { this.LeavesForEmployee = data; },
@@ -246,7 +246,7 @@ export class AllLeavesComponent implements OnInit {
          },
       error => { console.log(error) }
     )
-    this.EmpService.EmployeeByProfession().subscribe(
+    this.EmpService.EmployeeByProfession(this.empId).subscribe(
       data => {  this.EmployeeByProfession = data,console.log("EmployeeByProfession",this.EmployeeByProfession) },
       error => console.log(error)
     );

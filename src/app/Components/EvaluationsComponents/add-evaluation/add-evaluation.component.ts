@@ -71,7 +71,7 @@ export class AddEvaluationComponent implements OnInit {
       },
       error => { console.log(error) }
     )
-    this.EmployeeService.EmployeeByProfession().subscribe(
+    this.EmployeeService.EmployeeByProfession(this.empId).subscribe(
       data => {
         this.EmployeesByManager = data
         , console.log("EmployeeByProfession",data)

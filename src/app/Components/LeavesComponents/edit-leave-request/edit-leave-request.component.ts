@@ -59,6 +59,7 @@ export class EditLeaveRequestComponent implements OnInit {
   LeaveId = this.activeRoute.snapshot.params['id'];
 
   ngOnInit(): void {
+    this.empId = Number(localStorage.getItem('id'))
     this.NewLeaveRequest = {id:0,profession:"",alternativeEmp:"",date:new Date(),end:new Date(),
     comment: '', alternativeAddress: '', status: 'pending', leavesFiles: '',employeeName:"",
     alternativeEmpID: 0, days: 0, employeeID: 0, leaveTypeID: 0, start: new Date(Date.now())
@@ -90,7 +91,7 @@ export class EditLeaveRequestComponent implements OnInit {
       data => { this.LeaveTypes = data },
       error => console.log(error)
     );
-    this.EmpService.EmployeeByProfession().subscribe(
+    this.EmpService.EmployeeByProfession(this.empId).subscribe(
       data => {  this.EmployeeByProfession = data,console.log("EmployeeByProfession",this.EmployeeByProfession) },
       error => console.log(error)
     );

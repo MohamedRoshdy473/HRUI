@@ -101,6 +101,10 @@ export class DisplayAllEmployeesComponent implements OnInit {
               );
               this.getimage = environment.getImageByName
     }
+    TrackEmployees(index:number,item:any)
+    {
+       return item.id;
+    }
     onActivityChange(event) {
         const value = event.target.value;
         if (value && value.trim().length) {

@@ -29,6 +29,7 @@ export class AddLeaveComponent implements OnInit {
   message = '';
 
   fileInfos: Observable<any>;
+  empId: number;
 
   constructor(private EmpService: EmployeeService, private LeaveTypeService:LeaveTypeService,
     private Leaveservice: LeaveService,private router :Router,private messageService: MessageService
@@ -42,7 +43,8 @@ export class AddLeaveComponent implements OnInit {
   // @ViewChild('someInput') someInput: ElementRef;
 
   ngOnInit(): void {
-    this.EmpService.EmployeeByProfession().subscribe(
+    this.empId = Number(localStorage.getItem('id'))
+    this.EmpService.EmployeeByProfession(this.empId).subscribe(
       data => { console.log(data), this.EmployeeByProfession = data },
       error => console.log(error)
     );

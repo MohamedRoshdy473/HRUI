@@ -111,6 +111,11 @@ export class AllExcusesComponent implements OnInit {
       data => { this.PendingExcuseByHR= data; console.log("PendingExcuseByHR",data) },
       error => console.log(error)
     );
+
+    this.EmpService.getProfession().subscribe(
+      data => {this.AllProfessions = data,console.log("AllProfessions",this.AllProfessions)},
+      error => console.log(error)
+    );
     this.checkExcuseDate();
   }
   
@@ -192,7 +197,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
   NewExcuseDialog() {
     this.NewExcuseDialogbool = true;
     this.EmpService.getProfession().subscribe(
-      data => this.AllProfessions = data,
+      data => {this.AllProfessions = data,console.log("AllProfessions",this.AllProfessions)},
       error => console.log(error)
     );
     this.professionService.GetProfessionByEmployeeId(this.empId).subscribe(

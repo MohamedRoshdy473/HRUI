@@ -86,13 +86,13 @@ export class EmployeeService {
       map(() => { return true; }));
   }
 
-  EmployeeByProfession()
+  EmployeeByProfession(EmpId:number)
   {
     const httpOptions = {headers: new HttpHeaders({
       'Content-Type': 'application/json',
       "Authorization": "bearer " + localStorage.getItem('token')
         })};
-    return this.httpclient.get(`${environment.ApiURL}/Employees/EmployeeByProfession`,httpOptions);
+    return this.httpclient.get(`${environment.ApiURL}/Employees/EmployeeByProfession/`+EmpId,httpOptions);
   }
   GetAllEmployeesByProfession(id):Observable<any>
   {

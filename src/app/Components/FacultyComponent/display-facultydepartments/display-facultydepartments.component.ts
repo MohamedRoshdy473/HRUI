@@ -153,6 +153,7 @@ export class DisplayFacultydepartmentsComponent implements OnInit {
   onReject() {
     this.messageService.clear('c');
   }
+  
 
   clear() {
     this.messageService.clear();

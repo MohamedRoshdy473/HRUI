@@ -58,6 +58,9 @@ export class DisplayFacultydepartmentsComponent implements OnInit {
   NewDialog() {
     this.NewDialogbool = true;
     this.FacultyObj={id:0,facultyDepartmentName:"",facultyId:0,facultyName:"",universityID:0,universityName:""}
+    this.lstFaculties=[];
+    this.lstUniversities=[];
+    this.facultyDepartmentObj.facultyDepartmentName="";
   }
   add() {
     this.facultyDepartmentObj.facultyId=Number(this.facultyDepartmentObj.facultyId);

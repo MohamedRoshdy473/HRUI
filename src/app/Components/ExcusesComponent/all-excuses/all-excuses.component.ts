@@ -78,7 +78,7 @@ export class AllExcusesComponent implements OnInit {
       data => { this.Allexcuses = data; console.log(data) },
       error => console.log(error)
     );
-    this.ExcuseService.GetExcusesByManager().subscribe(
+    this.ExcuseService.GetExcusesByManager(this.empId).subscribe(
       data => { this.AllexcusesByManager = data; console.log(data) },
       error => console.log(error)
     );
@@ -91,7 +91,7 @@ export class AllExcusesComponent implements OnInit {
       data => { this.Approvedexcuses = data; console.log(data) },
       error => console.log(error)
     );
-    this.ExcuseService.ApprovedExcusesByManager().subscribe(
+    this.ExcuseService.ApprovedExcusesByManager(this.empId).subscribe(
       data => { this.ApprovedexcusesByManager = data; console.log(data) },
       error => console.log(error)
     );
@@ -99,11 +99,11 @@ export class AllExcusesComponent implements OnInit {
       data => { this.DisApprovedexcuses = data; console.log(data) },
       error => console.log(error)
     );
-    this.ExcuseService.DisApprovedExcusesByManager().subscribe(
+    this.ExcuseService.DisApprovedExcusesByManager(this.empId).subscribe(
       data => { this.DisApprovedexcusesByManager = data; console.log(data) },
       error => console.log(error)
     );
-    this.ExcuseService.PendingExcusesByManager().subscribe(
+    this.ExcuseService.PendingExcusesByManager(this.empId).subscribe(
       data => { this.PendingExcuseByManager = data; console.log("PendingExcuseByManager",data) },
       error => console.log(error)
     );
@@ -186,13 +186,15 @@ saveAsExcelFile(buffer: any, fileName: string): void {
 
     var data = {
       ID: this.NewExcuse.id, Approved: this.NewExcuse.approved, Comment: this.NewExcuse.comment, Date: this.excuseDate,
-      Hours: this.NewExcuse.hours, Time: this.NewExcuse.time
+      Hours: this.NewExcuse.hours, Time: this.NewExcuse.time,EmployeeId:this.NewExcuse.employeeId
     };
     this.ExcuseService.Update(data, id).subscribe(
-      data => { console.log(data), this.ngOnInit() },
+      data => { console.log(data)
+          },
       error => { console.log(error) }
     );
     this.EditExcuseboolean = false;
+    this.ngOnInit();
   }
   NewExcuseDialog() {
     this.NewExcuseDialogbool = true;
@@ -216,7 +218,7 @@ saveAsExcelFile(buffer: any, fileName: string): void {
     console.log((this.NewExcuse));
     var data = {
       ID: this.NewExcuse.id, Approved: this.NewExcuse.approved, Comment: this.NewExcuse.comment, Date: this.NewExcuse.date,
-      Hours: this.NewExcuse.hours, Time: this.NewExcuse.time, EmployeeID: Number(this.NewExcuse.EmployeeID)
+      Hours: this.NewExcuse.hours, Time: this.NewExcuse.time, employeeId: Number(this.NewExcuse.EmployeeID)
     };
     this.ExcuseService.addExcuse(data).subscribe(
       res => {

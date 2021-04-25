@@ -16,7 +16,7 @@ export class AddExcuseComponent implements OnInit {
   Excuse: Excuse
   ExBool: boolean
   constructor(private ExcuseService: ExcuseService, private router: Router, private messageService: MessageService,) {
-    this.Excuse = { Approved: "pending", Date: new Date(Date.now()), Comment: '', Hours: 0, Time: { hours: 0, minutes: 0 } };
+    this.Excuse = {employeeId:0, Approved: "pending", Date: new Date(Date.now()), Comment: '', Hours: 0, Time: { hours: 0, minutes: 0 } };
   }
 
   ngOnInit(): void {
@@ -35,17 +35,13 @@ export class AddExcuseComponent implements OnInit {
 
   }
   add() {
-    this.showSuccess()
     // this.messageService.add({ severity: 'info', summary: 'Record Deleted!', detail: 'Record Deleted!' ,});
+    this.Excuse.employeeId=this.EmpId;
     this.ExcuseService.addExcuse(this.Excuse).subscribe(
       res => {
         var usrRole = localStorage.getItem("roles");
-        if (usrRole == "Admin") {
+        this.messageService.add({ severity: 'info', summary: 'Record Added!', detail: 'Record Added!' ,});
           this.router.navigate(['/AllExcuses']);
-        }
-        if (usrRole == "User") {
-          this.router.navigate(['/AllExcuses']);
-        }
       },
       error => console.log(error),
     );

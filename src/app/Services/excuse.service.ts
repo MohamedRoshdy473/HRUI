@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -9,9 +9,13 @@ import { Excuse } from '../Data_Types/excuse';
 @Injectable({
   providedIn: 'root'
 })
-export class ExcuseService {
+export class ExcuseService implements OnInit{
+  empId: number;
 
   constructor(private httpclient: HttpClient) { }
+  ngOnInit(): void {
+   // this.empId = Number(localStorage.getItem('id'))
+  }
 
    httpOptions = {
     headers: new HttpHeaders({
@@ -33,9 +37,9 @@ export class ExcuseService {
     return this.httpclient.post(`${environment.ApiURL}/Excuses`, excuse, httpOptions);
   }
 
-  GetExcusesByManager():Observable<any>
+  GetExcusesByManager(empId):Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcusesByManager`,this.httpOptions)
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/GetExcusesByManager/`+empId,this.httpOptions)
   }
   AllExcuses():Observable<any>
   {
@@ -79,21 +83,21 @@ export class ExcuseService {
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/ApprovedExcuses`,this.httpOptions)
   }
-  ApprovedExcusesByManager():Observable<any>
+  ApprovedExcusesByManager(EmployeeId):Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/Excuses/ApprovedExcusesByManager`,this.httpOptions)
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/ApprovedExcusesByManager/`+EmployeeId,this.httpOptions)
   }
   DisApprovedExcuses():Observable<any>
   {
     return this.httpclient.get(`${environment.ApiURL}/Excuses/DisApprovedExcuses`,this.httpOptions)
   }
-    DisApprovedExcusesByManager():Observable<any>
+    DisApprovedExcusesByManager(EmployeeId):Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/Excuses/DisApprovedExcusesByManager`,this.httpOptions)
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/DisApprovedExcusesByManager/`+EmployeeId,this.httpOptions)
   }
-  PendingExcusesByManager():Observable<any>
+  PendingExcusesByManager(EmployeeId):Observable<any>
   {
-    return this.httpclient.get(`${environment.ApiURL}/Excuses/PendingExcuses`,this.httpOptions)
+    return this.httpclient.get(`${environment.ApiURL}/Excuses/PendingExcuses/`+EmployeeId,this.httpOptions)
   }
   PendingExcusesByHR():Observable<any>
   {

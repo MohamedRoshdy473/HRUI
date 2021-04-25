@@ -441,7 +441,7 @@ export class PieChartsComponent implements OnInit {
         labels: ["Excuses"]
       };
     })
-    this.excuseService.GetExcusesByManager().subscribe(res => {
+    this.excuseService.GetExcusesByManager(this.empId).subscribe(res => {
       this.ManagerExcusesesNumber.push(res.length)
       this.chartOptionsManagerExcusesesNumber = {
         series: this.ManagerExcusesesNumber,
@@ -932,7 +932,7 @@ export class PieChartsComponent implements OnInit {
   })
 })
   })
-  this.excuseService.PendingExcusesByManager().subscribe(res => {
+  this.excuseService.PendingExcusesByManager(this.empId).subscribe(res => {
     res.forEach(element => {
       let latest_date = this.datepipe.transform(element.date, 'MM');
       if (this.Strdate == latest_date) {
@@ -942,7 +942,7 @@ export class PieChartsComponent implements OnInit {
     this.ManagerPendingExcusesesNumber.push(this.ManagerlstOfPendingExcuse.length)
  
   console.log("PendingExcusesesNumber", this.ManagerPendingExcusesesNumber)
-  this.excuseService.ApprovedExcusesByManager().subscribe(res => {
+  this.excuseService.ApprovedExcusesByManager(this.empId).subscribe(res => {
     console.log("approved",res)
     res.forEach(element => {
       let latest_date2 = this.datepipe.transform(element.date, 'MM');
@@ -954,7 +954,7 @@ export class PieChartsComponent implements OnInit {
     console.log("ApprovedExcusesesNumber", this.ManagerlstOfApprovedExcuse.length)
 
 
-  this.excuseService.DisApprovedExcusesByManager().subscribe(res => {
+  this.excuseService.DisApprovedExcusesByManager(this.empId).subscribe(res => {
     res.forEach(element => {
       let latest_date = this.datepipe.transform(element.date, 'MM');
       if (this.Strdate == latest_date) {

@@ -7,4 +7,5 @@ export class Excuse {
     Hours:number;
     Approved:string;
     Comment:string;
+    employeeId:Number;
 }

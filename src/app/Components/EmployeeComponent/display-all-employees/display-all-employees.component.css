@@ -188,3 +188,9 @@
 	visibility: visible;
 	opacity: 1;
   }
+  .example-section{
+	  color: black;
+  }
+  .example-section {
+	color: black;
+  }

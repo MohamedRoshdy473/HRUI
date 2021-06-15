@@ -15,6 +15,9 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { EmployeeDocuments } from 'src/app/Data_Types/EmployeeDocuments';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { SchoolService } from 'src/app/Services/school.service';
+import { SchoolDepartmentsService } from 'src/app/Services/school-departments.service';
+import { EducationStatusService } from 'src/app/Services/education-status.service';
 
 @Component({
   selector: 'app-edit-employee',
@@ -30,6 +33,7 @@ export class EditEmployeeComponent implements OnInit {
   phonePatern = "^((\\+91-?)|0)?[0-9]{9}$";
   isValidFormSubmitted = false;
   Employee: Employee;
+  EmployeeUpdated: Employee;
   profession: any;
   positionLevellst: any;
   Positions: any;
@@ -46,35 +50,58 @@ export class EditEmployeeComponent implements OnInit {
   displaydoc: boolean
   options: FormGroup;
   employeeId: any;
-  
+
   error: any = { isError: false, errorMessage: '' };
   isValidDate: any;
-  hiringdate:any;
+  hiringdate: any;
   bithdate: Date;
-  year:any;
-  month :any;
-  day :any;
-  maxDate:any;
+  year: any;
+  month: any;
+  day: any;
+  maxDate: any;
+  lstEducationStatus: any;
+  ShowSectionHighEducation: boolean;
+  ShowSectionMiddleEducation: boolean;
+  ShowSectionPropEducation: boolean;
+  IsHidden: boolean = false;
+
+  lstSchools: any
+  lstSchoolDepartments: any
+  educationName: any;
   //docEmployee: EmployeeDocuments
   lstTest: any[] = []
   EmployeeID = this.activeRoute.snapshot.params['empId'];
-
+  eventEducation: any;
+  dateOfB: string
+  hiringD: string
+  DOB: string;
+  Hire: string;
   constructor(private empService: EmployeeService, private router: Router, private fb: FormBuilder
     , private activeRoute: ActivatedRoute, public datepipe: DatePipe,
     private confirmationService: ConfirmationService, private messageService: MessageService,
     private positionLevelService: PositionLevelService, private positionsService: PositionsService,
     private univertyService: UniversitiesService, private FacultyService: FacultyService,
-    private employeeDocumentservice: EmployeeDocumentsService,private datePipe: DatePipe,
+    private employeeDocumentservice: EmployeeDocumentsService, private datePipe: DatePipe,
     private facultyDepartmentService: FacultyDepartmentService, private httpClient: HttpClient,
+    private schoolService: SchoolService,
+    private schoolSepartmentService: SchoolDepartmentsService,
+    private educationStatusService: EducationStatusService,
 
   ) {
     this.Employee = {
-      address: '', email: '', graduatioYear: '',nationalId:'',mobile:'',dateOfBirth:'',emailCompany:'',facultyDepartmentName:''
-      , maritalStatus: 'Marital Status', name: '',facultyId:0,facultyName:'',hiringDateHiringDate:'',id:0,positionLevelName:'',positionName:'',
-      phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0,universityId:0,universityName:'',listOfdocuments:[],
+      education: '', schoolName: '', schoolId: 0, isActive: true, schoolDepartmentId: 0, schoolDepartmentName: '', professionName: '',
+      address: '', email: '', graduatioYear: '', nationalId: '', mobile: '', dateOfBirth: '', emailCompany: '', facultyDepartmentName: ''
+      , maritalStatus: 'Marital Status', name: '', facultyId: 0, facultyName: '', hiringDateHiringDate: '', id: 0, positionLevelName: '', positionName: '',
+      phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0, universityId: 0, universityName: '', listOfdocuments: [],
       positionlevelId: 0, facultyDepartmentId: 0
     };
-
+    this.EmployeeUpdated = {
+      education: '', schoolName: '', schoolId: 0, isActive: true, schoolDepartmentId: 0, schoolDepartmentName: '', professionName: '',
+      address: '', email: '', graduatioYear: '', nationalId: '', mobile: '', dateOfBirth: '', emailCompany: '', facultyDepartmentName: ''
+      , maritalStatus: 'Marital Status', name: '', facultyId: 0, facultyName: '', hiringDateHiringDate: '', id: 0, positionLevelName: '', positionName: '',
+      phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0, universityId: 0, universityName: '', listOfdocuments: [],
+      positionlevelId: 0, facultyDepartmentId: 0
+    }
     this.options = this.fb.group({
       hideRequired: false,
       floatLabel: 'always',
@@ -90,13 +117,17 @@ export class EditEmployeeComponent implements OnInit {
     form.resetForm();
   }
   ngOnInit(): void {
+    this.ShowSectionHighEducation = false
+    this.ShowSectionMiddleEducation = false
+    this.ShowSectionPropEducation = false
+
     this.hiringdate = new Date();
     this.bithdate = new Date();
     this.year = this.bithdate.getFullYear();
     this.month = this.bithdate.getMonth();
     this.day = this.bithdate.getDay();
-    this.maxDate=(this.year-16)+"/"+(this.month+1)+"/"+this.day
-    console.log("maxDate",this.maxDate);
+    this.maxDate = (this.year - 16) + "/" + (this.month + 1) + "/" + this.day
+    console.log("maxDate", this.maxDate);
 
 
     this.lstemployeeImages = []
@@ -104,11 +135,29 @@ export class EditEmployeeComponent implements OnInit {
     this.empImage = {
       documentName: '', employeeID: 0, employeeName: '', fileName: '', id: 0
     }
+    this.educationStatusService.getAllEducationStatus().subscribe(
+      res => {
+
+
+        this.lstEducationStatus = res,
+
+
+          console.log("lstEducationStatus", this.lstEducationStatus)
+      },
+      err => console.log(err)
+    )
+
+    this.schoolService.getAllSchool().subscribe(
+      res => { this.lstSchools = res },
+      err => console.log(err)
+    )
     this.employeeDocumentservice.GetEmployeeDocmentsByEmployeeId(this.EmployeeID).subscribe(d => {
       this.Employee.listOfdocuments = d;
       this.lstTest = d
-      console.log("this.employeeId", this.EmployeeID)
-      console.log("docs", this.Employee.listOfdocuments)
+      // console.log("this.employeeId", this.EmployeeID)
+      // console.log("docs", this.Employee.listOfdocuments)
+
+
       // this.project1.listOfdocuments = this.documents;
       //  this.projectObj.listOfdocuments = d;
       // console.log("doc", d)
@@ -121,38 +170,78 @@ export class EditEmployeeComponent implements OnInit {
     this.empService.getProfession().subscribe(
       (res) => {
         this.profession = res;
-        console.log("profession", this.profession)
       },
       (err) => { console.log(err) }
     );
     this.empService.GetEmployee(this.EmployeeID).subscribe(
       (res) => {
         this.Employee = res;
-        console.log(this.Employee);
+         this.EmployeeUpdated = res
+        console.log("EmployeeUpdated", this.EmployeeUpdated);
       },
       (err) => { console.log(err) }
     );
 
     this.positionLevelService.getAllPositionLevel().subscribe(
-      res => { this.positionLevellst = res; console.log("levels", this.positionLevellst) },
+      res => { this.positionLevellst = res; },
       err => console.log(err)
     )
     this.positionsService.getAllPosition().subscribe(
-      res => { this.Positions = res; console.log("Positions", this.Positions) },
+      res => { this.Positions = res; },
       err => console.log(err)
     )
     this.univertyService.getAllUniversities().subscribe(
-      res => { this.Universities = res; console.log("Universities", this.Universities) },
+      res => { this.Universities = res; },
       err => console.log(err)
     )
     this.FacultyService.getAllFaculties().subscribe(
-      res => { this.Faculties = res; console.log("Faculties", this.Faculties) },
+      res => { this.Faculties = res; },
       err => console.log(err)
     )
     this.facultyDepartmentService.getAllFacultyDepartments().subscribe(
-      res => { this.FacultyDepartments = res; console.log("FacultyDepartments", this.FacultyDepartments) },
+      res => { this.FacultyDepartments = res; },
       err => console.log(err)
     )
+    this.schoolSepartmentService.getAllSchoolDepartment().subscribe(
+      res => { this.lstSchoolDepartments = res; },
+      err => console.log(err)
+    )
+  }
+  onchangeSchool($event) {
+    this.schoolSepartmentService.GetAllSchoolDepartmentsBySchoolId($event.target.value).subscribe(
+      res => { this.lstSchoolDepartments = res; },
+      err => console.log(err)
+    )
+  }
+  onchangeEducationStatus($event) {
+    this.eventEducation = $event.target.value
+    console.log("event", $event.target.value)
+    this.educationName = $event.target.value
+    if (this.educationName == "High qualified") {
+
+      this.ShowSectionHighEducation = true
+      this.ShowSectionMiddleEducation = false
+      this.ShowSectionPropEducation = false
+    }
+
+    if (this.educationName == "Middle qualified") {
+
+      this.ShowSectionMiddleEducation = true
+      this.ShowSectionHighEducation = false
+      this.ShowSectionPropEducation = false
+    }
+
+    if (this.educationName == "preparatory") {
+
+      this.ShowSectionPropEducation = true
+      this.ShowSectionHighEducation = false
+      this.ShowSectionMiddleEducation = false
+    }
+    if (this.educationName == "Without education") {
+      this.ShowSectionPropEducation = true
+      this.ShowSectionHighEducation = false
+      this.ShowSectionMiddleEducation = false
+    }
   }
   onchangeUniversity($event) {
     console.log("uni", $event.target.value)
@@ -167,8 +256,39 @@ export class EditEmployeeComponent implements OnInit {
       err => console.log(err)
     )
   }
+  addEvent(event: MatDatepickerInputEvent<Date>) {
+    this.dateOfB = this.datepipe.transform(event.value, 'yyyy-MM-dd');
+  
+    this.EmployeeUpdated.dateOfBirth = this.dateOfB
+    console.log("hiringD",this.EmployeeUpdated.hiringDateHiringDate)
+    console.log("dateOfBirth",this.dateOfB)
+
+
+  }
+
+  addEventhiringDateHiringDate(event1: MatDatepickerInputEvent<Date>) {
+    this.hiringD = this.datepipe.transform(event1.value, 'yyyy-MM-dd');
+    this.EmployeeUpdated.hiringDateHiringDate = this.hiringD
+    console.log("hiringD",this.hiringD)
+    console.log("dateOfBirth",this.EmployeeUpdated.dateOfBirth)
+  }
   update() {
-    console.log(this.Employee);
+    console.log("this.eventEducation", this.eventEducation);
+    if (this.eventEducation == "High qualified") {
+      this.Employee.schoolDepartmentId = 0
+    }
+    if (this.eventEducation == "Middle qualified") {
+      this.Employee.facultyDepartmentId = 0
+    }
+    if (this.eventEducation == "preparatory") {
+      this.Employee.schoolDepartmentId = 0
+      this.Employee.facultyDepartmentId = 0
+    }
+    if (this.eventEducation == "preparatory") {
+      this.Employee.schoolDepartmentId = 0
+      this.Employee.facultyDepartmentId = 0
+    }
+
     this.Employee.graduatioYear = String(this.Employee.graduatioYear);
     this.Employee.professionID = Number(this.Employee.professionID);
     // this.Employee.dateOfBirth = this.dateOfBirth;
@@ -178,26 +298,22 @@ export class EditEmployeeComponent implements OnInit {
     this.Employee.phone = String(this.Employee.phone)
     this.Employee.mobile = String(this.Employee.mobile)
     this.Employee.relevantPhone = String(this.Employee.relevantPhone)
-
     this.Employee.positionId = Number(this.Employee.positionId);
     this.Employee.positionlevelId = Number(this.Employee.positionlevelId);
     this.Employee.facultyDepartmentId = Number(this.Employee.facultyDepartmentId);
 
-    console.log(this.Employee.professionID)
-    console.log(typeof (this.Employee.professionID))
-    this.Employee.dateOfBirth = this.datePipe.transform(this.dateOfB, "dd-MM-yyyy");
-    this.Employee.hiringDateHiringDate = this.datePipe.transform(this.hiringD, "dd-MM-yyyy")
-   // this.isValidDate = this.validateDates(this.Employee.dateOfBirth, this.Employee.hiringDateHiringDate);
-   // if (this.isValidDate) {
-    this.empService.UpdateEmployee(this.EmployeeID, this.Employee).subscribe(
+    // this.isValidDate = this.validateDates(this.Employee.dateOfBirth, this.Employee.hiringDateHiringDate);
+    // if (this.isValidDate) {
+    console.log("update Employee", this.EmployeeUpdated);
+    this.empService.UpdateEmployee(this.EmployeeID, this.EmployeeUpdated).subscribe(
       res => {
         this.messageService.add({ severity: 'info', summary: 'Record Updated!', detail: 'Record Updated!' });
         this.router.navigate(['/employee']);
       },
       error => console.log(error),
     );
-  //}
-}
+    //}
+  }
 
   validateDates(sDate: string, eDate: string) {
     this.isValidDate = true;
@@ -271,28 +387,21 @@ export class EditEmployeeComponent implements OnInit {
     this.employeeDocumentservice.AddEmployeeDocument(this.lstemployeeImages).subscribe(e => {
       console.log(e)
       this.Employee = {
-        address: '', email: '', graduatioYear: '',nationalId:'',mobile:'',dateOfBirth:'',emailCompany:'',facultyDepartmentName:''
-        , maritalStatus: 'Marital Status', name: '',facultyId:0,facultyName:'',hiringDateHiringDate:'',id:0,positionLevelName:'',positionName:'',
-        phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0,universityId:0,universityName:'',listOfdocuments:[],
+        education: '', schoolId: 0, schoolName: '', isActive: true, schoolDepartmentId: 0, schoolDepartmentName: '', professionName: '',
+        address: '', email: '', graduatioYear: '', nationalId: '', mobile: '', dateOfBirth: '', emailCompany: '', facultyDepartmentName: ''
+        , maritalStatus: 'Marital Status', name: '', facultyId: 0, facultyName: '', hiringDateHiringDate: '', id: 0, positionLevelName: '', positionName: '',
+        phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0, universityId: 0, universityName: '', listOfdocuments: [],
         positionlevelId: 0, facultyDepartmentId: 0
       };
-  
-  
+
+
       this.router.navigate(['/employee'])
     })
 
   }
 
-  dateOfB: string
-  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.dateOfB = this.datepipe.transform(event.value, 'yyyy-MM-dd');
-    console.log(this.dateOfB)
-  }
-  hiringD: string
-  addEventhiringDateHiringDate(type: string, event: MatDatepickerInputEvent<Date>) {
-    this.hiringD = this.datepipe.transform(event.value, 'yyyy-MM-dd');
-    console.log(this.hiringD)
-  }
+
+
   showSuccess() {
     this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Message Content' });
   }

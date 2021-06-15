@@ -145,14 +145,26 @@
             </div>
             <div class="col-md-4">
                 <label [translate]="'HR.HiringDate'"></label>
-                <input type="date" (change)="comparedate()" max="{{hiringdate | date:'yyyy-MM-dd'}}" class="form-control" name="HiringData" [(ngModel)]="Employee.hiringDateHiringDate"
-                    #EmpHdate="ngModel" [class.is-invalid]="EmpHdate.invalid && EmpHdate.touched"
-                    [class.is-valid]="EmpHdate.valid" required [placeholder]="'HR.HiringDate' | translate">
+                <input type="date" (change)="comparedate()" max="{{hiringdate | date:'yyyy-MM-dd'}}" class="form-control" name="HiringData"
+                    [(ngModel)]="Employee.hiringDateHiringDate"
+                    #EmpHdate1="ngModel" [class.is-invalid]="EmpHdate1.invalid && EmpHdate1.touched"
+                    [class.is-valid]="EmpHdate1.valid" required [placeholder]="'HR.HiringDate' | translate">
                     <div class="text-danger" *ngIf="error.isError">{{error.errorMessage}}</div>
             </div>
         </div>
         <br>
         <div class="form-row">
+            <div class="col-md-12">
+                <label [translate]="'HR.EducationStatus'"></label>
+                <select (change)="onchangeEducationStatus($event)"  name="sel2"
+                    class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of lstEducationStatus" value="{{item.educationStatusName}}">{{item.educationStatusName}}</option>
+                </select>
+            </div>
+        </div>
+        <br>
+        <div class="form-row" [hidden]="ShowSectionHighEducation">
             <div class="col-md-4">
                 <label [translate]="'HR.UniversityName'"></label>
                 <select (change)="onchangeUniversity($event)" [(ngModel)]="Employee.universityId" name="sel2"
@@ -178,6 +190,34 @@
                 </select>
             </div>
         </div><br>
+        <div class="form-row" [hidden]="ShowSectionMiddleEducation">
+            <div class="col-6">
+                <label [translate]="'HR.School'"></label>
+                <select  (change)="onchangeSchool($event)" [(ngModel)]="Employee.schoolId" name="sel2" class="form-control">
+                    <option value="" selected disabled hidden></option>
+                    <option *ngFor="let item of lstSchools" value="{{item.id}}">{{item.schoolName}}</option>
+                </select>
+            </div>
+
+            <div class="col-6">
+                <label for="time" [translate]="'HR.School Department Name'"></label>
+                <select [value]="0" [(ngModel)]="Employee.schoolDepartmentId" name="sel2" class="form-control">
+                    <option value="0" selected>{{'HR.School Department Name'| translate}}</option>
+                    <option *ngFor="let item of lstSchoolDepartments" value="{{item.id}}">{{item.schoolDepartmentName}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row" [hidden]="ShowSectionPropEducation">
+            <div class="col-md-12">
+                <label for="name222" [translate]="'HR.Education'"></label>
+                <input type="text" #EmpEducation="ngModel" [class.is-invalid]="EmpEducation.invalid && EmpEducation.touched"
+                    [class.is-valid]="EmpEducation.valid" [(ngModel)]="Employee.education"  minlength="3" name="Name222"
+                    id="EmpEducation" class="form-control" [placeholder]="'HR.Education' | translate" aria-describedby="helpId">
+                <small [hidden]="EmpEducation.valid || EmpEducation.untouched" id="helpId" class="text-muted"
+                    [translate]="'HR.messege'"></small>
+            </div>
+        </div>
+        <br>
         <div class="form-row">
             <div class="col-md-4">
                 <label [translate]="'HR.Address'"></label>

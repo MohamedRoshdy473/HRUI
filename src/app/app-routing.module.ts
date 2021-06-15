@@ -82,6 +82,9 @@ import { ForgetPasswordComponent } from './Components/AuthComponents/forget-pass
 import { ResetPasswordComponent } from './Components/AuthComponents/reset-password/reset-password.component';
 import { ChildComponent } from './Components/InputAndOutput/child/child.component';
 import { ParentComponent } from './Components/InputAndOutput/parent/parent.component';
+import { EducationStatusComponent } from './Components/education-status/education-status.component';
+import { SchoolsComponent } from './Components/schools/schools.component';
+import { SchoolDepartmentsComponent } from './Components/school-departments/school-departments.component';
 
 
 const routes: Routes = [
@@ -164,6 +167,9 @@ const routes: Routes = [
     {path:'ReportLeave',component:ReportLeavesComponent},
     {path:'EmployeeFullReport',component:EmployeeFullReportComponent},
     {path:'ReportAttendance',component:ReportAttendanceComponent},
+    {path:'EducationStatus',component:EducationStatusComponent},
+    {path:'Schools',component:SchoolsComponent},
+    {path:'SchoolDepartments',component:SchoolDepartmentsComponent},
 
 
 

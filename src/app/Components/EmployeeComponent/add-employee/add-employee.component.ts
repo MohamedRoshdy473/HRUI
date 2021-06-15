@@ -21,6 +21,9 @@ import { NgForm } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { date } from '@rxweb/reactive-form-validators';
+import { EducationStatusService } from 'src/app/Services/education-status.service';
+import { SchoolService } from 'src/app/Services/school.service';
+import { SchoolDepartmentsService } from 'src/app/Services/school-departments.service';
 @Component({
   selector: 'app-add-employee',
   templateUrl: './add-employee.component.html',
@@ -55,8 +58,8 @@ export class AddEmployeeComponent implements OnInit {
   model = new Employee();
   error: any = { isError: false, errorMessage: '' };
   isValidDate: any;
-  hiringdate:any;
-   diabledButton:boolean;
+  hiringdate: any;
+  diabledButton: boolean;
   genderType: Gender[] = [
     { name: 'Male' },
     { name: 'Female' }
@@ -68,21 +71,34 @@ export class AddEmployeeComponent implements OnInit {
   fileToUpload: File;
   uploadedFiles: any[] = [];
   bithdate: Date;
-  year:any;
-  month :any;
-  day :any;
-  maxDate:any;
+  year: any;
+  month: any;
+  day: any;
+  maxDate: any;
+  lstEducationStatus: any;
+  ShowSectionHighEducation: boolean;
+  ShowSectionMiddleEducation: boolean;
+  ShowSectionPropEducation: boolean;
+  IsHidden: boolean = false;
+
+  lstSchools: any
+  lstSchoolDepartments: any
+  educationName: any;
   constructor(private empService: EmployeeService, private router: Router, private datePipe: DatePipe,
     private positionLevelService: PositionLevelService, private positionsService: PositionsService,
     private univertyService: UniversitiesService, private FacultyService: FacultyService,
-    private httpClient: HttpClient,private messageService: MessageService,
+    private httpClient: HttpClient, private messageService: MessageService,
     private employeeDocumentservice: EmployeeDocumentsService,
-
-    private facultyDepartmentService: FacultyDepartmentService,) {
+    private educationStatusService: EducationStatusService,
+    private facultyDepartmentService: FacultyDepartmentService,
+    private schoolService: SchoolService,
+    private schoolSepartmentService: SchoolDepartmentsService
+  ) {
     this.Employee = {
-      address: '', email: '', graduatioYear: '',nationalId:'',mobile:'',dateOfBirth:'',emailCompany:'',facultyDepartmentName:''
-      , maritalStatus: 'Marital Status', name: '',facultyId:0,facultyName:'',hiringDateHiringDate:'',id:0,positionLevelName:'',positionName:'',
-      phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0,universityId:0,universityName:'',listOfdocuments:[],
+      education: '', schoolId: 0, schoolName: '', professionName: '', isActive: true, schoolDepartmentId: 0, schoolDepartmentName: '',
+      address: '', email: '', graduatioYear: '', nationalId: '', mobile: '', dateOfBirth: '', emailCompany: '', facultyDepartmentName: ''
+      , maritalStatus: 'Marital Status', name: '', facultyId: 0, facultyName: '', hiringDateHiringDate: '', id: 0, positionLevelName: '', positionName: '',
+      phone: '', professionID: 0, relevantPhone: '', photo: 'dummyPerson.png', code: '', gender: 'Gender', positionId: 0, universityId: 0, universityName: '', listOfdocuments: [],
       positionlevelId: 0, facultyDepartmentId: 0
     };
 
@@ -100,24 +116,34 @@ export class AddEmployeeComponent implements OnInit {
   //   form.resetForm();
   // }
   ngOnInit(): void {
-     this.diabledButton=false
-     this.hiringdate = new Date;
-     this.bithdate = new Date();
-     this.year = this.bithdate.getFullYear();
-     this.month = this.bithdate.getMonth();
-     this.day = this.bithdate.getDay();
-     this.maxDate=(this.year-16)+"-"+(this.month+1)+"-"+this.day
-     console.log("maxDate",this.maxDate);
+    this.diabledButton = false
+    
+    this.ShowSectionHighEducation = true
+    this.ShowSectionMiddleEducation = true
+    this.ShowSectionPropEducation = true
 
-
-
-
+    this.hiringdate = new Date;
+    this.bithdate = new Date();
+    this.year = this.bithdate.getFullYear();
+    this.month = this.bithdate.getMonth();
+    this.day = this.bithdate.getDay();
+    this.maxDate = (this.year - 16) + "-" + (this.month + 1) + "-" + this.day
+    console.log("maxDate", this.maxDate);
 
     this.lstoddocproj = []
     this.lstemployeeImages = []
     this.empImage = {
       documentName: '', employeeID: 0, employeeName: '', fileName: '', id: 0
     }
+    this.educationStatusService.getAllEducationStatus().subscribe(
+      res => { this.lstEducationStatus = res, console.log("lstEducationStatus", this.lstEducationStatus) },
+      err => console.log(err)
+    )
+
+    this.schoolService.getAllSchool().subscribe(
+      res => { this.lstSchools = res, console.log("lstSchools", this.lstSchools) },
+      err => console.log(err)
+    )
     this.positionLevelService.getAllPositionLevel().subscribe(
       res => { this.positionLevel = res; console.log("levels", this.positionLevel) },
       err => console.log(err)
@@ -136,6 +162,40 @@ export class AddEmployeeComponent implements OnInit {
     );
     console.log("fileToUpload.name", this.fileToUpload)
   }
+  onchangeSchool($event) {
+    this.schoolSepartmentService.GetAllSchoolDepartmentsBySchoolId($event.target.value).subscribe(
+      res => { this.lstSchoolDepartments = res; console.log("lstSchoolDepartments", this.lstSchoolDepartments) },
+      err => console.log(err)
+    )
+  }
+  show() {
+    this.IsHidden = true
+  }
+  onchangeEducationStatus($event) {
+
+    console.log("event", $event.target.value)
+    this.educationName = $event.target.value
+    if (this.educationName == "High qualified") {
+      this.ShowSectionHighEducation = false
+      this.ShowSectionMiddleEducation = true
+      this.ShowSectionPropEducation = true
+    }
+    if (this.educationName == "Middle qualified") {
+      this.ShowSectionHighEducation = true
+      this.ShowSectionMiddleEducation = false
+      this.ShowSectionPropEducation = true
+    }
+    if (this.educationName == "preparatory") {
+      this.ShowSectionPropEducation = false
+      this.ShowSectionHighEducation = true
+      this.ShowSectionMiddleEducation = true
+    }
+    if (this.educationName == "Without education") {
+      this.ShowSectionPropEducation = false
+      this.ShowSectionHighEducation = true
+      this.ShowSectionMiddleEducation = true
+    }
+  }
   onchangeUniversity($event) {
     console.log("uni", $event.target.value)
     this.FacultyService.GetFacultiesByUniversityId($event.target.value).subscribe(
@@ -149,9 +209,8 @@ export class AddEmployeeComponent implements OnInit {
       err => console.log(err)
     )
   }
-  check($event)
-  {
-    console.log("event",$event)
+  check($event) {
+    console.log("event", $event)
   }
   add(frm: NgForm) {
     this.Employee.professionID = Number(this.Employee.professionID);
@@ -166,27 +225,27 @@ export class AddEmployeeComponent implements OnInit {
     this.Employee.facultyDepartmentId = Number(this.Employee.facultyDepartmentId);
     //this.Employee.DateOfBirth = this.datePipe.transform(this.Employee.DateOfBirth, "dd-MM-yyyy");
     //this.Employee.HiringDateHiringDate = this.datePipe.transform(this.Employee.HiringDateHiringDate, "yyyy-MM-dd")
-   // this.isValidDate = this.validateDates(this.Employee.DateOfBirth, this.Employee.HiringDateHiringDate);
-    console.log("before add",this.Employee)
-   // if (this.isValidDate) {
-      this.empService.AddEmployee(this.Employee).subscribe(
-        res => { 
-          console.log("after employeeres",this.Employee)
-          this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee Added' });
-           this.employeeId=res
-           this.empImage.employeeID=this.employeeId,
-           this.diabledButton=false
-           this.showdocDialog()
+    // this.isValidDate = this.validateDates(this.Employee.DateOfBirth, this.Employee.HiringDateHiringDate);
+    console.log("before add", this.Employee)
+    // if (this.isValidDate) {
+    this.empService.AddEmployee(this.Employee).subscribe(
+      res => {
+        console.log("after employeeres", this.Employee)
+        this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Employee Added' });
+        this.employeeId = res
+        this.empImage.employeeID = this.employeeId,
+          this.diabledButton = false
+        this.showdocDialog()
 
         //  this.router.navigate(['/employee']);
-       },
-       error => console.log(error),
-      );
-      
-    }
+      },
+      error => console.log(error),
+    );
+
+  }
   //  }
   //  this.isValidFormSubmitted = true;
- // }
+  // }
   validateDates(sDate: string, eDate: string) {
     this.isValidDate = true;
     if ((sDate == null || eDate == null)) {
@@ -195,7 +254,7 @@ export class AddEmployeeComponent implements OnInit {
     }
 
     if ((sDate != null && eDate != null) && (eDate) < (sDate)) {
-      this.error = { isError: true, errorMessage: 'End date should be grater then start date.' };
+      this.error = { isError: true, errorMessage: 'End date should be greater than start date.' };
       this.isValidDate = false;
     }
     return this.isValidDate;
@@ -204,10 +263,10 @@ export class AddEmployeeComponent implements OnInit {
     this.isValidDate = true;
     this.isValidDate = this.validateDates(this.Employee.dateOfBirth, this.Employee.hiringDateHiringDate);
     if (!this.isValidDate) {
-      this.error = { isError: true, errorMessage: 'End date should be grater then start date.' };
+      this.error = { isError: true, errorMessage: 'End date should be greater than start date.' };
     }
     if (this.isValidDate) {
-      console.log("this.Employee.HiringDateHiringDate",this.Employee.hiringDateHiringDate)
+      console.log("this.Employee.HiringDateHiringDate", this.Employee.hiringDateHiringDate)
       this.error = { isError: true, errorMessage: '' };
     }
     return this.isValidDate;
@@ -238,7 +297,7 @@ export class AddEmployeeComponent implements OnInit {
       // do something, if upload success
       //c(data);
       // alert("image Uploaded Successfuly")
-     // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded Successfully' });
+      // this.messageService.add({ severity: 'success', summary: 'Success', detail: 'Uploaded Successfully' });
     }, error => {
       console.log(error);
     });
@@ -339,7 +398,7 @@ export class AddEmployeeComponent implements OnInit {
     this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Message Content' });
   }
   showCustom() {
-    this.messageService.add({ severity: 'custom', summary: 'Custom', detail: 'Message Content'});
+    this.messageService.add({ severity: 'custom', summary: 'Custom', detail: 'Message Content' });
   }
   showTopLeft() {
     this.messageService.add({ key: 'tl', severity: 'info', summary: 'Info', detail: 'Message Content' });

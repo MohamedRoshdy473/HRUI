@@ -170,6 +170,9 @@ import { ForgetPasswordComponent } from './Components/AuthComponents/forget-pass
 import { ResetPasswordComponent } from './Components/AuthComponents/reset-password/reset-password.component';
 import { ParentComponent } from './Components/InputAndOutput/parent/parent.component';
 import { ChildComponent } from './Components/InputAndOutput/child/child.component';
+import { EducationStatusComponent } from './Components/education-status/education-status.component';
+import { SchoolsComponent } from './Components/schools/schools.component';
+import { SchoolDepartmentsComponent } from './Components/school-departments/school-departments.component';
 
 
 
@@ -269,6 +272,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ResetPasswordComponent,
     ParentComponent,
     ChildComponent,
+    EducationStatusComponent,
+    SchoolsComponent,
+    SchoolDepartmentsComponent,
 
   ],
   imports: [

@@ -159,7 +159,7 @@
                             <span [translate]="'HR.Excuse Report'"></span>
                         </a>
                     </li>
-                     <li>
+                    <li>
                         <a routerLink='ReportLeave'>
                             <span [translate]="'HR.Leave Report'"></span>
                         </a>
@@ -168,8 +168,8 @@
                         <a routerLink='ReportAttendance'>
                             <span [translate]="'HR.Attendance Report'"></span>
                         </a>
-                    </li> 
-                     <li>
+                    </li>
+                    <li>
                         <a routerLink='EmployeeFullReport'>
                             <span [translate]="'HR.Full report to employee'"></span>
                         </a>
@@ -218,8 +218,21 @@
                             {{'HR.DisplayFacultydepartments'| translate}}
                         </a>
                     </li>
-
-
+                    <li>
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/EducationStatus']" class="pi pi-users">
+                            {{'HR.EducationStatus'| translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/Schools']" class="pi pi-users">
+                            {{'HR.School'| translate}}
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/SchoolDepartments']" class="pi pi-users">
+                            {{'HR.SchoolDepartments'| translate}}
+                        </a>
+                    </li>
                     <li>
                         <a *ngIf="role=='Admin' || role=='HR'" [routerLink]="['/Instructor']" class="pi pi-users">
                             {{'HR.Instructors'| translate}}

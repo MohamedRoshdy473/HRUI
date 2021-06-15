@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FacultyDepartmentService } from 'src/app/Services/faculty-department.service';
 import { FacultyService } from 'src/app/Services/faculty.service';
 import { UniversitiesService } from 'src/app/Services/universities.service';
+import{FacultyDepartment} from 'src/app/Data_Types/FacultyDepartment'
 @Component({
   selector: 'app-display-facultydepartments',
   templateUrl: './display-facultydepartments.component.html',
@@ -14,14 +15,14 @@ export class DisplayFacultydepartmentsComponent implements OnInit {
   lstUniversities:any;
   FacultyObj:any;
   lstFacultyDepartments:any;
-  facultyDepartmentObj:any;
+  facultyDepartmentObj:FacultyDepartment;
   Editboolean: boolean;
   displayBasic: boolean;
   NewDialogbool: boolean;
   constructor(private facultyDepartmentService:FacultyDepartmentService ,private facultyService:FacultyService,private universityService: UniversitiesService, private router: Router, private confirmationService: ConfirmationService, private messageService: MessageService) { }
 
   ngOnInit(): void {
-    this.facultyDepartmentObj={id:0,facultyDepartmentName:"",facultyId:0,facultyName:"",universityID:0,universityName:""}
+    this.facultyDepartmentObj={id:0,universityName:'',universityID:0,facultyName:'',facultyId:0,facultyDepartmentName:''}
     this.universityService.getAllUniversities().subscribe(
       res => { this.lstUniversities = res,console.log("lstUniversities",this.lstUniversities) },
       err => console.log(err)
@@ -58,8 +59,8 @@ export class DisplayFacultydepartmentsComponent implements OnInit {
   NewDialog() {
     this.NewDialogbool = true;
     this.FacultyObj={id:0,facultyDepartmentName:"",facultyId:0,facultyName:"",universityID:0,universityName:""}
-    this.lstFaculties=[];
-    this.lstUniversities=[];
+   // this.lstFaculties=[];
+   // this.lstUniversities=[];
     this.facultyDepartmentObj.facultyDepartmentName="";
   }
   add() {
@@ -74,7 +75,7 @@ export class DisplayFacultydepartmentsComponent implements OnInit {
     );
   }
   EditDialog(id) {
-    this.Editboolean = true;
+    this.Editboolean = true
     this.facultyDepartmentService.getFacultyDepartmentByID(id).subscribe(
       data => { this.facultyDepartmentObj = data,
          console.log("EditDialog",this.facultyDepartmentObj) },

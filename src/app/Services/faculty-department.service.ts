@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { FacultyDepartment } from '../Data_Types/FacultyDepartment';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,9 +18,9 @@ export class FacultyDepartmentService {
   getAllFacultyDepartments() {
     return this.httpclient.get(`${environment.ApiURL}/FacultyDepartment`, this.httpHeader)
   };
-  getFacultyDepartmentByID(Id) {
+  getFacultyDepartmentByID(Id):Observable<FacultyDepartment>{
     console.log(Id);
-    return this.httpclient.get(`${environment.ApiURL}/FacultyDepartment/` + Id, this.httpHeader);
+    return this.httpclient.get<FacultyDepartment>(`${environment.ApiURL}/FacultyDepartment/` + Id, this.httpHeader);
   }
   GetFacultyDepartmentsByFacultyId(FacultyId:number) {
     return this.httpclient.get(`${environment.ApiURL}/FacultyDepartment/GetFacultyDepartmentsByFacultyId/` + FacultyId, this.httpHeader);

@@ -213,7 +213,17 @@
     "Full report to employee":"Full report to employee",
     "Arrival":"Arrival",
     "Departure":"Departure",
-    "Attendance Report":"Attendance Report"
-
+    "Attendance Report":"Attendance Report",
+    "NonWorkedEmployees":"Non Worked Employees",
+    "Unworked":"Unworked",
+    "EducationStatus":"Education Status",
+    "New EducationStatus":"New Education Status",
+    "School":"Schools",
+    "New School":"New School",
+    "SchoolDepartments":"School Departments",
+    "New School Department":"New School Department",
+    "School Department Name":"School Department Name",
+    "School Name":"School Name",
+    "Education":"Education"
   }
 }

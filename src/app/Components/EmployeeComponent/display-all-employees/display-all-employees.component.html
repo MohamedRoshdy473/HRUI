@@ -31,7 +31,7 @@
         <ng-template pTemplate="caption">
             <h1 [translate]="'HR.AllEmployees'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;"></h1>
             <div class="row">
-                <div class="table-header col-md-10">
+                <div class="table-header col-md-8">
                     <!-- List of Employees -->
 
                     <span class="p-input-icon-left">
@@ -41,31 +41,41 @@
                     </span>
                 </div>
                 <div class="col-md-2">
+
+                    <button id="unworkedBtn" (click)="showUnworkedEmployees()"
+                        class="btn btn-outline-primary btn-md btn-block">
+                        <span class="pi pi-external-link">Unworked</span> </button>
+                </div>
+                <div class="col-md-2">
                     <button id="addEmpBtn" routerLink="/addemployee" class="btn btn-outline-primary btn-md btn-block">
                         <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button>
                 </div>
             </div>
         </ng-template>
         <ng-template pTemplate="header">
-            <tr >
+            <tr>
                 <th [translate]="'HR.Image'" style="text-align: inherit;"></th>
                 <th pSortableColumn="name" style="text-align: inherit;"><span [translate]="'HR.Employee Name'"></span>
                     <p-sortIcon field="name"></p-sortIcon>
                 </th>
-                <th pSortableColumn="positionName" style="text-align: inherit;"><span [translate]="'HR.Position Name'"></span>
+                <th pSortableColumn="positionName" style="text-align: inherit;"><span
+                        [translate]="'HR.Position Name'"></span>
                     <p-sortIcon field="positionName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="professionName" style="text-align: inherit;"><span [translate]="'HR.Profession Name'"></span>
+                <th pSortableColumn="professionName" style="text-align: inherit;"><span
+                        [translate]="'HR.Profession Name'"></span>
                     <p-sortIcon field="professionName"></p-sortIcon>
                 </th>
-                <th pSortableColumn="hiringDateHiringDate" style="text-align: inherit;"><span [translate]="'HR.HiringDate'"></span>
+                <th pSortableColumn="hiringDateHiringDate" style="text-align: inherit;"><span
+                        [translate]="'HR.HiringDate'"></span>
                     <p-sortIcon field="hiringDateHiringDate"></p-sortIcon>
                 </th>
                 <th pSortableColumn="email" style="text-align: inherit;"><span [translate]="'HR.Email'"></span>
                     <p-sortIcon field="email"></p-sortIcon>
                 </th>
-                <th ><span [translate]="'HR.Controls'" style="margin-left: 30px;"></span></th>
-                <th ><span [translate]="'HR.View'" style="margin-left: 30px;"></span></th>
+                <th>Is Active</th>
+                <th><span [translate]="'HR.Controls'" style="margin-left: 30px;"></span></th>
+                <th><span [translate]="'HR.View'" style="margin-left: 30px;"></span></th>
             </tr>
             <tr style="text-align: inherit;">
                 <th>
@@ -102,11 +112,12 @@
                         [placeholder]="'HR.Email' | translate" class="p-column-filter">
                 </th>
                 <th></th>
-          <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-employee>
-            <tr >
+            <tr>
                 <td>
                     <img class="img-thumbnail" src="{{getimage}}api/employees/getImage/{{employee.photo }}" alt=""
                         width="40%" height="40%">
@@ -126,43 +137,36 @@
                 <td style="text-align: inherit;">
                     {{employee.email}}
                 </td>
-
-                <!-- <td>
-                {{employee.phone}}
-            </td> -->
-                <!-- <td>
-                {{employee.gender}}
-            </td> -->
-                <!-- <td>
-                {{employee.maritalStatus}}
-            </td> -->
-                <!-- <td>
-                    <div style="margin-left: 10%;" class="row">
-                        <button (click)="showBasicDialog(employee.id)" class="btn btn-success c-btn">
-                            <i class="fa fa-eye" aria-hidden="true"></i></button>
-                        <button [routerLink]="['/editEmployee',employee.id]" class="btn btn-primary c-btn">
-                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-
-                        <button (click)="confirm(employee.id)" style="display: flex;" class="btn btn-danger c-btn">
-                            <i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <td>
+                    <div class="p-field-checkbox" style="text-align: center;">
+                        <section class="example-section">
+                            <!-- <mat-checkbox class="example-margin" name="sub" (change)="ArchiveEmp(employee)"
+                                [(ngModel)]="employee.isActive">
+                            </mat-checkbox> -->
+                            <p-checkbox [(ngModel)]="employee.isActive" (onChange)="ArchiveEmp(employee)"
+                                [binary]="true"></p-checkbox>
+                        </section>
                     </div>
-                </td> -->
+                </td>
+
                 <td>
                     <!-- <button icon="pi pi-print" printSectionId="print-section" ngxPrint styleClass="p-button-text"
                     [translate]="'HR.Print'" (click)="PrintEmployee(employee.id)"></button>  -->
                     <!-- <span class="pi pi-print btn" printSectionId="print-section" ngxPrint></span>-->
-                    <span style="margin-left: 20px;" [title]="'HR.Show' | translate"
-                    class="pi pi-compass btn" aria-hidden="true" (click)="showBasicDialog(employee.id)"></span>
+                    <span [title]="'HR.Show' | translate" class="pi pi-compass btn" aria-hidden="true"
+                        (click)="showBasicDialog(employee.id)"></span>
                     <span class="btn pi pi-pencil" aria-hidden="true" [title]="'HR.Update' | translate"
                         [routerLink]="['/editEmployee',employee.id]"></span>
-                    <span class="btn pi pi-times" [title]="'HR.Delete' | translate" (click)="confirm(employee.id)" aria-hidden="true"></span>
-                   <!-- <span class="btn" (click)="viewAllImages(employee.id)">View</span> -->
+                    <span class="btn pi pi-times" [title]="'HR.Delete' | translate" (click)="confirm(employee.id)"
+                        aria-hidden="true"></span>
+                    <!-- <span class="btn" (click)="viewAllImages(employee.id)">View</span> -->
                 </td>
                 <td style="width: 50px;">
-                    <button class="btn btn-success" style="margin-left: 40px;" (click)="viewAllImages(employee.id)" [translate]="'HR.View'">
+                    <button class="btn btn-success" style="margin-left: 40px;" (click)="viewAllImages(employee.id)"
+                        [translate]="'HR.View'">
                     </button>
                 </td>
-                
+
             </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
@@ -262,19 +266,20 @@
                         {{Employee.name}}</td>
                     <td
                         style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                        {{Employee.positionLevel}}&nbsp;{{Employee.positionName}}</td>
+                        {{Employee.positionLevelName}}&nbsp;{{Employee.positionName}}</td>
                 </tr>
                 <tr style="  border: 1px solid #d9e4e6;">
                     <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
                         [translate]="'HR.Profession Name'"></th>
-                        <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
                         [translate]="'HR.HiringDate'"></th>
                 </tr>
                 <tr style="  border: 1px solid #d9e4e6;">
                     <td
                         style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                        {{Employee.professionName}}</td>                   
-                        <td style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.professionName}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
                         {{Employee.hiringDateHiringDate}}</td>
                 </tr>
                 <tr style="  border: 1px solid #d9e4e6;">
@@ -308,10 +313,10 @@
 
                 <tr style="  border: 1px solid #d9e4e6;">
                     <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
-                    [translate]="'HR.Address'"></th>
-                                        <td
-                    style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                    {{Employee.address}}</td>
+                        [translate]="'HR.Address'"></th>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.address}}</td>
                 </tr>
                 <tr style="  border: 1px solid #d9e4e6;">
 
@@ -335,7 +340,7 @@
                 <tr style="  border: 1px solid #d9e4e6;">
                     <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
                         [translate]="'HR.dateOfBirth'"></th>
-                        <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
                         [translate]="'HR.Code'"></th>
                 </tr>
                 <tr style="  border: 1px solid #d9e4e6;">
@@ -346,37 +351,6 @@
                         style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
                         {{Employee.code}}</td>
                 </tr>
-
-                <tr style="  border: 1px solid #d9e4e6;">
-                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
-                        [translate]="'HR.UniversityName'"></th>
-                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
-                        [translate]="'HR.FacultyName'"></th>
-                </tr>
-                <tr style="  border: 1px solid #d9e4e6;">
-                    <td
-                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                        {{Employee.universityName}}</td>
-                    <td
-                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                        {{Employee.facultyName}}</td>
-                </tr>
-
-                <tr style="  border: 1px solid #d9e4e6;">
-                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
-                        [translate]="'HR.FacultyDepartmentName'"></th>
-                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
-                        [translate]="'HR.graduatioYear'"></th>
-                </tr>
-                <tr style="  border: 1px solid #d9e4e6;">
-                    <td
-                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                        {{Employee.facultyDepartmentName}}</td>
-                    <td
-                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
-                        {{Employee.graduatioYear}}</td>
-                </tr>
-
                 <tr style="  border: 1px solid #d9e4e6;">
                     <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
                         [translate]="'HR.gender'"></th>
@@ -390,17 +364,225 @@
                     <td
                         style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
                         {{Employee.maritalStatus}}</td>
-                </tr><br><br>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;" *ngIf="Employee.facultyDepartmentId!=null">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.UniversityName'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.FacultyName'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;" *ngIf="Employee.facultyDepartmentId!=null">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.universityName}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.facultyName}}</td>
+                </tr>
+
+                <tr style="  border: 1px solid #d9e4e6;" *ngIf="Employee.schoolDepartmentId!=null">
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.School Name'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.School Department Name'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;" *ngIf="Employee.schoolDepartmentId!=null">
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.schoolName}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.schoolDepartmentName}}</td>
+                </tr>
+
+
+
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <th *ngIf="Employee.facultyDepartmentId!=null"
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.FacultyDepartmentName'"></th>
+                    <th *ngIf="(Employee.facultyDepartmentId ==null &&  Employee.schoolDepartmentId==null)"
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.Education'"></th>
+                    <th style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;"
+                        [translate]="'HR.graduatioYear'"></th>
+                </tr>
+                <tr style="  border: 1px solid #d9e4e6;">
+                    <td *ngIf="Employee.facultyDepartmentId!=null"
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.facultyDepartmentName}}</td>
+                    <td *ngIf="(Employee.facultyDepartmentId ==null &&  Employee.schoolDepartmentId==null)"
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.education}}</td>
+                    <td
+                        style="font-size: large;display: table-cell;text-align: left;padding: 0.5em 1em 0 1em;border-right: 1px solid #d9e4e6;">
+                        {{Employee.graduatioYear}}</td>
+                </tr>
+
+
+
+                <br><br>
             </table>
-            
+
         </div>
         <!-- <span class="pi pi-print btn btn-primary"></span> -->
         <ng-template pTemplate="footer">
-            <button class="btn btn-primary" printSectionId="print-section" ngxPrint styleClass="p-button-text" [translate]="'HR.Print'">
+            <button class="btn btn-primary" printSectionId="print-section" ngxPrint styleClass="p-button-text"
+                [translate]="'HR.Print'">
                 {{"HR.Print"| translate}}</button>
-            <p-button icon="pi pi-check" [routerLink]="['/editEmployee',Employee.id]" [label]="'HR.Update' | translate"
-                styleClass="p-button-text"></p-button>
+            <!-- <p-button icon="pi pi-check" [routerLink]="['/editEmployee',Employee.id]" [label]="'HR.Update' | translate"
+                styleClass="p-button-text"></p-button> -->
             <p-button icon="pi pi-times" (click)="displayMaximizable=false" [label]="'HR.No' | translate"></p-button>
+        </ng-template>
+    </p-dialog>
+
+
+    <p-dialog [(visible)]="displayMaximizableNonWorkedEmployees" [modal]="true" [style]="{width: '100vw'}"
+        [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+
+        <p-table class="container card" #dt [value]="UnworkedEmployees" dataKey="id" [rows]="5"
+            [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,50]" [loading]="loading"
+            styleClass="p-datatable-customers" [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
+            [globalFilterFields]="['name','code','professionName','hiringDateHiringDate','email']">
+            <ng-template pTemplate="caption">
+                <h1 [translate]="'HR.NonWorkedEmployees'" style="margin-bottom: 20px; font-size: 2em;color: #2674a8;">
+                </h1>
+                <div class="row">
+                    <div class="table-header col-md-10">
+                        <!-- List of Employees -->
+
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                [placeholder]="'HR.Global Search' | translate" />
+                        </span>
+                    </div>
+                    <div class="col-md-2">
+                        <!-- <button id="addEmpBtn" routerLink="/addemployee"
+                            class="btn btn-outline-primary btn-md btn-block">
+                            <span class="pi pi-plus" [translate]="'HR.Add'"></span> </button> -->
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th [translate]="'HR.Image'" style="text-align: inherit;"></th>
+                    <th pSortableColumn="name" style="text-align: inherit;"><span
+                            [translate]="'HR.Employee Name'"></span>
+                        <p-sortIcon field="name"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="positionName" style="text-align: inherit;"><span
+                            [translate]="'HR.Position Name'"></span>
+                        <p-sortIcon field="positionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="professionName" style="text-align: inherit;"><span
+                            [translate]="'HR.Profession Name'"></span>
+                        <p-sortIcon field="professionName"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="hiringDateHiringDate" style="text-align: inherit;"><span
+                            [translate]="'HR.HiringDate'"></span>
+                        <p-sortIcon field="hiringDateHiringDate"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="email" style="text-align: inherit;"><span [translate]="'HR.Email'"></span>
+                        <p-sortIcon field="email"></p-sortIcon>
+                    </th>
+                    <th>Is Active</th>
+                    <th><span [translate]="'HR.Controls'" style="margin-left: 30px;"></span></th>
+                    <th><span [translate]="'HR.View'" style="margin-left: 30px;"></span></th>
+                </tr>
+                <tr style="text-align: inherit;">
+                    <th>
+                        <label></label>
+                    </th>
+                    <th>
+                        <input pInputText style="width: 100%;text-align: inherit;" type="text"
+                            (input)="dt.filter($event.target.value, 'name', 'startsWith')"
+                            [placeholder]="'HR.name' | translate" class="p-column-filter">
+                    </th>
+                    <th>
+                        <input pInputText type="text" style="width: 100%;text-align: inherit;"
+                            (input)="dt.filter($event.target.value, 'positionLevel', 'contains')"
+                            [placeholder]="'HR.Position Name' | translate" class="p-column-filter">
+                    </th>
+                    <th>
+                        <input pInputText type="text" style="width: 100%;text-align: inherit;"
+                            (input)="dt.filter($event.target.value, 'professionName', 'contains')"
+                            [placeholder]="'HR.Profession Name' | translate" class="p-column-filter">
+                    </th>
+                    <th>
+                        <input pInputText type="text" style="width: 100%;text-align: inherit;"
+                            (input)="dt.filter($event.target.value, 'hiringDateHiringDate', 'contains')"
+                            [placeholder]="'HR.HiringDate' | translate" class="p-column-filter">
+                    </th>
+                    <th>
+                        <input pInputText style="width: 100%;text-align: inherit;" type="email"
+                            (input)="dt.filter($event.target.value, 'email', 'startsWith')"
+                            [placeholder]="'HR.Email' | translate" class="p-column-filter">
+                    </th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-employee>
+                <tr>
+                    <td>
+                        <img class="img-thumbnail" src="{{getimage}}api/employees/getImage/{{employee.photo }}" alt=""
+                            width="40%" height="40%">
+                    </td>
+                    <td style="text-align: inherit;">
+                        {{employee.name}}
+                    </td>
+                    <td style="text-align: inherit;">
+                        {{employee.positionLevel}}&nbsp;{{employee.positionName}}
+                    </td>
+                    <td style="text-align: inherit;">
+                        {{employee.professionName}}
+                    </td>
+                    <td style="text-align: inherit;">
+                        {{employee.hiringDateHiringDate}}
+                    </td>
+                    <td style="text-align: inherit;">
+                        {{employee.email}}
+                    </td>
+                    <td>
+                        <div class="p-field-checkbox" style="text-align: center;">
+                            <section class="example-section">
+                                <p-checkbox [(ngModel)]="employee.isActive" (onChange)="ArchiveEmp(employee)"
+                                    [binary]="true"></p-checkbox>
+                            </section>
+                            <!--<p-checkbox name="groupname" value="employee.isActive" (change)="ArchiveEmp(employee)"
+                            [(ngModel)]="employee.isActive"></p-checkbox>-->
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <span [title]="'HR.Show' | translate" class="pi pi-compass btn" aria-hidden="true"
+                            (click)="showBasicDialog(employee.id)"></span>
+                    </td>
+                    <td style="width: 50px;">
+                        <button class="btn btn-success" style="margin-left: 40px;" (click)="viewAllImages(employee.id)"
+                            [translate]="'HR.View'">
+                        </button>
+                    </td>
+
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="6" [translate]="'HR.No data found'"></td>
+                </tr>
+                <tr>
+
+                </tr>
+            </ng-template>
+
+        </p-table>
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-times" (click)="displayMaximizableNonWorkedEmployees=false"
+                [label]="'HR.No' | translate"></p-button>
         </ng-template>
     </p-dialog>
 </div>
@@ -410,7 +592,8 @@
         <p-table [value]="empImages">
             <ng-template pTemplate="header">
                 <tr>
-                    <th colspan="2" style="color: #2674a8; font-size: 20px; font: bold; text-align: center;" [translate]="'HR.Document Name'"></th>
+                    <th colspan="2" style="color: #2674a8; font-size: 20px; font: bold; text-align: center;"
+                        [translate]="'HR.Document Name'"></th>
                 </tr>
 
             </ng-template>
@@ -418,17 +601,17 @@
                 <tr>
                     <td style="color: rgb(187, 12, 12);font-size: large;text-align: center;">{{i.fileName}}
                     </td>
-                    <td><button class="btn btn-info" style="margin-right: 30px;float: right;" (click)="viewSingleDoc(i)" [translate]="'HR.View'"></button>
+                    <td><button class="btn btn-info" style="margin-right: 30px;float: right;" (click)="viewSingleDoc(i)"
+                            [translate]="'HR.View'"></button>
                     </td>
                     <button pButton pRipple icon="pi pi-trash" style="min-width: 5px;" class="p-button-danger"
-                            (click)="delDocument(i.id)"></button>
+                        (click)="delDocument(i.id)"></button>
                 </tr>
             </ng-template>
             <ng-template pTemplate="emptymessage">
                 <tr>
                     <td></td>
-                    <td colspan="6" [translate]="'HR.No data found'"
-                    > </td>
+                    <td colspan="6" [translate]="'HR.No data found'"> </td>
                 </tr>
                 <tr>
 
@@ -437,7 +620,8 @@
         </p-table>
     </div>
     <ng-template pTemplate="footer">
-        <p-button icon="pi pi-times" (click)="NewEmployeeDocumentDialogbool=false" [label]="'HR.No' | translate"></p-button>
+        <p-button icon="pi pi-times" (click)="NewEmployeeDocumentDialogbool=false" [label]="'HR.No' | translate">
+        </p-button>
     </ng-template>
 
 </p-dialog>

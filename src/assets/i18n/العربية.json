@@ -212,7 +212,18 @@
     "Full report to employee":"تقرير كامل للموظف",
     "Arrival":"وصول",
     "Departure":"مغادرة",
-    "Attendance Report":"تقرير الحضور"
+    "Attendance Report":"تقرير الحضور",
+    "NonWorkedEmployees":"الموظفين غير العاملين",
+    "Unworked":"الغير عاملين",
+    "EducationStatus":"حالة التعليم",
+    "New EducationStatus":"إضافة حالة تعليم",
+    "Schools":"المدارس",
+    "New School":"مدرسة جديدة",
+    "SchoolDepartments":"أقسام المدرسة",
+    "New School Department":"قسم مدرسة جديد",
+    "School Department Name":"إسم قسم المدرسة",
+    "School Name":"إسم المدرسة",
+    "Education":"التعليم"
 
 
 

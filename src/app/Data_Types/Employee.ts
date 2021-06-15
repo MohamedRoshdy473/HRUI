@@ -3,6 +3,7 @@ export class Employee {
     name: string;
     code: string;
     professionID: number;
+    professionName:string
     gender: string;
     address: string;
     dateOfBirth: string;
@@ -26,6 +27,12 @@ export class Employee {
     universityName:string;
     facultyName:string;
     facultyId:number;
-    listOfdocuments: []
+    listOfdocuments: [];
+    isActive:boolean
+    schoolDepartmentId:number;
+    schoolDepartmentName:string
+    schoolId:number;
+    schoolName:string;
+    education:string
 
 }

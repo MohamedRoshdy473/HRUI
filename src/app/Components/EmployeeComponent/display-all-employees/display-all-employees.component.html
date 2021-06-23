@@ -23,7 +23,8 @@
         </div>
     </ng-template>
 </p-toast>
-<div class="container">
+<div class="container card">
+    <br>
     <p-table class="container card" #dt [value]="Employees" dataKey="id" [rows]="5" [showCurrentPageReport]="true"
         [rowsPerPageOptions]="[5,10,50]" [loading]="loading" styleClass="p-datatable-customers" [paginator]="true"
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [filterDelay]="0"
